@@ -1,0 +1,553 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D3623260D0F684500981E51 /* cocos2d_appAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* cocos2d_appAppDelegate.m */; };
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
+		496B814C1013459100BD4235 /* Card.png in Resources */ = {isa = PBXBuildFile; fileRef = 496B814B1013459100BD4235 /* Card.png */; };
+		496EAD371009BA5A000DED0F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 496EAD361009BA5A000DED0F /* OpenGLES.framework */; };
+		496EAD391009BA5A000DED0F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 496EAD381009BA5A000DED0F /* QuartzCore.framework */; };
+		496EAD3F1009BA7E000DED0F /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 496EAD3E1009BA7E000DED0F /* fps_images.png */; };
+		496EB121100E03AC000DED0F /* 0_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0EC100E03AC000DED0F /* 0_1.jpg */; };
+		496EB122100E03AC000DED0F /* 1_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0ED100E03AC000DED0F /* 1_1.jpg */; };
+		496EB123100E03AC000DED0F /* 1_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0EE100E03AC000DED0F /* 1_2.jpg */; };
+		496EB124100E03AC000DED0F /* 1_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0EF100E03AC000DED0F /* 1_3.jpg */; };
+		496EB125100E03AC000DED0F /* 1_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0F0100E03AC000DED0F /* 1_4.jpg */; };
+		496EB126100E03AC000DED0F /* 2_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0F1100E03AC000DED0F /* 2_1.jpg */; };
+		496EB127100E03AC000DED0F /* 2_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0F2100E03AC000DED0F /* 2_2.jpg */; };
+		496EB128100E03AC000DED0F /* 2_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0F3100E03AC000DED0F /* 2_3.jpg */; };
+		496EB129100E03AC000DED0F /* 2_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0F4100E03AC000DED0F /* 2_4.jpg */; };
+		496EB12A100E03AC000DED0F /* 3_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0F5100E03AC000DED0F /* 3_1.jpg */; };
+		496EB12B100E03AC000DED0F /* 3_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0F6100E03AC000DED0F /* 3_2.jpg */; };
+		496EB12C100E03AC000DED0F /* 3_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0F7100E03AC000DED0F /* 3_3.jpg */; };
+		496EB12D100E03AC000DED0F /* 3_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0F8100E03AC000DED0F /* 3_4.jpg */; };
+		496EB12E100E03AC000DED0F /* 4_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0F9100E03AC000DED0F /* 4_1.jpg */; };
+		496EB12F100E03AC000DED0F /* 4_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0FA100E03AC000DED0F /* 4_2.jpg */; };
+		496EB130100E03AC000DED0F /* 4_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0FB100E03AC000DED0F /* 4_3.jpg */; };
+		496EB131100E03AC000DED0F /* 4_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0FC100E03AC000DED0F /* 4_4.jpg */; };
+		496EB132100E03AC000DED0F /* 5_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0FD100E03AC000DED0F /* 5_1.jpg */; };
+		496EB133100E03AC000DED0F /* 5_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0FE100E03AC000DED0F /* 5_2.jpg */; };
+		496EB134100E03AC000DED0F /* 5_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB0FF100E03AC000DED0F /* 5_3.jpg */; };
+		496EB135100E03AC000DED0F /* 5_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB100100E03AC000DED0F /* 5_4.jpg */; };
+		496EB136100E03AC000DED0F /* 6_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB101100E03AC000DED0F /* 6_1.jpg */; };
+		496EB137100E03AC000DED0F /* 6_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB102100E03AC000DED0F /* 6_2.jpg */; };
+		496EB138100E03AC000DED0F /* 6_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB103100E03AC000DED0F /* 6_3.jpg */; };
+		496EB139100E03AC000DED0F /* 6_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB104100E03AC000DED0F /* 6_4.jpg */; };
+		496EB13A100E03AC000DED0F /* 7_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB105100E03AC000DED0F /* 7_1.jpg */; };
+		496EB13B100E03AC000DED0F /* 7_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB106100E03AC000DED0F /* 7_2.jpg */; };
+		496EB13C100E03AC000DED0F /* 7_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB107100E03AC000DED0F /* 7_3.jpg */; };
+		496EB13D100E03AC000DED0F /* 7_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB108100E03AC000DED0F /* 7_4.jpg */; };
+		496EB13E100E03AC000DED0F /* 8_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB109100E03AC000DED0F /* 8_1.jpg */; };
+		496EB13F100E03AC000DED0F /* 8_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB10A100E03AC000DED0F /* 8_2.jpg */; };
+		496EB140100E03AC000DED0F /* 8_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB10B100E03AC000DED0F /* 8_3.jpg */; };
+		496EB141100E03AC000DED0F /* 8_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB10C100E03AC000DED0F /* 8_4.jpg */; };
+		496EB142100E03AC000DED0F /* 9_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB10D100E03AC000DED0F /* 9_1.jpg */; };
+		496EB143100E03AC000DED0F /* 9_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB10E100E03AC000DED0F /* 9_2.jpg */; };
+		496EB144100E03AC000DED0F /* 9_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB10F100E03AC000DED0F /* 9_3.jpg */; };
+		496EB145100E03AC000DED0F /* 9_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB110100E03AC000DED0F /* 9_4.jpg */; };
+		496EB146100E03AC000DED0F /* 10_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB111100E03AC000DED0F /* 10_1.jpg */; };
+		496EB147100E03AC000DED0F /* 10_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB112100E03AC000DED0F /* 10_2.jpg */; };
+		496EB148100E03AC000DED0F /* 10_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB113100E03AC000DED0F /* 10_3.jpg */; };
+		496EB149100E03AC000DED0F /* 10_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB114100E03AC000DED0F /* 10_4.jpg */; };
+		496EB14A100E03AC000DED0F /* 11_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB115100E03AC000DED0F /* 11_1.jpg */; };
+		496EB14B100E03AC000DED0F /* 11_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB116100E03AC000DED0F /* 11_2.jpg */; };
+		496EB14C100E03AC000DED0F /* 11_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB117100E03AC000DED0F /* 11_3.jpg */; };
+		496EB14D100E03AC000DED0F /* 11_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB118100E03AC000DED0F /* 11_4.jpg */; };
+		496EB14E100E03AC000DED0F /* 12_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB119100E03AC000DED0F /* 12_1.jpg */; };
+		496EB14F100E03AC000DED0F /* 12_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB11A100E03AC000DED0F /* 12_2.jpg */; };
+		496EB150100E03AC000DED0F /* 12_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB11B100E03AC000DED0F /* 12_3.jpg */; };
+		496EB151100E03AC000DED0F /* 12_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 496EB11C100E03AC000DED0F /* 12_4.jpg */; };
+		496EB152100E03AC000DED0F /* bomb.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 496EB11D100E03AC000DED0F /* bomb.bmp */; };
+		496EB153100E03AC000DED0F /* Bomb.tga in Resources */ = {isa = PBXBuildFile; fileRef = 496EB11E100E03AC000DED0F /* Bomb.tga */; };
+		496EB154100E03AC000DED0F /* jocker2.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 496EB11F100E03AC000DED0F /* jocker2.bmp */; };
+		496EB155100E03AC000DED0F /* jocker3.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 496EB120100E03AC000DED0F /* jocker3.bmp */; };
+		496EB159100E0420000DED0F /* cocos2d-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 496EB156100E0420000DED0F /* cocos2d-Icon.png */; };
+		496EB15A100E0420000DED0F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 496EB157100E0420000DED0F /* Default.png */; };
+		496EB15B100E0420000DED0F /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 496EB158100E0420000DED0F /* Icon.png */; };
+		496EB164100E0440000DED0F /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 496EB15C100E0440000DED0F /* b1.png */; };
+		496EB165100E0440000DED0F /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 496EB15D100E0440000DED0F /* b2.png */; };
+		496EB166100E0440000DED0F /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 496EB15E100E0440000DED0F /* f1.png */; };
+		496EB167100E0440000DED0F /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 496EB15F100E0440000DED0F /* f2.png */; };
+		496EB168100E0440000DED0F /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 496EB160100E0440000DED0F /* r2.png */; };
+		496EB169100E0440000DED0F /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 496EB161100E0440000DED0F /* r1.png */; };
+		496EB16A100E0440000DED0F /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 496EB162100E0440000DED0F /* grossini.png */; };
+		496EB16B100E0440000DED0F /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 496EB163100E0440000DED0F /* grossinis_sister1.png */; };
+		496EB1BD100F5BB9000DED0F /* OppCard.png in Resources */ = {isa = PBXBuildFile; fileRef = 496EB1BA100F5BB9000DED0F /* OppCard.png */; };
+		496EB1BE100F5BB9000DED0F /* Back.png in Resources */ = {isa = PBXBuildFile; fileRef = 496EB1BB100F5BB9000DED0F /* Back.png */; };
+		496EB1C6100F5C40000DED0F /* GostopAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 496EB1BF100F5C40000DED0F /* GostopAgent.m */; };
+		496EB1C7100F5C40000DED0F /* GostopCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 496EB1C1100F5C40000DED0F /* GostopCard.m */; };
+		496EB1C8100F5C40000DED0F /* GostopFloor.m in Sources */ = {isa = PBXBuildFile; fileRef = 496EB1C4100F5C40000DED0F /* GostopFloor.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D3623240D0F684500981E51 /* cocos2d_appAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d_appAppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* cocos2d_appAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cocos2d_appAppDelegate.m; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* cocos2d app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cocos2d app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* cocos2d_app_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d_app_Prefix.pch; sourceTree = "<group>"; };
+		496B814B1013459100BD4235 /* Card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Card.png; sourceTree = "<group>"; };
+		496EAD361009BA5A000DED0F /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		496EAD381009BA5A000DED0F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		496EAD3E1009BA7E000DED0F /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = ../cocos2d/Images/fps_images.png; sourceTree = SOURCE_ROOT; };
+		496EB0EC100E03AC000DED0F /* 0_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 0_1.jpg; path = Library/cocos2d/Images/0_1.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0ED100E03AC000DED0F /* 1_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 1_1.jpg; path = Library/cocos2d/Images/1_1.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0EE100E03AC000DED0F /* 1_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 1_2.jpg; path = Library/cocos2d/Images/1_2.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0EF100E03AC000DED0F /* 1_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 1_3.jpg; path = Library/cocos2d/Images/1_3.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0F0100E03AC000DED0F /* 1_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 1_4.jpg; path = Library/cocos2d/Images/1_4.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0F1100E03AC000DED0F /* 2_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 2_1.jpg; path = Library/cocos2d/Images/2_1.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0F2100E03AC000DED0F /* 2_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 2_2.jpg; path = Library/cocos2d/Images/2_2.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0F3100E03AC000DED0F /* 2_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 2_3.jpg; path = Library/cocos2d/Images/2_3.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0F4100E03AC000DED0F /* 2_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 2_4.jpg; path = Library/cocos2d/Images/2_4.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0F5100E03AC000DED0F /* 3_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 3_1.jpg; path = Library/cocos2d/Images/3_1.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0F6100E03AC000DED0F /* 3_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 3_2.jpg; path = Library/cocos2d/Images/3_2.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0F7100E03AC000DED0F /* 3_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 3_3.jpg; path = Library/cocos2d/Images/3_3.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0F8100E03AC000DED0F /* 3_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 3_4.jpg; path = Library/cocos2d/Images/3_4.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0F9100E03AC000DED0F /* 4_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 4_1.jpg; path = Library/cocos2d/Images/4_1.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0FA100E03AC000DED0F /* 4_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 4_2.jpg; path = Library/cocos2d/Images/4_2.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0FB100E03AC000DED0F /* 4_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 4_3.jpg; path = Library/cocos2d/Images/4_3.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0FC100E03AC000DED0F /* 4_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 4_4.jpg; path = Library/cocos2d/Images/4_4.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0FD100E03AC000DED0F /* 5_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 5_1.jpg; path = Library/cocos2d/Images/5_1.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0FE100E03AC000DED0F /* 5_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 5_2.jpg; path = Library/cocos2d/Images/5_2.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB0FF100E03AC000DED0F /* 5_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 5_3.jpg; path = Library/cocos2d/Images/5_3.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB100100E03AC000DED0F /* 5_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 5_4.jpg; path = Library/cocos2d/Images/5_4.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB101100E03AC000DED0F /* 6_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 6_1.jpg; path = Library/cocos2d/Images/6_1.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB102100E03AC000DED0F /* 6_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 6_2.jpg; path = Library/cocos2d/Images/6_2.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB103100E03AC000DED0F /* 6_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 6_3.jpg; path = Library/cocos2d/Images/6_3.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB104100E03AC000DED0F /* 6_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 6_4.jpg; path = Library/cocos2d/Images/6_4.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB105100E03AC000DED0F /* 7_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 7_1.jpg; path = Library/cocos2d/Images/7_1.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB106100E03AC000DED0F /* 7_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 7_2.jpg; path = Library/cocos2d/Images/7_2.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB107100E03AC000DED0F /* 7_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 7_3.jpg; path = Library/cocos2d/Images/7_3.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB108100E03AC000DED0F /* 7_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 7_4.jpg; path = Library/cocos2d/Images/7_4.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB109100E03AC000DED0F /* 8_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 8_1.jpg; path = Library/cocos2d/Images/8_1.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB10A100E03AC000DED0F /* 8_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 8_2.jpg; path = Library/cocos2d/Images/8_2.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB10B100E03AC000DED0F /* 8_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 8_3.jpg; path = Library/cocos2d/Images/8_3.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB10C100E03AC000DED0F /* 8_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 8_4.jpg; path = Library/cocos2d/Images/8_4.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB10D100E03AC000DED0F /* 9_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 9_1.jpg; path = Library/cocos2d/Images/9_1.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB10E100E03AC000DED0F /* 9_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 9_2.jpg; path = Library/cocos2d/Images/9_2.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB10F100E03AC000DED0F /* 9_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 9_3.jpg; path = Library/cocos2d/Images/9_3.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB110100E03AC000DED0F /* 9_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 9_4.jpg; path = Library/cocos2d/Images/9_4.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB111100E03AC000DED0F /* 10_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 10_1.jpg; path = Library/cocos2d/Images/10_1.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB112100E03AC000DED0F /* 10_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 10_2.jpg; path = Library/cocos2d/Images/10_2.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB113100E03AC000DED0F /* 10_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 10_3.jpg; path = Library/cocos2d/Images/10_3.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB114100E03AC000DED0F /* 10_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 10_4.jpg; path = Library/cocos2d/Images/10_4.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB115100E03AC000DED0F /* 11_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 11_1.jpg; path = Library/cocos2d/Images/11_1.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB116100E03AC000DED0F /* 11_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 11_2.jpg; path = Library/cocos2d/Images/11_2.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB117100E03AC000DED0F /* 11_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 11_3.jpg; path = Library/cocos2d/Images/11_3.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB118100E03AC000DED0F /* 11_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 11_4.jpg; path = Library/cocos2d/Images/11_4.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB119100E03AC000DED0F /* 12_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 12_1.jpg; path = Library/cocos2d/Images/12_1.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB11A100E03AC000DED0F /* 12_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 12_2.jpg; path = Library/cocos2d/Images/12_2.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB11B100E03AC000DED0F /* 12_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 12_3.jpg; path = Library/cocos2d/Images/12_3.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB11C100E03AC000DED0F /* 12_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 12_4.jpg; path = Library/cocos2d/Images/12_4.jpg; sourceTree = DEVELOPER_DIR; };
+		496EB11D100E03AC000DED0F /* bomb.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = bomb.bmp; path = Library/cocos2d/Images/bomb.bmp; sourceTree = DEVELOPER_DIR; };
+		496EB11E100E03AC000DED0F /* Bomb.tga */ = {isa = PBXFileReference; lastKnownFileType = file; name = Bomb.tga; path = Library/cocos2d/Images/Bomb.tga; sourceTree = DEVELOPER_DIR; };
+		496EB11F100E03AC000DED0F /* jocker2.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = jocker2.bmp; path = Library/cocos2d/Images/jocker2.bmp; sourceTree = DEVELOPER_DIR; };
+		496EB120100E03AC000DED0F /* jocker3.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; name = jocker3.bmp; path = Library/cocos2d/Images/jocker3.bmp; sourceTree = DEVELOPER_DIR; };
+		496EB156100E0420000DED0F /* cocos2d-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cocos2d-Icon.png"; path = "../../Downloads/cocos2d-iphone-0.7.3/Resources/cocos2d-Icon.png"; sourceTree = SOURCE_ROOT; };
+		496EB157100E0420000DED0F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = "../../Downloads/cocos2d-iphone-0.7.3/Resources/Default.png"; sourceTree = SOURCE_ROOT; };
+		496EB158100E0420000DED0F /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = "../../Downloads/cocos2d-iphone-0.7.3/Resources/Icon.png"; sourceTree = SOURCE_ROOT; };
+		496EB15C100E0440000DED0F /* b1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = b1.png; path = "../../Downloads/cocos2d-iphone-0.7.3/Resources/Images/b1.png"; sourceTree = SOURCE_ROOT; };
+		496EB15D100E0440000DED0F /* b2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = b2.png; path = "../../Downloads/cocos2d-iphone-0.7.3/Resources/Images/b2.png"; sourceTree = SOURCE_ROOT; };
+		496EB15E100E0440000DED0F /* f1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = f1.png; path = "../../Downloads/cocos2d-iphone-0.7.3/Resources/Images/f1.png"; sourceTree = SOURCE_ROOT; };
+		496EB15F100E0440000DED0F /* f2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = f2.png; path = "../../Downloads/cocos2d-iphone-0.7.3/Resources/Images/f2.png"; sourceTree = SOURCE_ROOT; };
+		496EB160100E0440000DED0F /* r2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = r2.png; path = "../../Downloads/cocos2d-iphone-0.7.3/Resources/Images/r2.png"; sourceTree = SOURCE_ROOT; };
+		496EB161100E0440000DED0F /* r1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = r1.png; path = "../../Downloads/cocos2d-iphone-0.7.3/Resources/Images/r1.png"; sourceTree = SOURCE_ROOT; };
+		496EB162100E0440000DED0F /* grossini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grossini.png; path = "../../Downloads/cocos2d-iphone-0.7.3/Resources/Images/grossini.png"; sourceTree = SOURCE_ROOT; };
+		496EB163100E0440000DED0F /* grossinis_sister1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grossinis_sister1.png; path = "../../Downloads/cocos2d-iphone-0.7.3/Resources/Images/grossinis_sister1.png"; sourceTree = SOURCE_ROOT; };
+		496EB1BA100F5BB9000DED0F /* OppCard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = OppCard.png; path = ../../Downloads/Step39_Exam/GoStop/Resource/Game/OppCard.png; sourceTree = SOURCE_ROOT; };
+		496EB1BB100F5BB9000DED0F /* Back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Back.png; path = ../../Downloads/Step39_Exam/GoStop/Resource/Game/Back.png; sourceTree = SOURCE_ROOT; };
+		496EB1BF100F5C40000DED0F /* GostopAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GostopAgent.m; sourceTree = "<group>"; };
+		496EB1C0100F5C40000DED0F /* GostopAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GostopAgent.h; sourceTree = "<group>"; };
+		496EB1C1100F5C40000DED0F /* GostopCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GostopCard.m; sourceTree = "<group>"; };
+		496EB1C2100F5C40000DED0F /* GostopCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GostopCard.h; sourceTree = "<group>"; };
+		496EB1C3100F5C40000DED0F /* GostopCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GostopCommon.h; sourceTree = "<group>"; };
+		496EB1C4100F5C40000DED0F /* GostopFloor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GostopFloor.m; sourceTree = "<group>"; };
+		496EB1C5100F5C40000DED0F /* GostopFloor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GostopFloor.h; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* cocos2d_app-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "cocos2d_app-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
+				496EAD371009BA5A000DED0F /* OpenGLES.framework in Frameworks */,
+				496EAD391009BA5A000DED0F /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				496EB1BF100F5C40000DED0F /* GostopAgent.m */,
+				496EB1C0100F5C40000DED0F /* GostopAgent.h */,
+				496EB1C1100F5C40000DED0F /* GostopCard.m */,
+				496EB1C2100F5C40000DED0F /* GostopCard.h */,
+				496EB1C3100F5C40000DED0F /* GostopCommon.h */,
+				496EB1C4100F5C40000DED0F /* GostopFloor.m */,
+				496EB1C5100F5C40000DED0F /* GostopFloor.h */,
+				1D3623240D0F684500981E51 /* cocos2d_appAppDelegate.h */,
+				1D3623250D0F684500981E51 /* cocos2d_appAppDelegate.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* cocos2d app.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+				496EAD361009BA5A000DED0F /* OpenGLES.framework */,
+				496EAD381009BA5A000DED0F /* QuartzCore.framework */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* cocos2d_app_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				496EB0EB100E0396000DED0F /* image */,
+				496EAD3E1009BA7E000DED0F /* fps_images.png */,
+				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				8D1107310486CEB800E47090 /* cocos2d_app-Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		496EB0EB100E0396000DED0F /* image */ = {
+			isa = PBXGroup;
+			children = (
+				496B814B1013459100BD4235 /* Card.png */,
+				496EB1BA100F5BB9000DED0F /* OppCard.png */,
+				496EB1BB100F5BB9000DED0F /* Back.png */,
+				496EB15C100E0440000DED0F /* b1.png */,
+				496EB15D100E0440000DED0F /* b2.png */,
+				496EB15E100E0440000DED0F /* f1.png */,
+				496EB15F100E0440000DED0F /* f2.png */,
+				496EB160100E0440000DED0F /* r2.png */,
+				496EB161100E0440000DED0F /* r1.png */,
+				496EB162100E0440000DED0F /* grossini.png */,
+				496EB163100E0440000DED0F /* grossinis_sister1.png */,
+				496EB156100E0420000DED0F /* cocos2d-Icon.png */,
+				496EB157100E0420000DED0F /* Default.png */,
+				496EB158100E0420000DED0F /* Icon.png */,
+				496EB0EC100E03AC000DED0F /* 0_1.jpg */,
+				496EB0ED100E03AC000DED0F /* 1_1.jpg */,
+				496EB0EE100E03AC000DED0F /* 1_2.jpg */,
+				496EB0EF100E03AC000DED0F /* 1_3.jpg */,
+				496EB0F0100E03AC000DED0F /* 1_4.jpg */,
+				496EB0F1100E03AC000DED0F /* 2_1.jpg */,
+				496EB0F2100E03AC000DED0F /* 2_2.jpg */,
+				496EB0F3100E03AC000DED0F /* 2_3.jpg */,
+				496EB0F4100E03AC000DED0F /* 2_4.jpg */,
+				496EB0F5100E03AC000DED0F /* 3_1.jpg */,
+				496EB0F6100E03AC000DED0F /* 3_2.jpg */,
+				496EB0F7100E03AC000DED0F /* 3_3.jpg */,
+				496EB0F8100E03AC000DED0F /* 3_4.jpg */,
+				496EB0F9100E03AC000DED0F /* 4_1.jpg */,
+				496EB0FA100E03AC000DED0F /* 4_2.jpg */,
+				496EB0FB100E03AC000DED0F /* 4_3.jpg */,
+				496EB0FC100E03AC000DED0F /* 4_4.jpg */,
+				496EB0FD100E03AC000DED0F /* 5_1.jpg */,
+				496EB0FE100E03AC000DED0F /* 5_2.jpg */,
+				496EB0FF100E03AC000DED0F /* 5_3.jpg */,
+				496EB100100E03AC000DED0F /* 5_4.jpg */,
+				496EB101100E03AC000DED0F /* 6_1.jpg */,
+				496EB102100E03AC000DED0F /* 6_2.jpg */,
+				496EB103100E03AC000DED0F /* 6_3.jpg */,
+				496EB104100E03AC000DED0F /* 6_4.jpg */,
+				496EB105100E03AC000DED0F /* 7_1.jpg */,
+				496EB106100E03AC000DED0F /* 7_2.jpg */,
+				496EB107100E03AC000DED0F /* 7_3.jpg */,
+				496EB108100E03AC000DED0F /* 7_4.jpg */,
+				496EB109100E03AC000DED0F /* 8_1.jpg */,
+				496EB10A100E03AC000DED0F /* 8_2.jpg */,
+				496EB10B100E03AC000DED0F /* 8_3.jpg */,
+				496EB10C100E03AC000DED0F /* 8_4.jpg */,
+				496EB10D100E03AC000DED0F /* 9_1.jpg */,
+				496EB10E100E03AC000DED0F /* 9_2.jpg */,
+				496EB10F100E03AC000DED0F /* 9_3.jpg */,
+				496EB110100E03AC000DED0F /* 9_4.jpg */,
+				496EB111100E03AC000DED0F /* 10_1.jpg */,
+				496EB112100E03AC000DED0F /* 10_2.jpg */,
+				496EB113100E03AC000DED0F /* 10_3.jpg */,
+				496EB114100E03AC000DED0F /* 10_4.jpg */,
+				496EB115100E03AC000DED0F /* 11_1.jpg */,
+				496EB116100E03AC000DED0F /* 11_2.jpg */,
+				496EB117100E03AC000DED0F /* 11_3.jpg */,
+				496EB118100E03AC000DED0F /* 11_4.jpg */,
+				496EB119100E03AC000DED0F /* 12_1.jpg */,
+				496EB11A100E03AC000DED0F /* 12_2.jpg */,
+				496EB11B100E03AC000DED0F /* 12_3.jpg */,
+				496EB11C100E03AC000DED0F /* 12_4.jpg */,
+				496EB11D100E03AC000DED0F /* bomb.bmp */,
+				496EB11E100E03AC000DED0F /* Bomb.tga */,
+				496EB11F100E03AC000DED0F /* jocker2.bmp */,
+				496EB120100E03AC000DED0F /* jocker3.bmp */,
+			);
+			name = image;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* gostop2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "gostop2" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = gostop2;
+			productName = "cocos2d app";
+			productReference = 1D6058910D05DD3D006BFB54 /* cocos2d app.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "gostop2" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* gostop2 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				496EAD3F1009BA7E000DED0F /* fps_images.png in Resources */,
+				496EB121100E03AC000DED0F /* 0_1.jpg in Resources */,
+				496EB122100E03AC000DED0F /* 1_1.jpg in Resources */,
+				496EB123100E03AC000DED0F /* 1_2.jpg in Resources */,
+				496EB124100E03AC000DED0F /* 1_3.jpg in Resources */,
+				496EB125100E03AC000DED0F /* 1_4.jpg in Resources */,
+				496EB126100E03AC000DED0F /* 2_1.jpg in Resources */,
+				496EB127100E03AC000DED0F /* 2_2.jpg in Resources */,
+				496EB128100E03AC000DED0F /* 2_3.jpg in Resources */,
+				496EB129100E03AC000DED0F /* 2_4.jpg in Resources */,
+				496EB12A100E03AC000DED0F /* 3_1.jpg in Resources */,
+				496EB12B100E03AC000DED0F /* 3_2.jpg in Resources */,
+				496EB12C100E03AC000DED0F /* 3_3.jpg in Resources */,
+				496EB12D100E03AC000DED0F /* 3_4.jpg in Resources */,
+				496EB12E100E03AC000DED0F /* 4_1.jpg in Resources */,
+				496EB12F100E03AC000DED0F /* 4_2.jpg in Resources */,
+				496EB130100E03AC000DED0F /* 4_3.jpg in Resources */,
+				496EB131100E03AC000DED0F /* 4_4.jpg in Resources */,
+				496EB132100E03AC000DED0F /* 5_1.jpg in Resources */,
+				496EB133100E03AC000DED0F /* 5_2.jpg in Resources */,
+				496EB134100E03AC000DED0F /* 5_3.jpg in Resources */,
+				496EB135100E03AC000DED0F /* 5_4.jpg in Resources */,
+				496EB136100E03AC000DED0F /* 6_1.jpg in Resources */,
+				496EB137100E03AC000DED0F /* 6_2.jpg in Resources */,
+				496EB138100E03AC000DED0F /* 6_3.jpg in Resources */,
+				496EB139100E03AC000DED0F /* 6_4.jpg in Resources */,
+				496EB13A100E03AC000DED0F /* 7_1.jpg in Resources */,
+				496EB13B100E03AC000DED0F /* 7_2.jpg in Resources */,
+				496EB13C100E03AC000DED0F /* 7_3.jpg in Resources */,
+				496EB13D100E03AC000DED0F /* 7_4.jpg in Resources */,
+				496EB13E100E03AC000DED0F /* 8_1.jpg in Resources */,
+				496EB13F100E03AC000DED0F /* 8_2.jpg in Resources */,
+				496EB140100E03AC000DED0F /* 8_3.jpg in Resources */,
+				496EB141100E03AC000DED0F /* 8_4.jpg in Resources */,
+				496EB142100E03AC000DED0F /* 9_1.jpg in Resources */,
+				496EB143100E03AC000DED0F /* 9_2.jpg in Resources */,
+				496EB144100E03AC000DED0F /* 9_3.jpg in Resources */,
+				496EB145100E03AC000DED0F /* 9_4.jpg in Resources */,
+				496EB146100E03AC000DED0F /* 10_1.jpg in Resources */,
+				496EB147100E03AC000DED0F /* 10_2.jpg in Resources */,
+				496EB148100E03AC000DED0F /* 10_3.jpg in Resources */,
+				496EB149100E03AC000DED0F /* 10_4.jpg in Resources */,
+				496EB14A100E03AC000DED0F /* 11_1.jpg in Resources */,
+				496EB14B100E03AC000DED0F /* 11_2.jpg in Resources */,
+				496EB14C100E03AC000DED0F /* 11_3.jpg in Resources */,
+				496EB14D100E03AC000DED0F /* 11_4.jpg in Resources */,
+				496EB14E100E03AC000DED0F /* 12_1.jpg in Resources */,
+				496EB14F100E03AC000DED0F /* 12_2.jpg in Resources */,
+				496EB150100E03AC000DED0F /* 12_3.jpg in Resources */,
+				496EB151100E03AC000DED0F /* 12_4.jpg in Resources */,
+				496EB152100E03AC000DED0F /* bomb.bmp in Resources */,
+				496EB153100E03AC000DED0F /* Bomb.tga in Resources */,
+				496EB154100E03AC000DED0F /* jocker2.bmp in Resources */,
+				496EB155100E03AC000DED0F /* jocker3.bmp in Resources */,
+				496EB159100E0420000DED0F /* cocos2d-Icon.png in Resources */,
+				496EB15A100E0420000DED0F /* Default.png in Resources */,
+				496EB15B100E0420000DED0F /* Icon.png in Resources */,
+				496EB164100E0440000DED0F /* b1.png in Resources */,
+				496EB165100E0440000DED0F /* b2.png in Resources */,
+				496EB166100E0440000DED0F /* f1.png in Resources */,
+				496EB167100E0440000DED0F /* f2.png in Resources */,
+				496EB168100E0440000DED0F /* r2.png in Resources */,
+				496EB169100E0440000DED0F /* r1.png in Resources */,
+				496EB16A100E0440000DED0F /* grossini.png in Resources */,
+				496EB16B100E0440000DED0F /* grossinis_sister1.png in Resources */,
+				496EB1BD100F5BB9000DED0F /* OppCard.png in Resources */,
+				496EB1BE100F5BB9000DED0F /* Back.png in Resources */,
+				496B814C1013459100BD4235 /* Card.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				1D3623260D0F684500981E51 /* cocos2d_appAppDelegate.m in Sources */,
+				496EB1C6100F5C40000DED0F /* GostopAgent.m in Sources */,
+				496EB1C7100F5C40000DED0F /* GostopCard.m in Sources */,
+				496EB1C8100F5C40000DED0F /* GostopFloor.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = cocos2d_app_Prefix.pch;
+				INFOPLIST_FILE = "cocos2d_app-Info.plist";
+				PRODUCT_NAME = "cocos2d app";
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = cocos2d_app_Prefix.pch;
+				INFOPLIST_FILE = "cocos2d_app-Info.plist";
+				PRODUCT_NAME = "cocos2d app";
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "/Developer/Library/cocos2d/Include/**";
+				LIBRARY_SEARCH_PATHS = /Developer/Library/cocos2d/Simulator;
+				OTHER_LDFLAGS = (
+					/Developer/Library/cocos2d/Simulator/libcocos2d.a,
+					"-Icocos2d",
+				);
+				PREBINDING = NO;
+				SDKROOT = iphonesimulator2.2;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = iphoneos3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "gostop2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "gostop2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
