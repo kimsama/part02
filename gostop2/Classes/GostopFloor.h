@@ -67,6 +67,6 @@
 
 - (int) GetPutOutMonth;
 - (int) GetTurnUpMonth;
-
+- (int) numbersort:(id) obj1 second: (id) obj2;
 
 @end

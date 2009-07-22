@@ -125,7 +125,6 @@ enum EChangeTurnState
 - (int) GetObtainedCard:(int) nPlayer  nCardType:(int)nCardType nOffset:(int) nOffset;
 
 
-- (int) GetFloorCardInAgent:(int)nMonth byteoffset:(Byte)byteOffset;
-
+- (int) GetFloorCard:(int)nMonth boffset:(Byte)boffset;
 
 @end

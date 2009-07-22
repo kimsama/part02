@@ -163,15 +163,10 @@ Class restartAction()
 	m_Agent = [CGostopAgent alloc];
 	[m_Agent InitGame];
 	[m_Agent StartNewGame];
-	[m_Agent StartTimerfunc];
+//	[m_Agent StartTimerfunc];
 	
 	
-	[self DrawFloorCards];
-	[self DrawObtainedCards];
-	[self DrawPlayerCards];
-	[self DisplayGameProgress];
-	
-//	[NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(Update) userInfo:nil repeats:YES];
+//	[NSTimer scheduledTimerWithTimeInterval:8.0f target:self selector:@selector(Update) userInfo:nil repeats:YES];
 	
 	return self;
 }
@@ -182,7 +177,10 @@ Class restartAction()
 }
 - (void) Update:(NSTimer*)timer
 {
-	[m_Agent DoAgency:timer];
+	[self DrawFloorCards];
+	[self DrawObtainedCards];
+	[self DrawPlayerCards];
+	[self DisplayGameProgress];
 }
 
 -(void) onEnter
@@ -219,7 +217,7 @@ Class restartAction()
 
 - (void) draw
 {
-//	[self Update];
+	[m_Agent DoAgency:nil];
 	
 //	glEnableClientState(GL_VERTEX_ARRAY);
 //	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -229,11 +227,11 @@ Class restartAction()
 	//배경 그리고
 	
 	//카드 그리고
-//	[self DrawFloorCards];
-//	[self DrawObtainedCards];
-//	[self DrawPlayerCards];
+	[self DrawFloorCards];
+	[self DrawObtainedCards];
+	[self DrawPlayerCards];
 	//게임 상황 그리고
-//	[self DisplayGameProgress];
+	[self DisplayGameProgress];
 	
 	
 //	glDisable(GL_TEXTURE_2D);
@@ -357,7 +355,7 @@ Class restartAction()
 	}
 	else
 	{
-		for(iCnt = 0 ; iCnt <5+(nCntCenterCard-5)/3;iCnt++)
+		for(iCnt = 0 ; iCnt <5+(nCntCenterCard-5)/6;iCnt++)
 		{
 			AtlasSprite *OppCardBack = [AtlasSprite spriteWithRect:CGRectMake( CARD_WIDTH*BACK_CARD , 0.0f, CARD_WIDTH, CARD_HEIGHT) spriteManager:mgr];
 			[OppCardBack setPosition:CGPointMake(m_coFloorCards[0].x -iCnt, m_coFloorCards[0].y-iCnt)];
@@ -383,15 +381,26 @@ Class restartAction()
 		if(0 < [m_Agent GetFloorCardCount:iMonth])
 		{
 			iCnt = -1;
-			while(!ISNOCARD(nidxCard = [m_Agent GetFloorCardInAgent:(int)iMonth byteoffset:(Byte)(++iCnt)]))
+			
+			int count = [m_Agent GetFloorCardCount:iMonth];
+			for(int i =0; i < count; i++)
 			{
-				
+				++iCnt;
+				//nidxCard = [m_Agent GetFloorCardInAgent:iMonth byteoffset:iCnt];
+				nidxCard = [m_Agent GetFloorCard:iMonth boffset:iCnt];
+				if(!ISNOCARD(nidxCard))
+				{
+					break;
+				}
 				[mgr addChild:m_sprCard[nidxCard]];
 				[m_sprCard[nidxCard] setPosition:CGPointMake( m_coFloorCards[1+ iMonth].x , m_coFloorCards[1+ iMonth].y)];
-
-				//m_sprCard[nidxCard].position = ccp ( m_coFloorCards[1+ iMonth].x , m_coFloorCards[1+ iMonth].y );
-				//[m_sprCard[nidxCard] release];
+				
 			}
+//			while(!ISNOCARD(nidxCard = ))
+//			{
+//				[mgr addChild:m_sprCard[nidxCard]];
+//				[m_sprCard[nidxCard] setPosition:CGPointMake( m_coFloorCards[1+ iMonth].x , m_coFloorCards[1+ iMonth].y)];
+//			}
 		}
 	}
 	
@@ -486,13 +495,15 @@ Class restartAction()
 	nCntPlayerCardCount = [m_Agent GetPlayerCardCount:PLAYER];
 	for(int i = 0 ; i < nCntPlayerCardCount; i++)
 	{
-		nIdxPlayerCard = [m_Agent GetPlayerCard:PLAYER nOffset:++iCnt];	
+		++iCnt;
+		
+		nIdxPlayerCard = [m_Agent GetPlayerCard:PLAYER nOffset:iCnt];	
 		
 		if(ISNOCARD(nIdxPlayerCard))
 			break;
 		
-		
-		[m_sprCard[nIdxPlayerCard] setPosition:CGPointMake( m_coPlayerCards[PLAYER][iCnt].x , m_coPlayerCards[PLAYER][iCnt].y)];
+		m_sprCard[nIdxPlayerCard].position = ccp ( m_coPlayerCards[PLAYER][iCnt].x , m_coPlayerCards[PLAYER][iCnt].y);
+//		[m_sprCard[nIdxPlayerCard] setPosition:CGPointMake( m_coPlayerCards[PLAYER][iCnt].x , m_coPlayerCards[PLAYER][iCnt].y)];
 		[mgr addChild:m_sprCard[nIdxPlayerCard]];
 		
 	}
