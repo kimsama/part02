@@ -56,7 +56,7 @@
     for(iCnt=0; iCnt < iFloorCardCount; iCnt++)
     {
         NSNumber *numbercard = [m_vFloorCards[nMonth] objectAtIndex:iCnt]; 
-		if( ISBONUSCARD((int)numbercard) )
+		if( ISBONUSCARD((int)[numbercard intValue]) )
         {
             break;
         }
@@ -124,23 +124,56 @@
     return NONE;
 } // INT CGostopFloor::PutToFloor(INT nPlayer, INT nIdxCard, INT nMonth).
 
-static int numbersort (id obj1, id obj2, void *context)
+- (int) numbersort:(id)obj1  second:(id)obj2 
 {
-	NSNumber *int1 = [obj1 lastObject];
-	NSNumber *int2 = [obj2 lastObject];
+	NSNumber *int1 = (NSNumber*)obj1;
+	NSNumber *int2 = (NSNumber*)obj2;
 	
-	if(int1 < int2)
+	int int3 = [int1 intValue];
+	int int4 = [int2 intValue]; 
+	if(int3 < int4)
 		return NSOrderedAscending;
-	else if(int1 == int2)
+	else if(int3 == int4)
 		return NSOrderedSame;
 	else
 		return NSOrderedDescending;
 	
 }// numbersort
 
+
 - (void) SortFloor:(int)nMonth
 {
-	[m_vFloorCards[nMonth] sortUsingFunction:numbersort context:nil];
+	//[m_vFloorCards[nMonth] sortUsingFunction:numbersort context:nil];
+	int count = [m_vFloorCards[nMonth] count];
+	
+    for(int i = 0; i < count ; i++)
+	{
+		for(int j = count; j > 0 ; j--)
+		{
+			j--;
+			NSNumber *first = [m_vFloorCards[nMonth] objectAtIndex:i];
+			NSNumber *second = [m_vFloorCards[nMonth] objectAtIndex:j];
+			
+			if(first == nil && second == nil) 
+				continue;
+			
+			if(first == nil)
+			{
+				//[m_vFloorCards[nMonth] insertObject:second atIndex:i];
+			}else if(second == nil)
+			{				
+				//[m_vFloorCards[nMonth] insertObject:first atIndex:j];
+			}else
+			{
+				int result = [self numbersort:first second:second ];
+				if(result == NSOrderedDescending)
+				{
+					[m_vFloorCards[nMonth] exchangeObjectAtIndex:(NSUInteger)i withObjectAtIndex:(NSUInteger)j];
+				}
+			}
+		}
+	}
+	
 } // void CGostopFloor::SortFloor(INT nMonth).
 
 
@@ -245,7 +278,7 @@ static int numbersort (id obj1, id obj2, void *context)
         return NOCARD;
     }
 	NSNumber *card = [m_vFloorCards[nMonth] objectAtIndex:byOffset];
-    nIdxCard = (int)card;
+    nIdxCard = (int)[card intValue];
     //m_vFloorCards[nMonth].erase(m_vFloorCards[nMonth].begin()+byOffset);
 	[m_vFloorCards[nMonth] removeObjectAtIndex:byOffset];
 	
@@ -268,7 +301,7 @@ static int numbersort (id obj1, id obj2, void *context)
     //nIdxCard = m_vFloorCards[nMonth].at(nOffset);
     //m_vFloorCards[nMonth].erase(m_vFloorCards[nMonth].begin() + nOffset);
 	NSNumber *card = [m_vFloorCards[nMonth] objectAtIndex:nOffset];
-    nIdxCard = (int)card;
+    nIdxCard = (int)[card intValue];
 	[m_vFloorCards[nMonth] removeObjectAtIndex:nOffset];
 	
 	
@@ -294,7 +327,7 @@ static int numbersort (id obj1, id obj2, void *context)
         return NOCARD;
     }
 	
-    return (int)[m_vFloorCards[nMonth] objectAtIndex:byOffset];
+    return (int)[[m_vFloorCards[nMonth] objectAtIndex:byOffset] intValue] ;
 } // INT CGostopFloor::GetFloorCard(INT nMonth, BYTE byOffset).
 
 - (int) GetNormalFloorCardCount:(int)nMonth
@@ -310,7 +343,7 @@ static int numbersort (id obj1, id obj2, void *context)
 	
     for(iCnt=0; iCnt<[self GetFloorCardCount:nMonth]; iCnt++)
     {
-        if( ISBONUSCARD((int)[m_vFloorCards[nMonth] objectAtIndex:iCnt]) )
+        if( ISBONUSCARD((int)[[m_vFloorCards[nMonth] objectAtIndex:iCnt] intValue]) )
         {
             nCntBonusCard++;
         }
@@ -336,7 +369,7 @@ static int numbersort (id obj1, id obj2, void *context)
         {
             if([self GetFloorCardCount:iCnt] > 0)
             {
-                if(((int)[m_vFloorCards[iCnt] objectAtIndex:0])/4 == nIdxCard/4)
+                if(((int)[[m_vFloorCards[iCnt] objectAtIndex:0] intValue])/4 == nIdxCard/4)
                 {
                     nTargetMonth = iCnt;
                     break;
@@ -344,7 +377,7 @@ static int numbersort (id obj1, id obj2, void *context)
 				
                 if(NONE == nTargetMonth)
                 {
-                    if( ISBONUSCARD((int)[m_vFloorCards[iCnt] objectAtIndex:0]) && (0==(int)[self GetNormalFloorCardCount:iCnt]) )
+                    if( ISBONUSCARD((int)[[m_vFloorCards[iCnt] objectAtIndex:0] intValue]) && (0==(int)[self GetNormalFloorCardCount:iCnt]) )
                     {
                         nTargetMonth = iCnt;
                         continue;

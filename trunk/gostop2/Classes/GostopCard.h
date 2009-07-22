@@ -75,7 +75,7 @@
 
 - (int) GetPlayerCard:(int)nPlayer  nOffset:(int) nOffset;
 
-- (int) GetSameMonthCardsCount:(int) nPlayer  nMonth:(int) nMonth;
+- (int) GetSameMonthCardsCount:(int) nPlayer  nIdxCard:(int) nIdxCard;
 
 
 - (int) GetObtainedCardCount:(int) nPlayer  nCardType:(int) nCardType;
@@ -85,7 +85,6 @@
 
 - (int) GetObtainedPeeCount:(int) nPlayer;
 
-
-
+- (int) numbersort:(id) obj1 second: (id) obj2;
 
 @end

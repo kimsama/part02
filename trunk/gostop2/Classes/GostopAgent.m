@@ -368,7 +368,7 @@
     case PO_CHECKSHAKE:
         m_nShakingMode = PM_NORMAL;
 
-		if( 2 <= [m_Card GetSameMonthCardsCount:(int)[self GetTurn]  nMonth:m_nIdxPutOutCard] )
+		if( 2 <= [m_Card GetSameMonthCardsCount:(int)[self GetTurn]  nIdxCard:m_nIdxPutOutCard] )
         {
             m_nShakingMode = PM_SHAKE;
 
@@ -637,11 +637,11 @@
     return [m_Floor GetFloorCardCount:nMonth];
 } // int GetFloorCardCount(int nMonth).
 
-- (int) GetFloorCardInAgent:(int)nMonth byteOffset:(Byte)byteOffset
-{
-    return [m_Floor GetFloorCard:nMonth byOffset:byteOffset];
-} // int GetFloorCard(int nMonth, BYTE byOffset).
 
+- (int) GetFloorCard:(int)nMonth boffset:(Byte)boffset
+{
+	return [m_Floor GetFloorCard:nMonth byOffset:boffset];
+}
 
 - (int) GetPlayerCardCount
 {

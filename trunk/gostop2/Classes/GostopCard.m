@@ -173,10 +173,14 @@
 } // void SortPlayerCards(void).
 
 
-static int numbersort (id obj1, id obj2, void *context)
+//static int numbersort (id obj1, id obj2, void *context)
+- (int) numbersort:(id)obj1  second:(id)obj2 
 {
-	NSNumber *int1 = [obj1 lastObject];
-	NSNumber *int2 = [obj2 lastObject];
+	NSNumber *int1 = (NSNumber*)obj1;
+	NSNumber *int2 = (NSNumber*)obj2;
+	
+	//NSNumber *int1 = [obj1 lastObject];
+	//NSNumber *int2 = [obj2 lastObject];
 	
 	int int3 = [int1 intValue];
 	int int4 = [int2 intValue]; 
@@ -192,7 +196,39 @@ static int numbersort (id obj1, id obj2, void *context)
 - (void) SortPlayerCards:(int)nPlayer
 {
     //sort(m_vPlayerCards[nPlayer].begin(), m_vPlayerCards[nPlayer].end());
-	[m_vPlayerCards[nPlayer] sortUsingFunction:numbersort context:nil];
+	//[m_vPlayerCards[nPlayer] sortUsingFunction:numbersort context:nil];
+	int count = [m_vPlayerCards[nPlayer] count];
+	
+    for(int i = 0; i < count ; i++)
+	{
+		for(int j = count; j > 0 ; j--)
+		{
+			//배열이니까
+			j--;
+			
+			NSNumber *first = [m_vPlayerCards[nPlayer] objectAtIndex:i];
+			NSNumber *second = [m_vPlayerCards[nPlayer] objectAtIndex:j];
+			
+			if(first == nil && second == nil) 
+				continue;
+			
+			if(first == nil)
+			{
+				[m_vPlayerCards[nPlayer] insertObject:second atIndex:i];
+			}else if(second == nil)
+			{				
+				[m_vPlayerCards[nPlayer] insertObject:first atIndex:j];
+			}else
+			{
+				int result = [self numbersort:first second:second ];
+				if(result == NSOrderedDescending)
+				{
+					[m_vPlayerCards[nPlayer] exchangeObjectAtIndex:(NSUInteger)i withObjectAtIndex:(NSUInteger)j];
+				}
+			}
+		}
+	}
+	
 } // void SortPlayerCards(int nPlayer).
 
 - (void) SortObtainCards:(int)nPlayer
@@ -206,7 +242,37 @@ static int numbersort (id obj1, id obj2, void *context)
 - (void) SortObtainCards:(int)nPlayer  nCardType:(int) nCardType
 {
 //    sort(m_vObtainedCards[nPlayer][nCardType].begin(), m_vObtainedCards[nPlayer][nCardType].end());
-	[m_vObtainedCards[nPlayer][nCardType] sortUsingFunction:numbersort context:nil];
+//	[m_vObtainedCards[nPlayer][nCardType] sortUsingFunction:numbersort context:nil];
+	int count = [m_vObtainedCards[nPlayer][nCardType] count];
+	
+    for(int i = 0; i < count ; i++)
+	{
+		for(int j = count; j > 0 ; j--)
+		{
+			//배열이니까
+			j--;
+			NSNumber *first = [m_vObtainedCards[nPlayer][nCardType] objectAtIndex:i];
+			NSNumber *second = [m_vObtainedCards[nPlayer][nCardType] objectAtIndex:j];
+			
+			if(first == nil && second == nil) 
+				continue;
+			
+			if(first == nil)
+			{
+				[m_vObtainedCards[nPlayer][nCardType] insertObject:second atIndex:i];
+			}else if(second == nil)
+			{				
+				[m_vObtainedCards[nPlayer][nCardType] insertObject:first atIndex:j];
+			}else
+			{
+				int result = [self numbersort:first second:second ];
+				if(result == NSOrderedDescending)
+				{
+					[m_vObtainedCards[nPlayer][nCardType] exchangeObjectAtIndex:(NSUInteger)i withObjectAtIndex:(NSUInteger)j];
+				}
+			}
+		}
+	}
 	
 } // void SortObtainCards(int nPlayer, int nCardType).
 
@@ -277,7 +343,7 @@ static int numbersort (id obj1, id obj2, void *context)
 	
 
     //m_vObtainedCards[nOpponent][PEE].erase(m_vObtainedCards[nOpponent][PEE].begin()+nOffsetCard);
-	[m_vObtainedCards[nOpponent][PEE] removeObjectAtIndex:(int)[m_vObtainedCards[nOpponent][PEE] objectAtIndex:(int)nOffsetCard]];
+	[m_vObtainedCards[nOpponent][PEE] removeObjectAtIndex:(int)[[m_vObtainedCards[nOpponent][PEE] objectAtIndex:(int)nOffsetCard] intValue]];
 	
 } // void RobPee(int nPlayer).
 
@@ -410,7 +476,7 @@ static int numbersort (id obj1, id obj2, void *context)
     }
 
     //nIdxCard = m_vPlayerCards[nPlayer].at(nOffset);
-	nIdxCard = (int) [m_vPlayerCards[nPlayer] objectAtIndex:nOffset];
+	nIdxCard = (int) [[m_vPlayerCards[nPlayer] objectAtIndex:nOffset] intValue];
 	
     //m_vPlayerCards[nPlayer].erase( m_vPlayerCards[nPlayer].begin() + nOffset );
 	[m_vPlayerCards[nPlayer] removeObjectAtIndex:nOffset];
@@ -527,7 +593,7 @@ static int numbersort (id obj1, id obj2, void *context)
         return NOCARD;
     }
 
-    return (int)[m_vPlayerCards[nPlayer] objectAtIndex:(int)nOffset];
+    return (int)[[m_vPlayerCards[nPlayer] objectAtIndex:(int)nOffset] intValue];
 } // int GetPlayerCard(int nPlayer, int nOffset).
 
 - (int) GetSameMonthCardsCount:(int)nPlayer nIdxCard:(int) nIdxCard
@@ -539,7 +605,7 @@ static int numbersort (id obj1, id obj2, void *context)
 
     for(iCnt=0; iCnt<(int)[m_vPlayerCards[nPlayer] count]; iCnt++)
     {
-        if((int)[m_vPlayerCards[nPlayer] objectAtIndex:((iCnt)/4)] == nMonth)
+        if((int)[[m_vPlayerCards[nPlayer] objectAtIndex:((iCnt)/4)] intValue] == nMonth)
         {
             if(FALSE == bFind)
             {
@@ -571,7 +637,7 @@ static int numbersort (id obj1, id obj2, void *context)
         return NOCARD;
     }
 
-    return (int)[m_vObtainedCards[nPlayer][nCardType] objectAtIndex:nOffset];
+    return (int)[[m_vObtainedCards[nPlayer][nCardType] objectAtIndex:nOffset] intValue];
 } // int GetObtainedCard(int nPlayer, int nCardType, int nOffset).
 
 -(int) GetObtainedPeeCount:(int) nPlayer
@@ -582,7 +648,7 @@ static int numbersort (id obj1, id obj2, void *context)
     
     for(iCnt=0; iCnt< (int)[m_vObtainedCards[nPlayer][PEE] count]; iCnt++)
     {
-        switch( [self IsSsangPee:(int)[m_vObtainedCards[nPlayer][PEE] objectAtIndex:iCnt]] )
+        switch( [self IsSsangPee:(int)[[m_vObtainedCards[nPlayer][PEE] objectAtIndex:iCnt] intValue]] )
         {
         case SSANGPEE:
         case BONUSPEE2:
