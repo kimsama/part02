@@ -23,9 +23,9 @@
 
 #define NONE        -1
 #define NOCARD      -1
-#define ISNOCARD(_CRESULT_)         ((_CRESULT_) < 0)
-#define ISBOMBCARD(_CARDINDEX_)     ((BOMBCARD) == (_CARDINDEX_))
-#define ISBONUSCARD(_CARDINDEX_)    ((BONUSCARD2 == (_CARDINDEX_)) || (BONUSCARD3 == (_CARDINDEX_)))
+//#define ISNOCARD(_CRESULT_)         ((_CRESULT_) < 0)
+//#define ISBOMBCARD(_CARDINDEX_)     ((BOMBCARD) == (_CARDINDEX_))
+//s#define ISBONUSCARD(_CARDINDEX_)    ((BONUSCARD2 == (_CARDINDEX_)) || (BONUSCARD3 == (_CARDINDEX_)))
 
 
 enum EPlayer

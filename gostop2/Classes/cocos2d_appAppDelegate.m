@@ -164,7 +164,7 @@ Class restartAction()
 	[m_Agent InitGame];
 	[m_Agent StartNewGame];
 //	[m_Agent StartTimerfunc];
-	
+
 //	[self DrawFloorCards];
 //	[self DrawObtainedCards];
 //	[self DrawPlayerCards];
@@ -224,10 +224,9 @@ Class restartAction()
 {
 	[m_Agent DoAgency:nil];
 	
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	
-	glEnable( GL_TEXTURE_2D);
+//	glEnableClientState(GL_VERTEX_ARRAY);
+//	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+//	glEnable( GL_TEXTURE_2D);
 	
 	//배경 그리고
 	if(GS_PLAYING == [m_Agent GetState])
@@ -239,48 +238,46 @@ Class restartAction()
 		[self DrawPlayerCards];
 		//게임 상황 그리고
 		[self DisplayGameProgress];
-		
-		
-		
 	}
 	
-	AtlasSpriteManager *mgr = (AtlasSpriteManager*)[self getChildByTag:kTagSpriteManager];
-	[mgr draw];
+//	AtlasSpriteManager *mgr = (AtlasSpriteManager*)[self getChildByTag:kTagSpriteManager];
+//	[mgr draw];
 	
-	
-	glDisable(GL_TEXTURE_2D);
-	
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+//	glDisable(GL_TEXTURE_2D);
+//	glDisableClientState(GL_VERTEX_ARRAY);
+//	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 - (void) LoadSprites
 {
 	AtlasSpriteManager *mgr = (AtlasSpriteManager*)[self getChildByTag:kTagSpriteManager];
 
-	
-	
 	int cnt;
 	float x = 0.0f; 
 	float y = 0.0f;
 	for( cnt = 0; cnt < GAME_TOTAL_CARD; cnt++)
 	{
-		m_sprCard[cnt] = [AtlasSprite spriteWithRect:CGRectMake(x,y,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
-		[mgr setPosition:CGPointMake( x, y )];
-		[mgr addChild:m_sprCard[cnt] z:0 tag:cnt];
 		
 		x =(cnt%10)*CARD_WIDTH;
 		y =((cnt)/10)*CARD_HEIGHT;
+		
+		m_sprCard[cnt] = [AtlasSprite spriteWithRect:CGRectMake(x,y,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
+		[mgr setPosition:CGPointMake( 0, 0 )];
+		[mgr addChild:m_sprCard[cnt] z:0 tag:cnt];
+		
 	}
-	m_sprBombCard = [AtlasSprite spriteWithRect:CGRectMake(x,y,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
-	[mgr setPosition:CGPointMake( x, y )];
-	[mgr addChild:m_sprBombCard z:0 tag:++cnt];
+	x =(50%10)*CARD_WIDTH;
+	y =((50)/10)*CARD_HEIGHT;
 	
-	x =(cnt%10)*CARD_WIDTH;
-	y =((cnt)/10)*CARD_HEIGHT;
+	m_sprBombCard = [AtlasSprite spriteWithRect:CGRectMake(x,y,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
+	[mgr setPosition:CGPointMake( 0, 0 )];
+	[mgr addChild:m_sprBombCard z:0 tag:50];
+	
+	x =(51%10)*CARD_WIDTH;
+	y =((51)/10)*CARD_HEIGHT;
 	
 	m_sprOppCardBack = [AtlasSprite spriteWithRect:CGRectMake(x,y,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
-	[mgr setPosition:CGPointMake( x, y )];
-	[mgr addChild:m_sprOppCardBack z:0 tag:++cnt];
+	[mgr setPosition:CGPointMake( 0, 0 )];
+	[mgr addChild:m_sprOppCardBack z:0 tag:51];
 	
 	NSString *pscore = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetScore:PLAYER]];
 	NSString *oscore = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetScore:OPPONENT]];
@@ -339,18 +336,19 @@ Class restartAction()
 - (void) SetDefaultCoordination
 {
 	m_coFloorCards[0] = ccp( 215, 268 );
-	m_coFloorCards[5] = ccp( 277, 336 );
+	
 	m_coFloorCards[1] = ccp( 141, 336 );
-	m_coFloorCards[6] = ccp( 141, 268 );
 	m_coFloorCards[2] = ccp( 178, 336 );
 	m_coFloorCards[3] = ccp( 215, 336 );
-	m_coFloorCards[7] = ccp( 277, 268 );
 	m_coFloorCards[4] = ccp( 246, 336 );
+	m_coFloorCards[5] = ccp( 277, 336 );
+	m_coFloorCards[6] = ccp( 141, 268 );
+	m_coFloorCards[7] = ccp( 277, 268 );
 	m_coFloorCards[8] = ccp( 141, 186 );
 	m_coFloorCards[9] = ccp( 178, 186 );
+	m_coFloorCards[10] = ccp( 215, 186 );
 	m_coFloorCards[11] = ccp( 246, 186 );
 	m_coFloorCards[12] = ccp( 277, 186 );
-	m_coFloorCards[10] = ccp( 215, 186 );
 	
 	m_coPlayerCards[PLAYER][0] = ccp( 140, 112 );
 	m_coPlayerCards[PLAYER][1] = ccp( 177, 112 );
@@ -365,7 +363,7 @@ Class restartAction()
 	
 	for(int i = 0 ; i < 10 ; i++)
 	{
-		m_coPlayerCards[OPPONENT][i] = ccp (m_coPlayerCards[PLAYER][i].x , m_coPlayerCards[PLAYER][i].y + 339);
+		m_coPlayerCards[OPPONENT][i] = ccp (m_coPlayerCards[PLAYER][i].x , m_coPlayerCards[PLAYER][i].y + 286);
 	}
 	m_coObtainedCards[PLAYER][KWANG] = ccp ( 0, 225 );
 	m_coObtainedCards[PLAYER][YEOL] = ccp ( 0, 187.5 );
@@ -374,7 +372,7 @@ Class restartAction()
 	
 	for(int j =0; j < CARDTYPE_COUNT; j++)
 	{
-		m_coObtainedCards[OPPONENT][j] = ccp ( 0, m_coObtainedCards[PLAYER][j].y + 235);
+		m_coObtainedCards[OPPONENT][j] = ccp ( 0, m_coObtainedCards[PLAYER][j].y + 179);
 		
 	}
 		
@@ -404,27 +402,17 @@ Class restartAction()
 	{
 		for(iCnt = 0; iCnt < nCntCenterCard; iCnt++)
 		{
-			//AtlasSprite *OppCardBack = [AtlasSprite spriteWithRect:CGRectMake(CARD_WIDTH*BACK_CARD,0,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
-			AtlasSprite *OppCardBack = (AtlasSprite*)[mgr getChildByTag:BACK_CARD];
+			AtlasSprite *OppCardBack = (AtlasSprite*)[mgr getChildByTag:50];
 			[OppCardBack setPosition:CGPointMake(m_coFloorCards[0].x -iCnt, m_coFloorCards[0].y-iCnt)];
-			//[mgr addChild:OppCardBack z:0];
-			
-			//OppCardBack.position = ccp (m_coFloorCards[0].x -iCnt, m_coFloorCards[0].y-iCnt);
-			//[OppCardBack release];
 		}
 	}
 	else
 	{
 		for(iCnt = 0 ; iCnt <5+(nCntCenterCard-5)/6;iCnt++)
 		{
-			//AtlasSprite *OppCardBack = [AtlasSprite spriteWithRect:CGRectMake( CARD_WIDTH*BACK_CARD , 0.0f, CARD_WIDTH, CARD_HEIGHT) spriteManager:mgr];
-			AtlasSprite *OppCardBack = (AtlasSprite*)[mgr getChildByTag:BACK_CARD];
+			AtlasSprite *OppCardBack = (AtlasSprite*)[mgr getChildByTag:50];
 			[OppCardBack setPosition:CGPointMake(m_coFloorCards[0].x -iCnt, m_coFloorCards[0].y-iCnt)];
-			//[mgr addChild:OppCardBack z:0];
-
-			//OppCardBack.position = ccp (m_coFloorCards[0].x -iCnt, m_coFloorCards[0].y-iCnt);	
-			//[OppCardBack release];
-			
+					
 		}
 	}
 	
@@ -447,26 +435,19 @@ Class restartAction()
 			for(int i =0; i < count; i++)
 			{
 				++iCnt;
-				//nidxCard = [m_Agent GetFloorCardInAgent:iMonth byteoffset:iCnt];
+				
 				nidxCard = [m_Agent GetFloorCard:iMonth boffset:iCnt];
 				if(0 > (nidxCard))
 				{
 					continue;
 				}
 				
-				//[m_sprCard[nidxCard] setPosition:CGPointMake( m_coFloorCards[1+ iMonth].x , m_coFloorCards[1+ iMonth].y)];
-				//[mgr addChild:m_sprCard[nidxCard]];
-				
 				AtlasSprite* card =(AtlasSprite*)[mgr getChildByTag:nidxCard];
 				[card setPosition:CGPointMake( m_coFloorCards[1+ iMonth].x , m_coFloorCards[1+ iMonth].y)];
 				
 				
 			}
-//			while(!ISNOCARD(nidxCard = ))
-//			{
-//				[mgr addChild:m_sprCard[nidxCard]];
-//				[m_sprCard[nidxCard] setPosition:CGPointMake( m_coFloorCards[1+ iMonth].x , m_coFloorCards[1+ iMonth].y)];
-//			}
+
 		}
 	}
 	
@@ -595,7 +576,7 @@ Class restartAction()
 		//OppCardBack.position = ccp (m_coPlayerCards[OPPONENT][iCnt].x , m_coPlayerCards[OPPONENT][iCnt].y);
 		//[mgr addChild:OppCardBack];
 		
-		AtlasSprite* card =(AtlasSprite*)[mgr getChildByTag:BACK_CARD];
+		AtlasSprite* card =(AtlasSprite*)[mgr getChildByTag:50];
 		[card setPosition:CGPointMake(m_coPlayerCards[OPPONENT][iCnt].x , m_coPlayerCards[OPPONENT][iCnt].y )];
 	
 		//[OppCardBack release];
