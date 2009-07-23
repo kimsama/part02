@@ -86,6 +86,7 @@
 		496EB1C6100F5C40000DED0F /* GostopAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 496EB1BF100F5C40000DED0F /* GostopAgent.m */; };
 		496EB1C7100F5C40000DED0F /* GostopCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 496EB1C1100F5C40000DED0F /* GostopCard.m */; };
 		496EB1C8100F5C40000DED0F /* GostopFloor.m in Sources */ = {isa = PBXBuildFile; fileRef = 496EB1C4100F5C40000DED0F /* GostopFloor.m */; };
+		499251B01017568C00AE374B /* editcard.png in Resources */ = {isa = PBXBuildFile; fileRef = 499251AF1017568C00AE374B /* editcard.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -175,6 +176,7 @@
 		496EB1C3100F5C40000DED0F /* GostopCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GostopCommon.h; sourceTree = "<group>"; };
 		496EB1C4100F5C40000DED0F /* GostopFloor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GostopFloor.m; sourceTree = "<group>"; };
 		496EB1C5100F5C40000DED0F /* GostopFloor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GostopFloor.h; sourceTree = "<group>"; };
+		499251AF1017568C00AE374B /* editcard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editcard.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* cocos2d_app-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "cocos2d_app-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -265,6 +267,7 @@
 		496EB0EB100E0396000DED0F /* image */ = {
 			isa = PBXGroup;
 			children = (
+				499251AF1017568C00AE374B /* editcard.png */,
 				496B814B1013459100BD4235 /* Card.png */,
 				496EB1BA100F5BB9000DED0F /* OppCard.png */,
 				496EB1BB100F5BB9000DED0F /* Back.png */,
@@ -447,6 +450,7 @@
 				496EB1BD100F5BB9000DED0F /* OppCard.png in Resources */,
 				496EB1BE100F5BB9000DED0F /* Back.png in Resources */,
 				496B814C1013459100BD4235 /* Card.png in Resources */,
+				499251B01017568C00AE374B /* editcard.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

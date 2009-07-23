@@ -18,8 +18,8 @@
 #define PLAYER_CARD_SPACE 2
 #define OPPONENT_CARD_SPACE 0
 #define GAME_LEFT_SPACE 80
-#define CARD_WIDTH 18.5
-#define CARD_HEIGHT 28
+#define CARD_WIDTH 37
+#define CARD_HEIGHT 56
 
 
 @class Sprite;
