@@ -153,7 +153,7 @@ Class restartAction()
 	
 	isTouchEnabled = YES;
 	
-	AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"Card.png" ];	
+	AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"editcard.png" ];	
 	[self addChild:mgr z:0 tag:kTagSpriteManager ];
 	
 	[self LoadSprites];
@@ -164,6 +164,11 @@ Class restartAction()
 	[m_Agent InitGame];
 	[m_Agent StartNewGame];
 //	[m_Agent StartTimerfunc];
+	
+//	[self DrawFloorCards];
+//	[self DrawObtainedCards];
+//	[self DrawPlayerCards];
+//	[self DisplayGameProgress];
 	
 	
 //	[NSTimer scheduledTimerWithTimeInterval:8.0f target:self selector:@selector(Update) userInfo:nil repeats:YES];
@@ -219,33 +224,39 @@ Class restartAction()
 {
 	[m_Agent DoAgency:nil];
 	
-//	glEnableClientState(GL_VERTEX_ARRAY);
-//	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	
-//	glEnable( GL_TEXTURE_2D);
+	glEnable( GL_TEXTURE_2D);
 	
 	//배경 그리고
+	if(GS_PLAYING == [m_Agent GetState])
+	{
+		
+		//카드 그리고
+		[self DrawFloorCards];
+		[self DrawObtainedCards];
+		[self DrawPlayerCards];
+		//게임 상황 그리고
+		[self DisplayGameProgress];
+		
+		
+		
+	}
 	
-	//카드 그리고
-	[self DrawFloorCards];
-	[self DrawObtainedCards];
-	[self DrawPlayerCards];
-	//게임 상황 그리고
-	[self DisplayGameProgress];
+	AtlasSpriteManager *mgr = (AtlasSpriteManager*)[self getChildByTag:kTagSpriteManager];
+	[mgr draw];
 	
 	
-//	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_2D);
 	
-//	glDisableClientState(GL_VERTEX_ARRAY);
-//	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 - (void) LoadSprites
 {
 	AtlasSpriteManager *mgr = (AtlasSpriteManager*)[self getChildByTag:kTagSpriteManager];
-//	test code
-//	AtlasSprite *Card = [AtlasSprite spriteWithRect:CGRectMake(0.0f, 0.0f, CARD_WIDTH, CARD_HEIGHT) spriteManager:mgr];
-//	Card.position = ccp (100,100);
-//	[mgr addChild:Card];
+
 	
 	
 	int cnt;
@@ -254,17 +265,64 @@ Class restartAction()
 	for( cnt = 0; cnt < GAME_TOTAL_CARD; cnt++)
 	{
 		m_sprCard[cnt] = [AtlasSprite spriteWithRect:CGRectMake(x,y,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
-		//[mgr setPosition:CGPointMake( x, y )];
-		//[mgr addChild:m_sprCard[cnt]];
-		x += CARD_WIDTH;
+		[mgr setPosition:CGPointMake( x, y )];
+		[mgr addChild:m_sprCard[cnt] z:0 tag:cnt];
+		
+		x =(cnt%10)*CARD_WIDTH;
+		y =((cnt)/10)*CARD_HEIGHT;
 	}
 	m_sprBombCard = [AtlasSprite spriteWithRect:CGRectMake(x,y,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
-	//[mgr setPosition:CGPointMake( x, y+ 56 )];
-	//[mgr addChild:m_sprBombCard];
-	x += CARD_WIDTH;
+	[mgr setPosition:CGPointMake( x, y )];
+	[mgr addChild:m_sprBombCard z:0 tag:++cnt];
+	
+	x =(cnt%10)*CARD_WIDTH;
+	y =((cnt)/10)*CARD_HEIGHT;
+	
 	m_sprOppCardBack = [AtlasSprite spriteWithRect:CGRectMake(x,y,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
-	//[mgr setPosition:CGPointMake( x, y+ 112 )];
-	//[mgr addChild:m_sprOppCardBack];
+	[mgr setPosition:CGPointMake( x, y )];
+	[mgr addChild:m_sprOppCardBack z:0 tag:++cnt];
+	
+	NSString *pscore = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetScore:PLAYER]];
+	NSString *oscore = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetScore:OPPONENT]];
+	
+	NSString *pgonotice = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetRuleCount:PLAYER nRuleType:GO]];
+	NSString *ogonotice = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetRuleCount:OPPONENT nRuleType:GO]];
+	
+	NSString *pshakenotice = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetRuleCount:PLAYER nRuleType:SHAKE]];
+	NSString *oshakenotice = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetRuleCount:OPPONENT nRuleType:SHAKE]];
+	
+	NSString *pppnotice = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetRuleCount:PLAYER nRuleType:PPUCK]];
+	NSString *oppnotice = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetRuleCount:OPPONENT nRuleType:PPUCK]];
+	
+	Label* pslabel = [Label labelWithString:pscore fontName:@"Arial" fontSize:10];
+	Label* oslabel = [Label labelWithString:oscore fontName:@"Arial" fontSize:10];
+	Label* pglabel = [Label labelWithString:pgonotice fontName:@"Arial" fontSize:10];
+	Label* oglabel = [Label labelWithString:ogonotice fontName:@"Arial" fontSize:10];
+	Label* pshlabel = [Label labelWithString:pshakenotice fontName:@"Arial" fontSize:10];
+	Label* oshlabel = [Label labelWithString:oshakenotice fontName:@"Arial" fontSize:10];
+	Label* pplabel = [Label labelWithString:pppnotice fontName:@"Arial" fontSize:10];
+	Label* oplabel = [Label labelWithString:oppnotice fontName:@"Arial" fontSize:10];
+	
+	[self addChild: pslabel z:0 tag:0];
+	[pslabel setPosition: ccp(m_coScore[PLAYER].x, m_coScore[PLAYER].y)];
+	[self addChild: oslabel z:0 tag:1];
+	[oslabel setPosition: ccp(m_coScore[OPPONENT].x, m_coScore[OPPONENT].y)];
+	
+	[self addChild: pglabel z:0 tag:2];
+	[pglabel setPosition: ccp(m_coRule[PLAYER][GO].x, m_coRule[PLAYER][GO].y)];
+	[self addChild: oglabel z:0 tag:3];
+	[oglabel setPosition: ccp(m_coRule[OPPONENT][GO].x, m_coRule[OPPONENT][GO].y)];
+	
+	[self addChild: pshlabel z:0 tag:4];
+	[pshlabel setPosition: ccp(m_coRule[PLAYER][SHAKE].x, m_coRule[PLAYER][SHAKE].y)];
+	[self addChild: oshlabel z:0 tag:5];
+	[oshlabel setPosition: ccp(m_coRule[OPPONENT][SHAKE].x, m_coRule[OPPONENT][SHAKE].y)];
+	
+	[self addChild: pplabel z:0 tag:6];
+	[pplabel setPosition: ccp(m_coRule[PLAYER][PPUCK].x, m_coRule[PLAYER][PPUCK].y)];
+	[self addChild: oplabel z:0 tag:7];
+	[oplabel setPosition: ccp(m_coRule[OPPONENT][PPUCK].x, m_coRule[OPPONENT][PPUCK].y)];
+	
 	
 }
 - (void) UnloadSprites
@@ -346,9 +404,11 @@ Class restartAction()
 	{
 		for(iCnt = 0; iCnt < nCntCenterCard; iCnt++)
 		{
-			AtlasSprite *OppCardBack = [AtlasSprite spriteWithRect:CGRectMake(CARD_WIDTH*BACK_CARD,0,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
+			//AtlasSprite *OppCardBack = [AtlasSprite spriteWithRect:CGRectMake(CARD_WIDTH*BACK_CARD,0,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
+			AtlasSprite *OppCardBack = (AtlasSprite*)[mgr getChildByTag:BACK_CARD];
 			[OppCardBack setPosition:CGPointMake(m_coFloorCards[0].x -iCnt, m_coFloorCards[0].y-iCnt)];
-			[mgr addChild:OppCardBack z:0];
+			//[mgr addChild:OppCardBack z:0];
+			
 			//OppCardBack.position = ccp (m_coFloorCards[0].x -iCnt, m_coFloorCards[0].y-iCnt);
 			//[OppCardBack release];
 		}
@@ -357,10 +417,11 @@ Class restartAction()
 	{
 		for(iCnt = 0 ; iCnt <5+(nCntCenterCard-5)/6;iCnt++)
 		{
-			AtlasSprite *OppCardBack = [AtlasSprite spriteWithRect:CGRectMake( CARD_WIDTH*BACK_CARD , 0.0f, CARD_WIDTH, CARD_HEIGHT) spriteManager:mgr];
+			//AtlasSprite *OppCardBack = [AtlasSprite spriteWithRect:CGRectMake( CARD_WIDTH*BACK_CARD , 0.0f, CARD_WIDTH, CARD_HEIGHT) spriteManager:mgr];
+			AtlasSprite *OppCardBack = (AtlasSprite*)[mgr getChildByTag:BACK_CARD];
 			[OppCardBack setPosition:CGPointMake(m_coFloorCards[0].x -iCnt, m_coFloorCards[0].y-iCnt)];
-			[mgr addChild:OppCardBack z:0];
-			//[mgr addChild:OppCardBack];
+			//[mgr addChild:OppCardBack z:0];
+
 			//OppCardBack.position = ccp (m_coFloorCards[0].x -iCnt, m_coFloorCards[0].y-iCnt);	
 			//[OppCardBack release];
 			
@@ -388,12 +449,17 @@ Class restartAction()
 				++iCnt;
 				//nidxCard = [m_Agent GetFloorCardInAgent:iMonth byteoffset:iCnt];
 				nidxCard = [m_Agent GetFloorCard:iMonth boffset:iCnt];
-				if(!ISNOCARD(nidxCard))
+				if(0 > (nidxCard))
 				{
-					break;
+					continue;
 				}
-				[mgr addChild:m_sprCard[nidxCard]];
-				[m_sprCard[nidxCard] setPosition:CGPointMake( m_coFloorCards[1+ iMonth].x , m_coFloorCards[1+ iMonth].y)];
+				
+				//[m_sprCard[nidxCard] setPosition:CGPointMake( m_coFloorCards[1+ iMonth].x , m_coFloorCards[1+ iMonth].y)];
+				//[mgr addChild:m_sprCard[nidxCard]];
+				
+				AtlasSprite* card =(AtlasSprite*)[mgr getChildByTag:nidxCard];
+				[card setPosition:CGPointMake( m_coFloorCards[1+ iMonth].x , m_coFloorCards[1+ iMonth].y)];
+				
 				
 			}
 //			while(!ISNOCARD(nidxCard = ))
@@ -469,15 +535,18 @@ Class restartAction()
 			
 			iCnt = -1;
 			
-			while(! ISNOCARD(nIdxObtainedCard = [m_Agent GetObtainedCard:iPlayer nCardType:iCardType nOffset:++iCnt]))
+			while(!( 0 > (nIdxObtainedCard = [m_Agent GetObtainedCard:iPlayer nCardType:iCardType nOffset:++iCnt])))
 			{
-				[m_sprCard[nIdxObtainedCard] setPosition:CGPointMake(m_coObtainedCards[iPlayer][iCardType].x + (CARD_WIDTH+nGapObtainedCard)*(iCnt%10) , m_coObtainedCards[iPlayer][iCardType].y +(CARD_HEIGHT/2)*(iCnt/10))];
-				//[m_sprCard[nIdxObtainedCard] setScale:0.67];
-				//m_sprCard[nIdxObtainedCard].scale = 0.67;
-				//m_sprCard[nIdxObtainedCard].position = ccp ( m_coObtainedCards[iPlayer][iCardType].x + (24.59+nGapObtainedCard)*(iCnt%10) , m_coObtainedCards[iPlayer][iCardType].y +(37.52/2)*(iCnt/10) );
-				[mgr addChild:m_sprCard[nIdxObtainedCard]];
+				//[m_sprCard[nIdxObtainedCard] setPosition:CGPointMake(m_coObtainedCards[iPlayer][iCardType].x + (CARD_WIDTH+nGapObtainedCard)*(iCnt%10) , m_coObtainedCards[iPlayer][iCardType].y +(CARD_HEIGHT/2)*(iCnt/10))];
+					//[m_sprCard[nIdxObtainedCard] setScale:0.67];
+					//m_sprCard[nIdxObtainedCard].scale = 0.67;
+					//m_sprCard[nIdxObtainedCard].position = ccp ( m_coObtainedCards[iPlayer][iCardType].x + (24.59+nGapObtainedCard)*(iCnt%10) , m_coObtainedCards[iPlayer][iCardType].y +(37.52/2)*(iCnt/10) );
+				//[mgr addChild:m_sprCard[nIdxObtainedCard]];
 				
-				//[m_sprCard[nIdxObtainedCard] release];
+				
+				
+				AtlasSprite* card =(AtlasSprite*)[mgr getChildByTag:nIdxObtainedCard];
+				[card setPosition:CGPointMake( m_coObtainedCards[iPlayer][iCardType].x + (CARD_WIDTH+nGapObtainedCard)*(iCnt%10) , m_coObtainedCards[iPlayer][iCardType].y +(CARD_HEIGHT/2)*(iCnt/10))];
 			}
 			
 		}
@@ -499,12 +568,16 @@ Class restartAction()
 		
 		nIdxPlayerCard = [m_Agent GetPlayerCard:PLAYER nOffset:iCnt];	
 		
-		if(ISNOCARD(nIdxPlayerCard))
+		if(0 > (nIdxPlayerCard))
 			break;
 		
-		m_sprCard[nIdxPlayerCard].position = ccp ( m_coPlayerCards[PLAYER][iCnt].x , m_coPlayerCards[PLAYER][iCnt].y);
+		//m_sprCard[nIdxPlayerCard].position = ccp ( m_coPlayerCards[PLAYER][iCnt].x , m_coPlayerCards[PLAYER][iCnt].y);
 //		[m_sprCard[nIdxPlayerCard] setPosition:CGPointMake( m_coPlayerCards[PLAYER][iCnt].x , m_coPlayerCards[PLAYER][iCnt].y)];
-		[mgr addChild:m_sprCard[nIdxPlayerCard]];
+		//[mgr addChild:m_sprCard[nIdxPlayerCard]];
+		
+		AtlasSprite* card =(AtlasSprite*)[mgr getChildByTag:nIdxPlayerCard];
+		[card setPosition:CGPointMake( m_coPlayerCards[PLAYER][iCnt].x , m_coPlayerCards[PLAYER][iCnt].y )];
+		
 		
 	}
 //	while (! ISNOCARD(nIdxPlayerCard = [m_Agent GetPlayerCard:PLAYER nOffset:++iCnt]))
@@ -517,73 +590,32 @@ Class restartAction()
 	
 	for(iCnt =0; iCnt< [m_Agent GetPlayerCardCount:OPPONENT]; iCnt++)
 	{
-		AtlasSprite *OppCardBack = [AtlasSprite spriteWithRect:CGRectMake(18.5*BACK_CARD,0,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
-		[OppCardBack setPosition:CGPointMake(m_coPlayerCards[OPPONENT][iCnt].x , m_coPlayerCards[OPPONENT][iCnt].y)];
+		//AtlasSprite *OppCardBack = [AtlasSprite spriteWithRect:CGRectMake(18.5*BACK_CARD,0,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
+		//[OppCardBack setPosition:CGPointMake(m_coPlayerCards[OPPONENT][iCnt].x , m_coPlayerCards[OPPONENT][iCnt].y)];
 		//OppCardBack.position = ccp (m_coPlayerCards[OPPONENT][iCnt].x , m_coPlayerCards[OPPONENT][iCnt].y);
-		[mgr addChild:OppCardBack];
+		//[mgr addChild:OppCardBack];
+		
+		AtlasSprite* card =(AtlasSprite*)[mgr getChildByTag:BACK_CARD];
+		[card setPosition:CGPointMake(m_coPlayerCards[OPPONENT][iCnt].x , m_coPlayerCards[OPPONENT][iCnt].y )];
 	
 		//[OppCardBack release];
 	}
 }
 - (void) DisplayGameProgress
 {
-	NSString *pscore = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetScore:PLAYER]];
-	NSString *oscore = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetScore:OPPONENT]];
 	
-	NSString *pgonotice = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetRuleCount:PLAYER nRuleType:GO]];
-	NSString *ogonotice = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetRuleCount:OPPONENT nRuleType:GO]];
 	
-	NSString *pshakenotice = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetRuleCount:PLAYER nRuleType:SHAKE]];
-	NSString *oshakenotice = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetRuleCount:OPPONENT nRuleType:SHAKE]];
-	
-	NSString *pppnotice = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetRuleCount:PLAYER nRuleType:PPUCK]];
-	NSString *oppnotice = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetRuleCount:OPPONENT nRuleType:PPUCK]];
-	
-	Label* pslabel = [Label labelWithString:pscore fontName:@"Arial" fontSize:10];
-	Label* oslabel = [Label labelWithString:oscore fontName:@"Arial" fontSize:10];
-	Label* pglabel = [Label labelWithString:pgonotice fontName:@"Arial" fontSize:10];
-	Label* oglabel = [Label labelWithString:ogonotice fontName:@"Arial" fontSize:10];
-	Label* pshlabel = [Label labelWithString:pshakenotice fontName:@"Arial" fontSize:10];
-	Label* oshlabel = [Label labelWithString:oshakenotice fontName:@"Arial" fontSize:10];
-	Label* pplabel = [Label labelWithString:pppnotice fontName:@"Arial" fontSize:10];
-	Label* oplabel = [Label labelWithString:oppnotice fontName:@"Arial" fontSize:10];
-	
-	[self addChild: pslabel];
-	[pslabel setPosition: ccp(m_coScore[PLAYER].x, m_coScore[PLAYER].y)];
-	[self addChild: oslabel];
-	[oslabel setPosition: ccp(m_coScore[OPPONENT].x, m_coScore[OPPONENT].y)];
-	
-	[self addChild: pglabel];
-	[pglabel setPosition: ccp(m_coRule[PLAYER][GO].x, m_coRule[PLAYER][GO].y)];
-	[self addChild: oglabel];
-	[oglabel setPosition: ccp(m_coRule[OPPONENT][GO].x, m_coRule[OPPONENT][GO].y)];
-	
-	[self addChild: pshlabel];
-	[pshlabel setPosition: ccp(m_coRule[PLAYER][SHAKE].x, m_coRule[PLAYER][SHAKE].y)];
-	[self addChild: oshlabel];
-	[oshlabel setPosition: ccp(m_coRule[OPPONENT][SHAKE].x, m_coRule[OPPONENT][SHAKE].y)];
-	
-	[self addChild: pplabel];
-	[pplabel setPosition: ccp(m_coRule[PLAYER][PPUCK].x, m_coRule[PLAYER][PPUCK].y)];
-	[self addChild: oplabel];
-	[oplabel setPosition: ccp(m_coRule[OPPONENT][PPUCK].x, m_coRule[OPPONENT][PPUCK].y)];
-	
-//	[pscore release];
-//	[oscore release];
-//	[pgonotice release];
-//	[ogonotice release];
-//	[pshakenotice release];
-//	[oshakenotice release];
-//	[pppnotice release];
-//	[oppnotice release];
-//	[pslabel release];
-//	[oslabel release];
-//	[pglabel release];
-//	[oglabel release];
-//	[pshlabel release];
-//	[oshlabel release];
-//	[pplabel release];
-//	[oplabel release];
+/*
+	Label* pslabel = (Label*)[self getChildByTag:0];
+	Label* oslabel = (Label*)[self getChildByTag:1];
+	Label* pglabel = (Label*)[self getChildByTag:2];
+	Label* oglabel = (Label*)[self getChildByTag:3];
+	Label* pshlabel = (Label*)[self getChildByTag:4];
+	Label* oshlabel = (Label*)[self getChildByTag:5];
+	Label* pplabel = (Label*)[self getChildByTag:6];
+	Label* oplabel = (Label*)[self getChildByTag:7];
+*/	
+
 }
 
 

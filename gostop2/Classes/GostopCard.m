@@ -281,7 +281,7 @@
 {
     int nCardType = [self GetCardType:nIdxCard];
 
-    if( ISNOCARD(nCardType) )
+    if( 0 > (nCardType) )
     {
         return NOCARD;
     }
@@ -318,7 +318,7 @@
 	[self SortObtainCards:(int)!nPlayer];
 
     iCnt = 0;
-    while( ! ISNOCARD(nOffsetCard=[self GetObtainedCard:(int)nOpponent nCardType:(int)PEE nOffset:(int)iCnt]) )
+    while( !( 0 > (nOffsetCard=[self GetObtainedCard:(int)nOpponent nCardType:(int)PEE nOffset:(int)iCnt])) )
     {
        if( NORMALPEE < [self IsSsangPee:(int)nOffsetCard] )
         {
@@ -331,8 +331,8 @@
         break;
     }
     
-    // ¿œπ› ««∏¶ πﬂ∞ﬂ«œ¡ˆ ∏¯«ﬂ¥Ÿ∏È,
-    if( ISNOCARD(nOffsetCard) )
+   
+    if( 0 > (nOffsetCard) )
     {
         nOffsetCard = 0;
     }
@@ -489,7 +489,7 @@
 {
     int iCardType;
 
-    if( ISNOCARD(nIdxCard) )
+    if( 0 > (nIdxCard) )
     {
         return NOCARD;
     }

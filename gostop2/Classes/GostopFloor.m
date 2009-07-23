@@ -56,7 +56,8 @@
     for(iCnt=0; iCnt < iFloorCardCount; iCnt++)
     {
         NSNumber *numbercard = [m_vFloorCards[nMonth] objectAtIndex:iCnt]; 
-		if( ISBONUSCARD((int)[numbercard intValue]) )
+		//if( ISBONUSCARD((int)[numbercard intValue]) )
+		if((BONUSCARD2 ==(int)[numbercard intValue]) || (BONUSCARD3 == (int)[numbercard intValue]))
         {
             break;
         }
@@ -78,7 +79,7 @@
 
 - (int) AddToFloor:(int)nIdxCard nMonth:(int)nMonth
 {
-    if( ISNOCARD(nIdxCard) )
+    if( 0 > (nIdxCard) )
     {
         return NOCARD;
     }
@@ -183,14 +184,15 @@
     int nResult = NONE;
     int nCntTurnUpMonth;
 	
-    if( ISNOCARD(nIdxCard = [self PopCenterCard]) )
+    if( 0 > (nIdxCard = [self PopCenterCard]) )
     {
         return NOCARD;
     }
 	
     m_nTurnUpMonth = [self AddToFloor:nIdxCard];
 	
-    if( ISBONUSCARD(nIdxCard) )
+    //if( ISBONUSCARD(nIdxCard) )
+	if((BONUSCARD2 == (nIdxCard)) || (BONUSCARD3 == (nIdxCard)))
     {
         return nIdxCard;
     }
@@ -293,7 +295,7 @@
 	
     nOffset = [self HasBonusCard:nMonth];
 	
-    if( ISNOCARD(nOffset) )
+    if( 0 > (nOffset) )
     {
         return NOCARD;
     }
@@ -343,7 +345,9 @@
 	
     for(iCnt=0; iCnt<[self GetFloorCardCount:nMonth]; iCnt++)
     {
-        if( ISBONUSCARD((int)[[m_vFloorCards[nMonth] objectAtIndex:iCnt] intValue]) )
+        //if( ISBONUSCARD((int)[[m_vFloorCards[nMonth] objectAtIndex:iCnt] intValue]) )
+		int nIdxCard = 	(int)[[m_vFloorCards[nMonth] objectAtIndex:iCnt] intValue];
+		if((BONUSCARD2 == (nIdxCard)) || (BONUSCARD3 == (nIdxCard)))	
         {
             nCntBonusCard++;
         }
@@ -357,7 +361,12 @@
 {
     int iCnt;
     int nTargetMonth = NONE;
-    BOOL bBonusCard = ISBONUSCARD( nIdxCard );
+    BOOL bBonusCard = FALSE;// = ISBONUSCARD( nIdxCard );
+	
+	if((BONUSCARD2 == (nIdxCard)) || (BONUSCARD3 == (nIdxCard)))
+	{
+		bBonusCard = TRUE;
+	}
 	
     if( TRUE == bBonusCard && NONE != m_nLastMonth )
     {
@@ -377,7 +386,9 @@
 				
                 if(NONE == nTargetMonth)
                 {
-                    if( ISBONUSCARD((int)[[m_vFloorCards[iCnt] objectAtIndex:0] intValue]) && (0==(int)[self GetNormalFloorCardCount:iCnt]) )
+                    //if( ISBONUSCARD((int)[[m_vFloorCards[iCnt] objectAtIndex:0] intValue]) && (0==(int)[self GetNormalFloorCardCount:iCnt]) )
+					int nIdxCard = (int)[[m_vFloorCards[iCnt] objectAtIndex:0] intValue];
+					if((BONUSCARD2 == (nIdxCard)) || (BONUSCARD3 == (nIdxCard)) && (0==(int)[self GetNormalFloorCardCount:iCnt]))	
                     {
                         nTargetMonth = iCnt;
                         continue;
@@ -391,7 +402,7 @@
         } // for(iCnt=0; iCnt<12; iCnt++).
     }
 	
-    if( ISNOCARD(nTargetMonth) )
+    if( 0 > (nTargetMonth) )
     {
     
         nTargetMonth = 0;

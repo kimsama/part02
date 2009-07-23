@@ -259,7 +259,7 @@
         for(iCnt=0; iCnt<12; iCnt++)
         {
 
-            while( ! ISNOCARD(nIdxCard=[m_Floor PopBonusCard:iCnt]) )
+            while( !(0 > (nIdxCard=[m_Floor PopBonusCard:iCnt])) )
             {
 
 
@@ -336,14 +336,14 @@
     switch(m_nAgencyStep)
     {
     case PO_PICKUP:
-			if( ISNOCARD(m_nIdxPutOutCard = [m_Card PopPlayerCard:[self GetTurn]  nOffset:m_nGSParam1]))
+			if( 0 > (m_nIdxPutOutCard = [m_Card PopPlayerCard:[self GetTurn]  nOffset:m_nGSParam1]))
         {
 //            ChangeState(GS_PLAYING);
 			[self ChangeState:GS_PLAYING];
             return;
         } // if( ISNOCARD(m_nIdxPutOutCard = m_Card.PopPlayerCard(GetTurn(), m_nGSParam1)) ).
 
-        if( ISBOMBCARD(m_nIdxPutOutCard) )
+        if( (BOMBCARD) ==(m_nIdxPutOutCard) )
         {
             [m_Floor PutToFloor:[self GetTurn] nIdxCard:NOCARD];
 
@@ -351,7 +351,8 @@
             return;
         } // if( ISBOMBCARD(m_nIdxPutOutCard) ).
 
-        if( ISBONUSCARD(m_nIdxPutOutCard) )
+        //if( ISBONUSCARD(m_nIdxPutOutCard) )
+		if((BONUSCARD2 == (m_nIdxPutOutCard)) || (BONUSCARD3 == (m_nIdxPutOutCard)))
         {
             [self ObtainCard:m_nIdxPutOutCard];
 
@@ -447,7 +448,7 @@
 				[self ObtainFloorCard: nPutOutMonth ];
         case RES_JJOCK:
         case RES_DDADDAK:
-				while( ! ISNOCARD( [self ObtainCard:[m_Floor PopFloorCard:nTurnUpMonth]]) );
+				while( ! (0 > ( [self ObtainCard:[m_Floor PopFloorCard:nTurnUpMonth]])) );
 				if(0 == [m_Card GetPlayerCardCount:PLAYER] 
 				   && 0 == [m_Card  GetPlayerCardCount:OPPONENT])
             {
@@ -489,7 +490,7 @@
 
 		if(0 == [m_Card  GetPlayerCardCount:[self GetTurn]] && 0 == [m_Card GetPlayerCardCount:![self GetTurn]])
 		{
-            while( ! ISNOCARD( [self ObtainCard:[m_Floor PopCenterCard]] ) );
+            while( !( 0 > ( [self ObtainCard:[m_Floor PopCenterCard]] )) );
             [self ChangeState:GS_PLAYING];
             return;
         }
@@ -522,7 +523,7 @@
         return;
     }
 
-    while( ! ISNOCARD( [self ObtainCard:[m_Floor PopBonusCard:nMonth]] ) );
+    while( !( 0 > ( [self ObtainCard:[m_Floor PopBonusCard:nMonth]] )) );
     
 
     switch( [m_Floor GetNormalFloorCardCount:nMonth] )
@@ -536,7 +537,7 @@
         break;
 
     default:
-			while( ! ISNOCARD( [self ObtainCard:[m_Floor PopFloorCard:nMonth]] ) );
+			while( !( 0 > ( [self ObtainCard:[m_Floor PopFloorCard:nMonth]] )) );
     }
 } // void CGotopAgent::ObtainFloorCard(int nMonth).
 
