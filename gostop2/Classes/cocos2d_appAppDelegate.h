@@ -57,9 +57,9 @@
 	CGPoint m_coRule[2][RULE_COUNT];
 	
 	//TextureAtlas *texCard;
-	AtlasSprite *m_sprBack;
+	AtlasSprite *m_sprBack[10];
 	AtlasSprite *m_sprCard[GAME_TOTAL_CARD];
-	AtlasSprite *m_sprOppCardBack;
+	AtlasSprite *m_sprOppCardBack[DISTRIBUTE_PLAYER_CARDS];
 	AtlasSprite *m_sprBombCard;
 	
 	

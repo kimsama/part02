@@ -275,9 +275,20 @@ Class restartAction()
 	x =(51%10)*CARD_WIDTH;
 	y =((51)/10)*CARD_HEIGHT;
 	
-	m_sprOppCardBack = [AtlasSprite spriteWithRect:CGRectMake(x,y,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
-	[mgr setPosition:CGPointMake( 0, 0 )];
-	[mgr addChild:m_sprOppCardBack z:0 tag:51];
+//	m_sprOppCardBack = [AtlasSprite spriteWithRect:CGRectMake(x,y,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
+//	[mgr setPosition:CGPointMake( 0, 0 )];
+//	[mgr addChild:m_sprOppCardBack z:0 tag:51];
+	
+	for(cnt = 0  ; cnt < DISTRIBUTE_PLAYER_CARDS ; cnt++)
+	{
+		m_sprBack[cnt] = [AtlasSprite spriteWithRect:CGRectMake(x, y, CARD_WIDTH, CARD_HEIGHT) spriteManager:mgr];
+		[mgr setPosition:CGPointMake(0,0)];
+		[mgr addChild:m_sprBack[cnt] z:0 tag:51+cnt];
+		
+		m_sprOppCardBack[cnt] = [AtlasSprite spriteWithRect:CGRectMake(x, y, CARD_WIDTH, CARD_HEIGHT) spriteManager:mgr];
+		[mgr setPosition:CGPointMake(0,0)];
+		[mgr addChild:m_sprOppCardBack[cnt] z:0 tag:61+cnt];
+	}
 	
 	NSString *pscore = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetScore:PLAYER]];
 	NSString *oscore = [[NSString alloc] initWithFormat:@"%d",[m_Agent GetScore:OPPONENT]];
@@ -325,11 +336,18 @@ Class restartAction()
 - (void) UnloadSprites
 {
 	[m_sprBombCard release];
-	[m_sprOppCardBack release];
+	
+//	[m_sprOppCardBack release];
 	
 	for(int i = 0 ; i < GAME_TOTAL_CARD; i++)
 	{
 		[m_sprCard[i] release];
+	}
+	
+	for(int i = 0; i < DISTRIBUTE_PLAYER_CARDS; i++)
+	{
+		[m_sprOppCardBack[i] release];
+		[m_sprBack[i] release];
 	}
 	
 }
@@ -363,7 +381,7 @@ Class restartAction()
 	
 	for(int i = 0 ; i < 10 ; i++)
 	{
-		m_coPlayerCards[OPPONENT][i] = ccp (m_coPlayerCards[PLAYER][i].x , m_coPlayerCards[PLAYER][i].y + 286);
+		m_coPlayerCards[OPPONENT][i] = ccp (m_coPlayerCards[PLAYER][i].x , m_coPlayerCards[PLAYER][i].y + 336);
 	}
 	m_coObtainedCards[PLAYER][KWANG] = ccp ( 0, 225 );
 	m_coObtainedCards[PLAYER][YEOL] = ccp ( 0, 187.5 );
@@ -402,15 +420,15 @@ Class restartAction()
 	{
 		for(iCnt = 0; iCnt < nCntCenterCard; iCnt++)
 		{
-			AtlasSprite *OppCardBack = (AtlasSprite*)[mgr getChildByTag:50];
+			AtlasSprite *OppCardBack = (AtlasSprite*)[mgr getChildByTag:51+iCnt];
 			[OppCardBack setPosition:CGPointMake(m_coFloorCards[0].x -iCnt, m_coFloorCards[0].y-iCnt)];
 		}
 	}
 	else
 	{
-		for(iCnt = 0 ; iCnt <5+(nCntCenterCard-5)/6;iCnt++)
+		for(iCnt = 0 ; iCnt <5+(nCntCenterCard)/6;iCnt++)
 		{
-			AtlasSprite *OppCardBack = (AtlasSprite*)[mgr getChildByTag:50];
+			AtlasSprite *OppCardBack = (AtlasSprite*)[mgr getChildByTag:51+iCnt];
 			[OppCardBack setPosition:CGPointMake(m_coFloorCards[0].x -iCnt, m_coFloorCards[0].y-iCnt)];
 					
 		}
@@ -518,16 +536,9 @@ Class restartAction()
 			
 			while(!( 0 > (nIdxObtainedCard = [m_Agent GetObtainedCard:iPlayer nCardType:iCardType nOffset:++iCnt])))
 			{
-				//[m_sprCard[nIdxObtainedCard] setPosition:CGPointMake(m_coObtainedCards[iPlayer][iCardType].x + (CARD_WIDTH+nGapObtainedCard)*(iCnt%10) , m_coObtainedCards[iPlayer][iCardType].y +(CARD_HEIGHT/2)*(iCnt/10))];
-					//[m_sprCard[nIdxObtainedCard] setScale:0.67];
-					//m_sprCard[nIdxObtainedCard].scale = 0.67;
-					//m_sprCard[nIdxObtainedCard].position = ccp ( m_coObtainedCards[iPlayer][iCardType].x + (24.59+nGapObtainedCard)*(iCnt%10) , m_coObtainedCards[iPlayer][iCardType].y +(37.52/2)*(iCnt/10) );
-				//[mgr addChild:m_sprCard[nIdxObtainedCard]];
-				
-				
-				
 				AtlasSprite* card =(AtlasSprite*)[mgr getChildByTag:nIdxObtainedCard];
-				[card setPosition:CGPointMake( m_coObtainedCards[iPlayer][iCardType].x + (CARD_WIDTH+nGapObtainedCard)*(iCnt%10) , m_coObtainedCards[iPlayer][iCardType].y +(CARD_HEIGHT/2)*(iCnt/10))];
+				[card setScale:0.67];
+				[card setPosition:CGPointMake( m_coObtainedCards[iPlayer][iCardType].x + (CARD_WIDTH+nGapObtainedCard)*(iCnt%10) , m_coObtainedCards[iPlayer][iCardType].y+(CARD_HEIGHT/2)*(iCnt/10) )];
 			}
 			
 		}
@@ -576,7 +587,7 @@ Class restartAction()
 		//OppCardBack.position = ccp (m_coPlayerCards[OPPONENT][iCnt].x , m_coPlayerCards[OPPONENT][iCnt].y);
 		//[mgr addChild:OppCardBack];
 		
-		AtlasSprite* card =(AtlasSprite*)[mgr getChildByTag:50];
+		AtlasSprite* card =(AtlasSprite*)[mgr getChildByTag:61+iCnt];
 		[card setPosition:CGPointMake(m_coPlayerCards[OPPONENT][iCnt].x , m_coPlayerCards[OPPONENT][iCnt].y )];
 	
 		//[OppCardBack release];
