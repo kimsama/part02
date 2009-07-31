@@ -109,7 +109,21 @@ enum EChangeTurnState
     int m_nScore[PLAYER_COUNT];
 	// 게임 규칙 카운트 변수
     int m_nCntRule[PLAYER_COUNT][RULE_COUNT];
+	// 애니메이션 중이냐
+	bool m_bAnimEvent;
+	// 움직일 카드
+	NSMutableArray *MoveCards;
+	// 움직일 위치
+	CGPoint Movepoint[20];
+	
+    CGPoint m_coFloorCards[13];
+    CGPoint m_coPlayerCards[2][10];
+	CGPoint m_coObtainedCards[2][CARDTYPE_COUNT];
+	CGPoint m_coScore[2];
+	CGPoint m_coRule[2][RULE_COUNT];
 }
+
+
 // 새 게임 시작
 - (void) StartNewGame;
 // 게임 초기화
@@ -181,4 +195,13 @@ enum EChangeTurnState
 // 바닥 카드 리턴
 - (int) GetFloorCard:(int)nMonth boffset:(Byte)boffset;
 
+- (void) SetDefaultCoordination;
+
+- (void) SetDisplayCoordination;
+
+- (CGPoint) Getm_coFloorCards:(int)index;
+- (CGPoint) Getm_coPlayerCards:(int)index1 index2:(int)index2;
+- (CGPoint) Getm_coObtainedCards:(int)index1 index2:(int)index2;
+- (CGPoint) Getm_coScore:(int)index1;
+- (CGPoint) Getm_coRule:(int)index1 index2:(int)index2;
 @end

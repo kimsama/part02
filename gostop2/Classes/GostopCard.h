@@ -8,14 +8,18 @@
 {
 	//카드 타입을 기억하는 벡터
 	NSMutableArray *m_vCardTypes[CARDTYPE_COUNT];
+	//int m_vCardTypes[CARDTYPE_COUNT];
 	//고스톱 족보를 기억하는 벡터
     NSMutableArray *m_vGostopHands[HANDS_COUNT];
+	//int m_vGostopHands[HANDS_COUNT];
 	
 	
 	// 플레이어 카드 슬롯 벡터
     NSMutableArray *m_vPlayerCards[PLAYER_COUNT];
+	//int m_vPlayerCards[PLAYER_COUNT];
 	// 플레이어 획득 카드 슬롯 벡터
     NSMutableArray *m_vObtainedCards[PLAYER_COUNT][CARDTYPE_COUNT];
+	//int m_vObtainedCards[PLAYER_COUNT][CARDTYPE_COUNT];
 	// 점수 기억 배열
     int m_nScore[PLAYER_COUNT];
 

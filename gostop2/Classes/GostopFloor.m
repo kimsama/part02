@@ -38,11 +38,12 @@
 // 중앙의 카드를 섞어준다.
 - (void) ShuffleCenterCards
 {
-    
+    srand(time(Nil));
+	srandom(time(Nil));
 	for(int i = 0 ; i < 400; i++)
 	{
-		NSUInteger idx1 = random() % 47;
-		NSUInteger idx2 = random() % 47;
+		NSUInteger idx1 = random() % 48;
+		NSUInteger idx2 = random() % 48;
 		
 		[m_vCenterCards exchangeObjectAtIndex:(NSUInteger)idx1 withObjectAtIndex:(NSUInteger)idx2];
 	}
@@ -272,7 +273,6 @@
 	NSNumber *lastcard = [m_vCenterCards lastObject];
 	nIdxCard = (int)[lastcard intValue];
 		
-    //m_vCenterCards.pop_back();
 	[m_vCenterCards removeLastObject];
 	// 카드 번호 리턴
     return nIdxCard;

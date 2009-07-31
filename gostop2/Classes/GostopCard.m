@@ -10,96 +10,119 @@
 // 카드 타입 초기화
 - (void) InitCardTypes
 {
+	//카드 타입을 기억하는 벡터
+	for(int i = 0; i < CARDTYPE_COUNT; i++)
+		m_vCardTypes[i] = [[NSMutableArray alloc] initWithCapacity:10];
+	
+	//고스톱 족보를 기억하는 벡터
+	for(int i = 0; i < HANDS_COUNT ; i++)
+		m_vGostopHands[i] = [[NSMutableArray alloc] initWithCapacity:10];
+	
+	// 플레이어 카드 슬롯 벡터
+	for(int i = 0; i <PLAYER_COUNT ; i++)
+		m_vPlayerCards[i] = [[NSMutableArray alloc] initWithCapacity:10];
+	// 플레이어 획득 카드 슬롯 벡터
+	for(int i = 0; i <CARDTYPE_COUNT; i++)
+	{
+		for(int j =0 ; j <PLAYER_COUNT ; j++)
+		{
+			m_vObtainedCards[j][i] = [[NSMutableArray alloc] initWithCapacity:40];
+		}
+	}
+    
+	
 	// 1월 광
 	NSNumber *iCntNum = [[NSNumber alloc] initWithInt:4*(1-1)];
 	[m_vCardTypes[KWANG] addObject:iCntNum]; 
-    // m_vCardTypes[KWANG].push_back(4*(1-1));
+	
 	// 3월 광
 	NSNumber *iCntNum2 = [[NSNumber alloc] initWithInt:4*(3-1)];
 	[m_vCardTypes[KWANG] addObject:iCntNum2];
-    //m_vCardTypes[KWANG].push_back(4*(3-1));
+    
 	// 8월 광
 	NSNumber *iCntNum3 = [[NSNumber alloc] initWithInt:4*(8-1)];
 	[m_vCardTypes[KWANG] addObject:iCntNum3];
-    //m_vCardTypes[KWANG].push_back(4*(8-1));
+	//NSArray *array = [NSArray arrayWithObjects:iCntNum, iCntNum2, iCntNum3, nil];
+	//[m_vCardTypes[KWANG] addObjectsFromArray:array];
+    
 	// 11월 광
 	NSNumber *iCntNum4 = [[NSNumber alloc] initWithInt:4*(11-1)];
 	[m_vCardTypes[KWANG] addObject:iCntNum4];
-    //m_vCardTypes[KWANG].push_back(4*(11-1));
+
 	// 12월 광
 	NSNumber *iCntNum5 = [[NSNumber alloc] initWithInt:4*(12-1)];
 	[m_vCardTypes[KWANG] addObject:iCntNum5];
-    //m_vCardTypes[KWANG].push_back(4*(12-1));
+
 	// 열끗
 	NSNumber *iCntNum6 = [[NSNumber alloc] initWithInt:4];
 	[m_vCardTypes[YEOL] addObject:iCntNum6];
-    //m_vCardTypes[YEOL].push_back(4);
+
 	NSNumber *iCntNum7 = [[NSNumber alloc] initWithInt:12];
 	[m_vCardTypes[YEOL] addObject:iCntNum7];
-    //m_vCardTypes[YEOL].push_back(12);
+
 	NSNumber *iCntNum8 = [[NSNumber alloc] initWithInt:16];
 	[m_vCardTypes[YEOL] addObject:iCntNum8];
-    //m_vCardTypes[YEOL].push_back(16);
+
 	NSNumber *iCntNum9 = [[NSNumber alloc] initWithInt:20];
 	[m_vCardTypes[YEOL] addObject:iCntNum9];
-    //m_vCardTypes[YEOL].push_back(20);
+
 	NSNumber *iCntNum10 = [[NSNumber alloc] initWithInt:24];
 	[m_vCardTypes[YEOL] addObject:iCntNum10];
-    //m_vCardTypes[YEOL].push_back(24);
+
 	NSNumber *iCntNum11 = [[NSNumber alloc] initWithInt:29];
 	[m_vCardTypes[YEOL] addObject:iCntNum11];
-    //m_vCardTypes[YEOL].push_back(29);
+
 	NSNumber *iCntNum12 = [[NSNumber alloc] initWithInt:KUKJIN];
 	[m_vCardTypes[YEOL] addObject:iCntNum12];
-    //m_vCardTypes[YEOL].push_back(KUKJIN);
+
 	NSNumber *iCntNum13 = [[NSNumber alloc] initWithInt:36];
 	[m_vCardTypes[YEOL] addObject:iCntNum13];
-    //m_vCardTypes[YEOL].push_back(36);
+
 	NSNumber *iCntNum14 = [[NSNumber alloc] initWithInt:45];
 	[m_vCardTypes[YEOL] addObject:iCntNum14];
-    //m_vCardTypes[YEOL].push_back(45);
+
 	// 띠
 	NSNumber *iCntNum15 = [[NSNumber alloc] initWithInt:1];
 	[m_vCardTypes[TEE] addObject:iCntNum15];
-   // m_vCardTypes[TEE].push_back(1);
+
 	NSNumber *iCntNum16 = [[NSNumber alloc] initWithInt:5];
 	[m_vCardTypes[TEE] addObject:iCntNum16];
-   // m_vCardTypes[TEE].push_back(5);
+
 	NSNumber *iCntNum17 = [[NSNumber alloc] initWithInt:9];
 	[m_vCardTypes[TEE] addObject:iCntNum17];
-  //  m_vCardTypes[TEE].push_back(9);
+
 	NSNumber *iCntNum18 = [[NSNumber alloc] initWithInt:13];
 	[m_vCardTypes[TEE] addObject:iCntNum18];
-   // m_vCardTypes[TEE].push_back(13);
+
 	NSNumber *iCntNum19 = [[NSNumber alloc] initWithInt:17];
 	[m_vCardTypes[TEE] addObject:iCntNum19];
-  //  m_vCardTypes[TEE].push_back(17);
+
 	NSNumber *iCntNum20 = [[NSNumber alloc] initWithInt:21];
 	[m_vCardTypes[TEE] addObject:iCntNum20];
-    //m_vCardTypes[TEE].push_back(21);
+
 	NSNumber *iCntNum21 = [[NSNumber alloc] initWithInt:25];
 	[m_vCardTypes[TEE] addObject:iCntNum21];
-   // m_vCardTypes[TEE].push_back(25);
+
 	NSNumber *iCntNum22 = [[NSNumber alloc] initWithInt:33];
 	[m_vCardTypes[TEE] addObject:iCntNum22];
-   // m_vCardTypes[TEE].push_back(33);
+
 	NSNumber *iCntNum23 = [[NSNumber alloc] initWithInt:37];
 	[m_vCardTypes[TEE] addObject:iCntNum23];
-   // m_vCardTypes[TEE].push_back(37);
+
 	NSNumber *iCntNum24 = [[NSNumber alloc] initWithInt:46];
 	[m_vCardTypes[TEE] addObject:iCntNum24];
-   // m_vCardTypes[TEE].push_back(46);
+
 	
 	// 쌍피
 	NSNumber *iCntNum25 = [[NSNumber alloc] initWithInt:KUKJIN];
 	[m_vCardTypes[PEE] addObject:iCntNum25];
-   // m_vCardTypes[PEE].push_back(KUKJIN);
+
 	NSNumber *iCntNum26 = [[NSNumber alloc] initWithInt:41];
 	[m_vCardTypes[PEE] addObject:iCntNum26];
-   // m_vCardTypes[PEE].push_back(41);
+
 	NSNumber *iCntNum27 = [[NSNumber alloc] initWithInt:47];
 	[m_vCardTypes[PEE] addObject:iCntNum27];
-   // m_vCardTypes[PEE].push_back(47);
+
 
 } // void InitCardTypes(void).
 // 족보 배열 초기화
@@ -108,43 +131,43 @@
 	// 홍단
 	NSNumber *iCntNum28 = [[NSNumber alloc] initWithInt:1];
 	[m_vGostopHands[HONGDAN] addObject:iCntNum28]; 
-//    m_vGostopHands[HONGDAN].push_back(1);
+
 	NSNumber *iCntNum29 = [[NSNumber alloc] initWithInt:5];
 	[m_vGostopHands[HONGDAN] addObject:iCntNum29]; 
-  //  m_vGostopHands[HONGDAN].push_back(5);
+
 	NSNumber *iCntNum30 = [[NSNumber alloc] initWithInt:9];
 	[m_vGostopHands[HONGDAN] addObject:iCntNum30]; 
-    //m_vGostopHands[HONGDAN].push_back(9);
+
 	// 청단
 	NSNumber *iCntNum31 = [[NSNumber alloc] initWithInt:21];
 	[m_vGostopHands[CHUNGDAN] addObject:iCntNum31]; 
-    //m_vGostopHands[CHUNGDAN].push_back(21);
+
 	NSNumber *iCntNum32 = [[NSNumber alloc] initWithInt:41];
 	[m_vGostopHands[CHUNGDAN] addObject:iCntNum32]; 
-    //m_vGostopHands[CHUNGDAN].push_back(41);
+
 	NSNumber *iCntNum33 = [[NSNumber alloc] initWithInt:46];
 	[m_vGostopHands[CHUNGDAN] addObject:iCntNum33]; 
-    //m_vGostopHands[CHUNGDAN].push_back(46);
+
 	// 초단
 	NSNumber *iCntNum34 = [[NSNumber alloc] initWithInt:13];
 	[m_vGostopHands[CHODAN] addObject:iCntNum34]; 
-    //m_vGostopHands[CHODAN].push_back(13);
+
 	NSNumber *iCntNum35 = [[NSNumber alloc] initWithInt:17];
 	[m_vGostopHands[CHODAN] addObject:iCntNum35]; 
-    //m_vGostopHands[CHODAN].push_back(17);
+
 	NSNumber *iCntNum36 = [[NSNumber alloc] initWithInt:25];
 	[m_vGostopHands[CHODAN] addObject:iCntNum36]; 
-    //m_vGostopHands[CHODAN].push_back(25);
+
 	// 고도리
 	NSNumber *iCntNum37 = [[NSNumber alloc] initWithInt:4];
 	[m_vGostopHands[GODORI] addObject:iCntNum37]; 
-    //m_vGostopHands[GODORI].push_back(4);
+
 	NSNumber *iCntNum38 = [[NSNumber alloc] initWithInt:12];
 	[m_vGostopHands[GODORI] addObject:iCntNum38]; 
-    //m_vGostopHands[GODORI].push_back(12);
+
 	NSNumber *iCntNum39 = [[NSNumber alloc] initWithInt:29];
 	[m_vGostopHands[GODORI] addObject:iCntNum39]; 
-    //m_vGostopHands[GODORI].push_back(29);
+
 } // void InitGostopHands(void).
 
 // 초기화
@@ -156,15 +179,20 @@
     {	// 점수 초기화
         m_nScore[iCnt] = 0;
 		// 플레이어 카드 슬롯
-		m_vPlayerCards[iCnt] = [[NSMutableArray alloc] init];
+		//m_vPlayerCards[iCnt] = [[NSMutableArray alloc] init];
+		[m_vPlayerCards[iCnt] removeAllObjects];
 		// 획득 카드 슬롯
-        m_vObtainedCards[iCnt][KWANG] = [[NSMutableArray alloc] init];
+        //m_vObtainedCards[iCnt][KWANG] = [[NSMutableArray alloc] init];
+		[m_vObtainedCards[iCnt][KWANG] removeAllObjects];
         //m_vObtainedCards[iCnt][KWANG].clear();
-		m_vObtainedCards[iCnt][YEOL] = [[NSMutableArray alloc] init];
+		//m_vObtainedCards[iCnt][YEOL] = [[NSMutableArray alloc] init];
+		[m_vObtainedCards[iCnt][YEOL] removeAllObjects];
         //m_vObtainedCards[iCnt][YEOL].clear();
-		m_vObtainedCards[iCnt][TEE] = [[NSMutableArray alloc] init];
+		//m_vObtainedCards[iCnt][TEE] = [[NSMutableArray alloc] init];
+		[m_vObtainedCards[iCnt][TEE] removeAllObjects];
         //m_vObtainedCards[iCnt][TEE].clear();
-		m_vObtainedCards[iCnt][PEE] = [[NSMutableArray alloc] init];
+		//m_vObtainedCards[iCnt][PEE] = [[NSMutableArray alloc] init];
+		[m_vObtainedCards[iCnt][PEE] removeAllObjects];
         //m_vObtainedCards[iCnt][PEE].clear();
     }
 } // void Init(void).
@@ -537,13 +565,9 @@
 		for(int i = 0 ; i < cnt ; i++)
 		{
 			int intcard = [[m_vCardTypes[iCardType] objectAtIndex:i] intValue];
-			if(intcard == 36)
-			{
-				int pause = 1;
-			}
 			if( intcard == nIdxCard)
 			{
-				return iCardType;
+				return iCardType;				
 			}
 		}
 		

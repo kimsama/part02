@@ -11,15 +11,7 @@
 #import "GostopAgent.h"
 #import <UIKit/UIKit.h>
 
-#define FLOOR_CARD_HSPACE 60
-#define FLOOR_CARD_VSPACE 45
-#define FLOOR_CARD_GAP    10
-#define OBTAINED_CARD_GAP -4
-#define PLAYER_CARD_SPACE 2
-#define OPPONENT_CARD_SPACE 0
-#define GAME_LEFT_SPACE 80
-#define CARD_WIDTH 37
-#define CARD_HEIGHT 56
+
 
 
 @class Sprite;
@@ -50,11 +42,11 @@
 @interface MainGame : Layer
 {
 	CGostopAgent *m_Agent;
-	CGPoint m_coFloorCards[13];
-	CGPoint m_coPlayerCards[2][10];
-	CGPoint m_coObtainedCards[2][CARDTYPE_COUNT];
-	CGPoint m_coScore[2];
-	CGPoint m_coRule[2][RULE_COUNT];
+//	CGPoint m_coFloorCards[13];
+//	CGPoint m_coPlayerCards[2][10];
+//	CGPoint m_coObtainedCards[2][CARDTYPE_COUNT];
+//	CGPoint m_coScore[2];
+//	CGPoint m_coRule[2][RULE_COUNT];
 	
 	//TextureAtlas *texCard;
 	AtlasSprite *m_sprBack[10];
@@ -65,11 +57,11 @@
 	
 }
 
-- (void) Update:(NSTimer*)timer;
+//- (void) Update:(NSTimer*)timer;
 - (void) LoadSprites;
 - (void) UnloadSprites;
-- (void) SetDefaultCoordination;
-- (void) SetDisplayCoordination;
+//- (void) SetDefaultCoordination;
+//- (void) SetDisplayCoordination;
 - (void) DrawCenterCards;
 - (void) DrawFloorCards;
 - (void) DrawObtainedCards;

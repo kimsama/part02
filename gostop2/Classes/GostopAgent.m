@@ -12,11 +12,15 @@
 - (void) InitGame
 {
     int iCnt, jCnt;
-
+	m_bAnimEvent = false;
 	// 뺏어올 피 장수 초기화
     m_nCntRobPee = 0;
 
-    
+    MoveCards = [[NSMutableArray alloc] initWithCapacity:20];
+	for(int i = 0; i < 20 ;i++)
+	{
+		Movepoint[i] = CGPointMake( 0, 0 );
+	}
     // 카드 초기화
 	m_Card = [[CGostopCard alloc] init];
 	[m_Card InitCardTypes];
@@ -136,11 +140,12 @@
 
 			// 바닥에 카드 분배
     case DC_FLOORCARDS_FIRST:
-			// 바닥에 까는 카드중 반을 낸다.
+			
+		
+		// 바닥에 까는 카드중 반을 낸다.
         for(iCnt=0; iCnt<DISTRIBUTE_FLOOR_CARDS/2; iCnt++)
         {
 			// 바닥에 카드 추가
-            //m_Floor.AddToFloor( PopCenterCard() );
 			[m_Floor AddToFloor:[self PopCenterCard]];
 			
         }        
@@ -151,7 +156,6 @@
         for(iCnt=0; iCnt<DISTRIBUTE_FLOOR_CARDS/2+DISTRIBUTE_FLOOR_CARDS%2; iCnt++)
         {
 			// 바닥에 카드 추가.
-//            m_Floor.AddToFloor( PopCenterCard() );
 			[m_Floor AddToFloor:[self PopCenterCard]];
         }
         break;
@@ -241,8 +245,10 @@
         return;
     }
 
-    
-    m_nAgencyStep++;
+//   if(!m_bAnimEvent)
+	{
+		m_nAgencyStep++;
+	}
 } // void DealDistributeCards().
 
 // 보너스 카드 픽업
@@ -775,5 +781,83 @@
     return [m_Card GetObtainedCard:nPlayer nCardType:nCardType nOffset:nOffset];
 } // int GetObtainedCard(int nPlayer, int nCardType, int nOffset).
 
+- (void) SetDefaultCoordination
+{
+	m_coFloorCards[0] = CGPointMake( 215+(CARD_WIDTH/2) , 268 );
+	
+	m_coFloorCards[1] = CGPointMake( 141+(CARD_WIDTH/2) , 336 );
+	m_coFloorCards[2] = CGPointMake( 178+(CARD_WIDTH/2) , 336 );
+	m_coFloorCards[3] = CGPointMake( 215+(CARD_WIDTH/2) , 336 );
+	m_coFloorCards[4] = CGPointMake( 246+(CARD_WIDTH/2) , 336 );
+	m_coFloorCards[5] = CGPointMake( 277+(CARD_WIDTH/2) , 336 );
+	m_coFloorCards[6] = CGPointMake( 141+(CARD_WIDTH/2) , 268 );
+	m_coFloorCards[7] = CGPointMake( 277+(CARD_WIDTH/2) , 268 );
+	m_coFloorCards[8] = CGPointMake( 141+(CARD_WIDTH/2) , 186 );
+	m_coFloorCards[9] = CGPointMake( 178+(CARD_WIDTH/2) , 186 );
+	m_coFloorCards[10] = CGPointMake( 215+(CARD_WIDTH/2) , 186 );
+	m_coFloorCards[11] = CGPointMake( 246+(CARD_WIDTH/2) , 186 );
+	m_coFloorCards[12] = CGPointMake( 277+(CARD_WIDTH/2) , 186 );
+	
+	m_coPlayerCards[PLAYER][0] = CGPointMake( 135+(CARD_WIDTH/2) , 112 );
+	m_coPlayerCards[PLAYER][1] = CGPointMake( 172+(CARD_WIDTH/2) , 112 );
+	m_coPlayerCards[PLAYER][2] = CGPointMake( 209+(CARD_WIDTH/2) , 112 );
+	m_coPlayerCards[PLAYER][3] = CGPointMake( 246+(CARD_WIDTH/2) , 112 );
+	m_coPlayerCards[PLAYER][4] = CGPointMake( 283+(CARD_WIDTH/2) , 112 );
+	m_coPlayerCards[PLAYER][5] = CGPointMake( 135+(CARD_WIDTH/2) , 56 );
+	m_coPlayerCards[PLAYER][6] = CGPointMake( 172+(CARD_WIDTH/2) , 56 );
+	m_coPlayerCards[PLAYER][7] = CGPointMake( 209+(CARD_WIDTH/2) , 56 );
+	m_coPlayerCards[PLAYER][8] = CGPointMake( 246+(CARD_WIDTH/2) , 56 );
+	m_coPlayerCards[PLAYER][9] = CGPointMake( 283+(CARD_WIDTH/2) , 56 );
+	
+	for(int i = 0 ; i < 10 ; i++)
+	{
+		m_coPlayerCards[OPPONENT][i] = CGPointMake (m_coPlayerCards[PLAYER][i].x , m_coPlayerCards[PLAYER][i].y + 336);
+	}
+	m_coObtainedCards[PLAYER][KWANG] = CGPointMake ( 0+(CARD_WIDTH/2) , 225 );
+	m_coObtainedCards[PLAYER][YEOL] = CGPointMake ( 0+(CARD_WIDTH/2) , 187.5 );
+	m_coObtainedCards[PLAYER][TEE] = CGPointMake ( 0+(CARD_WIDTH/2) , 150 );
+	m_coObtainedCards[PLAYER][PEE] = CGPointMake ( 0+(CARD_WIDTH/2) , 112.5 );
+	
+	for(int j =0; j < CARDTYPE_COUNT; j++)
+	{
+		m_coObtainedCards[OPPONENT][j] = CGPointMake ( 0+(CARD_WIDTH/2) , m_coObtainedCards[PLAYER][j].y + 179);
+		
+	}
+	
+	
+}
+- (void) SetDisplayCoordination
+{
+	m_coScore[PLAYER] = CGPointMake( 178 +(CARD_WIDTH/2) , 121 );
+	m_coScore[OPPONENT] = CGPointMake ( 178+(CARD_WIDTH/2) , 335 );
+	m_coRule[PLAYER][GO] = CGPointMake ( 215+(CARD_WIDTH/2) , 121 );
+	m_coRule[OPPONENT][GO] = CGPointMake ( 215+(CARD_WIDTH/2) , 335 );
+	m_coRule[PLAYER][SHAKE] = CGPointMake ( 246+(CARD_WIDTH/2) , 121 );
+	m_coRule[OPPONENT][SHAKE] = CGPointMake ( 246+(CARD_WIDTH/2) , 335 );
+	m_coRule[PLAYER][PPUCK] = CGPointMake ( 277+(CARD_WIDTH/2) , 121 );
+	m_coRule[OPPONENT][PPUCK] = CGPointMake (277+(CARD_WIDTH/2) , 335 );
+}
+
+
+- (CGPoint) Getm_coFloorCards:(int)index
+{
+	return m_coFloorCards[index];
+}
+- (CGPoint) Getm_coPlayerCards:(int)index1 index2:(int)index2
+{
+	return m_coPlayerCards[index1][index2];
+}
+- (CGPoint) Getm_coObtainedCards:(int)index1 index2:(int)index2
+{
+	return m_coObtainedCards[index1][index2];
+}
+- (CGPoint) Getm_coScore:(int)index1
+{
+	return m_coScore[index1];
+}
+- (CGPoint) Getm_coRule:(int)index1 index2:(int)index2
+{
+	return m_coRule[index1][index2];
+}
 
 @end
