@@ -157,21 +157,14 @@ Class restartAction()
 	[self addChild:mgr z:0 tag:kTagSpriteManager ];
 	
 	[self LoadSprites];
-	[self SetDefaultCoordination];
-	[self SetDisplayCoordination];
 	
 	m_Agent = [CGostopAgent alloc];
 	[m_Agent InitGame];
+	[m_Agent SetDefaultCoordination];
+	[m_Agent SetDisplayCoordination];
 	[m_Agent StartNewGame];
-//	[m_Agent StartTimerfunc];
+	
 
-//	[self DrawFloorCards];
-//	[self DrawObtainedCards];
-//	[self DrawPlayerCards];
-//	[self DisplayGameProgress];
-	
-	
-//	[NSTimer scheduledTimerWithTimeInterval:8.0f target:self selector:@selector(Update) userInfo:nil repeats:YES];
 	
 	return self;
 }
@@ -180,19 +173,8 @@ Class restartAction()
 	[self UnloadSprites];
 	[super dealloc];
 }
-- (void) Update:(NSTimer*)timer
-{
-	[self DrawFloorCards];
-	[self DrawObtainedCards];
-	[self DrawPlayerCards];
-	[self DisplayGameProgress];
-}
 
--(void) onEnter
-{
-	[super onEnter];
-	
-}
+
 
 - (BOOL)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -205,9 +187,9 @@ Class restartAction()
 			for(int  i =0; i < [m_Agent GetPlayerCardCount];i++ )
 			{
 				int whoturn = [m_Agent GetTurn];
-				if(location.x > m_coPlayerCards[whoturn][i].x && location.x < m_coPlayerCards[whoturn][i].x + CARD_WIDTH)
+				if(location.x > [m_Agent Getm_coPlayerCards:whoturn index2:i].x && location.x < [m_Agent Getm_coPlayerCards:whoturn index2:i].x + CARD_WIDTH)
 				{
-					if(location.y > m_coPlayerCards[whoturn][i].y && location.y < m_coPlayerCards[whoturn][i].y + CARD_HEIGHT)
+					if(location.y < [m_Agent Getm_coPlayerCards:whoturn index2:i].y && location.y > [m_Agent Getm_coPlayerCards:whoturn index2:i].y - CARD_HEIGHT)
 					{
 						[m_Agent PutOutPlayerCard:i];
 						break;
@@ -229,7 +211,7 @@ Class restartAction()
 //	glEnable( GL_TEXTURE_2D);
 	
 	//배경 그리고
-	if(GS_PLAYING == [m_Agent GetState])
+//	if(GS_PLAYING == [m_Agent GetState])
 	{
 		
 		//카드 그리고
@@ -312,24 +294,24 @@ Class restartAction()
 	Label* oplabel = [Label labelWithString:oppnotice fontName:@"Arial" fontSize:10];
 	
 	[self addChild: pslabel z:0 tag:0];
-	[pslabel setPosition: ccp(m_coScore[PLAYER].x, m_coScore[PLAYER].y)];
+	[pslabel setPosition: ccp([m_Agent Getm_coScore:PLAYER].x, [m_Agent Getm_coScore:PLAYER].y)];
 	[self addChild: oslabel z:0 tag:1];
-	[oslabel setPosition: ccp(m_coScore[OPPONENT].x, m_coScore[OPPONENT].y)];
+	[oslabel setPosition: ccp([m_Agent Getm_coScore:OPPONENT].x, [m_Agent Getm_coScore:OPPONENT].y)];
 	
 	[self addChild: pglabel z:0 tag:2];
-	[pglabel setPosition: ccp(m_coRule[PLAYER][GO].x, m_coRule[PLAYER][GO].y)];
+	[pglabel setPosition: ccp([m_Agent Getm_coRule:PLAYER index2:GO].x, [m_Agent Getm_coRule:PLAYER index2:GO].y)];
 	[self addChild: oglabel z:0 tag:3];
-	[oglabel setPosition: ccp(m_coRule[OPPONENT][GO].x, m_coRule[OPPONENT][GO].y)];
+	[oglabel setPosition: ccp([m_Agent Getm_coRule:OPPONENT index2:GO].x,[m_Agent Getm_coRule:OPPONENT index2:GO].y)];
 	
 	[self addChild: pshlabel z:0 tag:4];
-	[pshlabel setPosition: ccp(m_coRule[PLAYER][SHAKE].x, m_coRule[PLAYER][SHAKE].y)];
+	[pshlabel setPosition: ccp([m_Agent Getm_coRule:PLAYER index2:SHAKE].x,[m_Agent Getm_coRule:PLAYER index2:SHAKE].y)];
 	[self addChild: oshlabel z:0 tag:5];
-	[oshlabel setPosition: ccp(m_coRule[OPPONENT][SHAKE].x, m_coRule[OPPONENT][SHAKE].y)];
+	[oshlabel setPosition: ccp([m_Agent Getm_coRule:OPPONENT index2:SHAKE].x,[m_Agent Getm_coRule:OPPONENT index2:SHAKE].y)];
 	
 	[self addChild: pplabel z:0 tag:6];
-	[pplabel setPosition: ccp(m_coRule[PLAYER][PPUCK].x, m_coRule[PLAYER][PPUCK].y)];
+	[pplabel setPosition: ccp([m_Agent Getm_coRule:PLAYER index2:PPUCK].x,[m_Agent Getm_coRule:PLAYER index2:PPUCK].y)];
 	[self addChild: oplabel z:0 tag:7];
-	[oplabel setPosition: ccp(m_coRule[OPPONENT][PPUCK].x, m_coRule[OPPONENT][PPUCK].y)];
+	[oplabel setPosition: ccp([m_Agent Getm_coRule:OPPONENT index2:PPUCK].x,[m_Agent Getm_coRule:OPPONENT index2:PPUCK].y)];
 	
 	
 }
@@ -351,62 +333,7 @@ Class restartAction()
 	}
 	
 }
-- (void) SetDefaultCoordination
-{
-	m_coFloorCards[0] = ccp( 215, 268 );
-	
-	m_coFloorCards[1] = ccp( 141, 336 );
-	m_coFloorCards[2] = ccp( 178, 336 );
-	m_coFloorCards[3] = ccp( 215, 336 );
-	m_coFloorCards[4] = ccp( 246, 336 );
-	m_coFloorCards[5] = ccp( 277, 336 );
-	m_coFloorCards[6] = ccp( 141, 268 );
-	m_coFloorCards[7] = ccp( 277, 268 );
-	m_coFloorCards[8] = ccp( 141, 186 );
-	m_coFloorCards[9] = ccp( 178, 186 );
-	m_coFloorCards[10] = ccp( 215, 186 );
-	m_coFloorCards[11] = ccp( 246, 186 );
-	m_coFloorCards[12] = ccp( 277, 186 );
-	
-	m_coPlayerCards[PLAYER][0] = ccp( 140, 112 );
-	m_coPlayerCards[PLAYER][1] = ccp( 177, 112 );
-	m_coPlayerCards[PLAYER][2] = ccp( 214, 112 );
-	m_coPlayerCards[PLAYER][3] = ccp( 251, 112 );
-	m_coPlayerCards[PLAYER][4] = ccp( 288, 112 );
-	m_coPlayerCards[PLAYER][5] = ccp( 140, 56 );
-	m_coPlayerCards[PLAYER][6] = ccp( 177, 56 );
-	m_coPlayerCards[PLAYER][7] = ccp( 214, 56 );
-	m_coPlayerCards[PLAYER][8] = ccp( 251, 56 );
-	m_coPlayerCards[PLAYER][9] = ccp( 288, 56 );
-	
-	for(int i = 0 ; i < 10 ; i++)
-	{
-		m_coPlayerCards[OPPONENT][i] = ccp (m_coPlayerCards[PLAYER][i].x , m_coPlayerCards[PLAYER][i].y + 336);
-	}
-	m_coObtainedCards[PLAYER][KWANG] = ccp ( 0, 225 );
-	m_coObtainedCards[PLAYER][YEOL] = ccp ( 0, 187.5 );
-	m_coObtainedCards[PLAYER][TEE] = ccp ( 0, 150 );
-	m_coObtainedCards[PLAYER][PEE] = ccp ( 0, 112.5 );
-	
-	for(int j =0; j < CARDTYPE_COUNT; j++)
-	{
-		m_coObtainedCards[OPPONENT][j] = ccp ( 0, m_coObtainedCards[PLAYER][j].y + 179);
-		
-	}
-		
 
-}
-- (void) SetDisplayCoordination
-{
-	m_coScore[PLAYER] = ccp( 178 , 121 );
-	m_coScore[OPPONENT] = ccp ( 178, 335 );
-	m_coRule[PLAYER][GO] = ccp ( 215, 121 );
-	m_coRule[OPPONENT][GO] = ccp ( 215, 335 );
-	m_coRule[PLAYER][SHAKE] = ccp ( 246, 121 );
-	m_coRule[OPPONENT][SHAKE] = ccp ( 246, 335 );
-	m_coRule[PLAYER][PPUCK] = ccp ( 277, 121 );
-	m_coRule[OPPONENT][PPUCK] = ccp (277, 335 );
-}
 //중앙 카드 그려줌
 - (void) DrawCenterCards
 {
@@ -421,7 +348,7 @@ Class restartAction()
 		for(iCnt = 0; iCnt < nCntCenterCard; iCnt++)
 		{
 			AtlasSprite *OppCardBack = (AtlasSprite*)[mgr getChildByTag:51+iCnt];
-			[OppCardBack setPosition:CGPointMake(m_coFloorCards[0].x -iCnt, m_coFloorCards[0].y-iCnt)];
+			[OppCardBack setPosition:CGPointMake([m_Agent Getm_coFloorCards:0].x -iCnt,[m_Agent Getm_coFloorCards:0].y-iCnt)];
 		}
 	}
 	else
@@ -429,7 +356,7 @@ Class restartAction()
 		for(iCnt = 0 ; iCnt <5+(nCntCenterCard)/6;iCnt++)
 		{
 			AtlasSprite *OppCardBack = (AtlasSprite*)[mgr getChildByTag:51+iCnt];
-			[OppCardBack setPosition:CGPointMake(m_coFloorCards[0].x -iCnt, m_coFloorCards[0].y-iCnt)];
+			[OppCardBack setPosition:CGPointMake([m_Agent Getm_coFloorCards:0].x -iCnt,[m_Agent Getm_coFloorCards:0].y-iCnt)];
 					
 		}
 	}
@@ -461,7 +388,7 @@ Class restartAction()
 				}
 				
 				AtlasSprite* card =(AtlasSprite*)[mgr getChildByTag:nidxCard];
-				[card setPosition:CGPointMake( m_coFloorCards[1+ iMonth].x , m_coFloorCards[1+ iMonth].y)];
+				[card setPosition:CGPointMake([m_Agent Getm_coFloorCards:(1+ iMonth)].x ,[m_Agent Getm_coFloorCards:(1+ iMonth)].y)];
 				
 				
 			}
@@ -492,42 +419,42 @@ Class restartAction()
 				case KWANG:
 					if(nCntObtainedCard>=5)
 					{
-						nGapObtainedCard = -10;
+						nGapObtainedCard = 0;
 					}else if( nCntObtainedCard > 2)
 					{
-						nGapObtainedCard -= (nCntObtainedCard-1)*6.5;
+						nGapObtainedCard -= -1;
 					}
 					break;
 				case YEOL:
 				case TEE:
 					if(nCntObtainedCard >= 10)
 					{
-						nGapObtainedCard -= 12;
+						nGapObtainedCard -= 0;
 						
 					}else if(nCntObtainedCard > 6)
 					{
-						nGapObtainedCard -= (nCntObtainedCard-6)*2+16;
+						nGapObtainedCard -= -3;
 					}else if(nCntObtainedCard > 4)
 					{
-						nGapObtainedCard -= (nCntObtainedCard-3)*5;
+						nGapObtainedCard -= -2;
 						
 					}else if(nCntObtainedCard >2)
 					{
-						nGapObtainedCard -= (nCntObtainedCard-2)*2;
+						nGapObtainedCard -= -1;
 					}
 					break;
 				case PEE:
 					if(nCntObtainedCard >=10)
 					{
-						nGapObtainedCard -= 19;
+						nGapObtainedCard = -22;
 						
 					}
 					else if(nCntObtainedCard >=8)
 					{
-						nGapObtainedCard -= (nCntObtainedCard -8)*2+15;
+						nGapObtainedCard = -22;
 					}else if(nCntObtainedCard >5)
 					{
-						nGapObtainedCard -= (nCntObtainedCard -4)*4;
+						nGapObtainedCard = -21;
 					}
 					break;
 			}
@@ -538,7 +465,7 @@ Class restartAction()
 			{
 				AtlasSprite* card =(AtlasSprite*)[mgr getChildByTag:nIdxObtainedCard];
 				[card setScale:0.67];
-				[card setPosition:CGPointMake( m_coObtainedCards[iPlayer][iCardType].x + (CARD_WIDTH+nGapObtainedCard)*(iCnt%10) , m_coObtainedCards[iPlayer][iCardType].y+(CARD_HEIGHT/2)*(iCnt/10) )];
+				[card setPosition:CGPointMake([m_Agent Getm_coObtainedCards:iPlayer index2:iCardType].x + (CARD_WIDTH+nGapObtainedCard)*(iCnt%10) ,[m_Agent Getm_coObtainedCards:iPlayer index2:iCardType].y-(CARD_HEIGHT/2)*(iCnt/10) )];
 			}
 			
 		}
@@ -568,7 +495,7 @@ Class restartAction()
 		//[mgr addChild:m_sprCard[nIdxPlayerCard]];
 		
 		AtlasSprite* card =(AtlasSprite*)[mgr getChildByTag:nIdxPlayerCard];
-		[card setPosition:CGPointMake( m_coPlayerCards[PLAYER][iCnt].x , m_coPlayerCards[PLAYER][iCnt].y )];
+		[card setPosition:CGPointMake([m_Agent Getm_coPlayerCards:PLAYER index2:iCnt].x ,[m_Agent Getm_coPlayerCards:PLAYER index2:iCnt].y )];
 		
 		
 	}
@@ -588,7 +515,7 @@ Class restartAction()
 		//[mgr addChild:OppCardBack];
 		
 		AtlasSprite* card =(AtlasSprite*)[mgr getChildByTag:61+iCnt];
-		[card setPosition:CGPointMake(m_coPlayerCards[OPPONENT][iCnt].x , m_coPlayerCards[OPPONENT][iCnt].y )];
+		[card setPosition:CGPointMake([m_Agent Getm_coPlayerCards:OPPONENT index2:iCnt].x ,[m_Agent Getm_coPlayerCards:OPPONENT index2:iCnt].y )];
 	
 		//[OppCardBack release];
 	}
@@ -625,6 +552,7 @@ Class restartAction()
 {
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	//window.backgroundColor = [UIColor greenColor];
 	[window setUserInteractionEnabled:YES];
 	[window setMultipleTouchEnabled:YES];
 	

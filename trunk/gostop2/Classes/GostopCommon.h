@@ -21,6 +21,17 @@
 #define KUKJIN                      32
 #define BIKWANG                     44
 
+#define ANIMTIME					1
+#define FLOOR_CARD_HSPACE 60
+#define FLOOR_CARD_VSPACE 45
+#define FLOOR_CARD_GAP    10
+#define OBTAINED_CARD_GAP -17
+#define PLAYER_CARD_SPACE 2
+#define OPPONENT_CARD_SPACE 0
+#define GAME_LEFT_SPACE 80
+#define CARD_WIDTH 37
+#define CARD_HEIGHT 56
+
 #define NONE        -1
 #define NOCARD      -1
 //#define ISNOCARD(_CRESULT_)         ((_CRESULT_) < 0)
