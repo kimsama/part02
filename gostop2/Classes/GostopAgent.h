@@ -1,4 +1,5 @@
 
+#import "cocos2d.h"
 #import "GostopCommon.h"
 #import "GostopFloor.h"
 #import "GostopCard.h"
@@ -6,82 +7,13 @@
 @class CGostopCard;
 @class CGostopFloor;
 // 게임 상태 상수
-enum EGameState
-{
-	GS_NULL,
-	// 게임 시작
-	GS_START_NEWGAME,
-	// 바닥 카드 분배
-	GS_DISTRIBUTE,
-	// 일반 플레이 상태 상수
-	GS_PLAYING,
-	// 턴 변경.
-	GS_CHANGETURN,
-	// 바닥에 카드 냄
-	GS_PUTOUT_PLAYERCARD,
-	// 상태 갯수
-	GS_COUNT
-};
-// 카드 분배 상태 상수
-enum EDistributeCardState
-{
-	// 대기 상태
-	DC_READY,
-	// 첫번째 바닥 카드 분배.
-	DC_FLOORCARDS_FIRST,
-	// 두번째 바닥 카드 분배
-	DC_FLOORCARDS_SECOND,
-	// 플레이어 카드 분배
-	DC_PLAYERCARDS_FIRST,
-	// 상대방 카드 분배
-	DC_OPPONENTCARDS_FIRST,
-	// 플레이어 나머지 카드 분배
-	DC_PLAYERCARDS_SECOND,
-	// 상대방 나머지 카드 분배
-	DC_OPPONENTCARDS_SECOND,
-	// 사용자 카드 정렬
-	DC_SORT_CARDS,
-	// 바닥에서 보너스 카드를 빼냄
-	DC_PICKUP_BONUSCARDS,
-	// 총통 검사
-	DC_CHECK_PRESIDENT,
-	// 마무리
-	DC_FINISH,
-    // 상태갯수
-	DC_COUNT
-};
 
-// 카드를 바닥에 내는 상태 상수.
-enum EPutOutState
-{
-	// 낼카드를 고름
-	PO_PICKUP,
-	// 흔들수 있는지 체크
-	PO_CHECKSHAKE,
-	// 카드를 바닥에 냄
-	PO_PUTOUT,
-	// 뒤집음
-	PO_TURNUP,
-	// 벌칙 룰 적용 체크
-	PO_CHECKRULE,
-	// 턴 변경
-	PO_CHANGETURN,
-	// 상태 갯수
-	PO_COUNT
-};
-
-enum EChangeTurnState
-{
-	// 피를 뺏어옴
-	CT_ROBPEE,
-	// 게임이 끝났는지 확인
-	CT_CHECKENDOFGAME,
-	// 턴 변경
-	CT_CHANGETURN,
-	// 상태 갯수
-	CT_COUNT
-};
 //
+typedef struct bonuscardinfo {
+	int nMonth;
+	int nCount;
+}bonusinfo;
+
 @interface CGostopAgent : NSObject
 {
 	// 게임 상태
@@ -111,16 +43,28 @@ enum EChangeTurnState
     int m_nCntRule[PLAYER_COUNT][RULE_COUNT];
 	// 애니메이션 중이냐
 	bool m_bAnimEvent;
+	// 
+	bool m_bPickUpCard;
+	
+	bonusinfo m_sbonuscardinfo;
 	// 움직일 카드
 	NSMutableArray *MoveCards;
 	// 움직일 위치
 	CGPoint Movepoint[20];
+	
+	AtlasSpriteManager * m_atlasmgr;
+	
 	
     CGPoint m_coFloorCards[13];
     CGPoint m_coPlayerCards[2][10];
 	CGPoint m_coObtainedCards[2][CARDTYPE_COUNT];
 	CGPoint m_coScore[2];
 	CGPoint m_coRule[2][RULE_COUNT];
+	
+	AtlasSprite *m_sprBack[10];
+	AtlasSprite *m_sprCard[GAME_TOTAL_CARD];
+	AtlasSprite *m_sprOppCardBack[DISTRIBUTE_PLAYER_CARDS];
+	AtlasSprite *m_sprBombCard;
 }
 
 
@@ -204,4 +148,21 @@ enum EChangeTurnState
 - (CGPoint) Getm_coObtainedCards:(int)index1 index2:(int)index2;
 - (CGPoint) Getm_coScore:(int)index1;
 - (CGPoint) Getm_coRule:(int)index1 index2:(int)index2;
+
+- (void) LoadSprites;
+- (void) UnloadSprites;
+- (void) DrawCenterCards;
+- (void) DrawFloorCards;
+- (void) DrawObtainedCards;
+- (void) DrawPlayerCards;
+- (void) DisplayGameProgress;
+- (void) SetAtlasspritemgr:(AtlasSpriteManager*)mgr;
+
+- (void) DrawAll;
+
+- (void) MovingCard:(int)nIdxCard startpoint:(CGPoint)startpoint endpoint:(CGPoint)endpoint;
+- (bool) IsMoving:(int)nIdxCard point:(CGPoint)point;
+// 중앙 카드를 뒤집어 바닥에 냄
+- (int) TurnUpCard:(int) nPlayer;
+
 @end

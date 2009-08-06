@@ -1,6 +1,3 @@
-#pragma once
-
-
 
 #define GAME_TOTAL_BONUS2           1
 #define GAME_TOTAL_BONUS3           1
@@ -21,7 +18,7 @@
 #define KUKJIN                      32
 #define BIKWANG                     44
 
-#define ANIMTIME					1
+#define ANIMTIME					0.5
 #define FLOOR_CARD_HSPACE 60
 #define FLOOR_CARD_VSPACE 45
 #define FLOOR_CARD_GAP    10
@@ -101,4 +98,107 @@ enum EResultRule
     RES_EATPPUCK = 3,
     RES_EATJAPPUCK = 4,
     RESULTRULE_COUNT = 5
+};
+
+enum EGameState
+{
+	GS_NULL,
+	// 게임 시작
+	GS_START_NEWGAME,
+	// 바닥 카드 분배
+	GS_DISTRIBUTE,
+	// 일반 플레이 상태 상수
+	GS_PLAYING,
+	// 턴 변경.
+	GS_CHANGETURN,
+	// 바닥에 카드 냄
+	GS_PUTOUT_PLAYERCARD,
+	// 상태 갯수
+	GS_COUNT
+};
+// 카드 분배 상태 상수
+enum EDistributeCardState
+{
+	// 대기 상태
+	DC_READY,
+	// 첫번째 바닥 카드 분배 애니메이션,
+	//DC_FLOORCARDS_FIRST_ANI,
+	// 첫번째 바닥 카드 분배.
+	DC_FLOORCARDS_FIRST,
+	//
+	//DC_FLOORCARDS_SECOND_ANI,
+	// 두번째 바닥 카드 분배
+	DC_FLOORCARDS_SECOND,
+	//
+	//DC_PLAYERCARDS_FIRST_ANI,
+	// 플레이어 카드 분배
+	DC_PLAYERCARDS_FIRST,
+	//
+	//DC_OPPONENTCARDS_FIRST_ANI,
+	// 상대방 카드 분배
+	DC_OPPONENTCARDS_FIRST,
+	//
+	//DC_PLAYERCARDS_SECOND_ANI,
+	// 플레이어 나머지 카드 분배
+	DC_PLAYERCARDS_SECOND,
+	//
+	//DC_OPPONENTCARDS_SECOND_ANI,
+	// 상대방 나머지 카드 분배
+	DC_OPPONENTCARDS_SECOND,
+	// 사용자 카드 정렬
+	DC_SORT_CARDS,
+	//
+	//DC_PICKUP_BONUSCARDS_ANI,
+	// 바닥에서 보너스 카드를 빼냄
+	DC_PICKUP_BONUSCARDS,
+	// 총통 검사
+	DC_CHECK_PRESIDENT,
+	// 마무리
+	DC_FINISH,
+    // 상태갯수
+	DC_COUNT
+};
+
+// 카드를 바닥에 내는 상태 상수.
+enum EPutOutState
+{
+	// 낼카드를 고름
+	PO_PICKUP,
+	// 흔들수 있는지 체크
+	PO_CHECKSHAKE,
+	// 카드를 바닥에 냄
+	PO_PUTOUT,
+	// 뒤집음
+	PO_TURNUP,
+	// 벌칙 룰 적용 체크
+	PO_CHECKRULE,
+	// 턴 변경
+	PO_CHANGETURN,
+	// 상태 갯수
+	PO_COUNT
+};
+
+enum EChangeTurnState
+{
+	// 피를 뺏어옴
+	CT_ROBPEE,
+	// 게임이 끝났는지 확인
+	CT_CHECKENDOFGAME,
+	// 턴 변경
+	CT_CHANGETURN,
+	// 상태 갯수
+	CT_COUNT
+};
+
+enum {
+	kTagAnimationDance = 1,
+	kTagSpriteManager = 1,
+	KtagTileMap = 1,
+};
+
+enum {
+	kTagSprite1,
+	kTagSprite2,
+	kTagSprite3,
+	
 };

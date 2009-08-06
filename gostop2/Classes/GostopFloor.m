@@ -62,9 +62,10 @@
     {
         NSNumber *numbercard = [m_vFloorCards[nMonth] objectAtIndex:iCnt]; 
 		//if( ISBONUSCARD((int)[numbercard intValue]) )
-		if((BONUSCARD2 ==(int)[numbercard intValue]) || (BONUSCARD3 == (int)[numbercard intValue]))
+		int nIdxCard = [numbercard intValue];
+		if(BONUSCARD2 ==nIdxCard || BONUSCARD3 == nIdxCard)
         {
-            break;
+			return iCnt;
         }
     }
 	// 보너스 카드를 찾지 못했다면,
@@ -187,78 +188,7 @@
 	
 } // void CGostopFloor::SortFloor(INT nMonth).
 
-// 중앙 카드를 뒤집어 바닥에 냄
-- (int) TurnUpCard:(int)nPlayer
-{
-    int nIdxCard;
-    int nResult = NONE;
-    int nCntTurnUpMonth;
-	// 중앙에 카드가 없다면
-    if( 0 > (nIdxCard = [self PopCenterCard]) )
-    {	// 아무것도 하지 않고
-        return NOCARD;
-    }
-	// 중앙 카드를 뒤집어 바닥에 냄
-    m_nTurnUpMonth = [self AddToFloor:nIdxCard];
-	// 보너스 카드를 냈다면
-    //if( ISBONUSCARD(nIdxCard) )
-	if((BONUSCARD2 == (nIdxCard)) || (BONUSCARD3 == (nIdxCard)))
-    {
-        return nIdxCard;
-    }
-	// 낸 월(슬롯)의 카드 장수 카운트
-    nCntTurnUpMonth = [self GetNormalFloorCardCount:m_nTurnUpMonth];
-	// 지금 낸 월과 , 처음 낸 월이 같다면
-    if(m_nTurnUpMonth == m_nPutOutMonth)
-    {
-		// 해당 월에서 보너스 카드 장수를 뺀 장수에 따라서 결과 리턴
-        switch( nCntTurnUpMonth )
-        {
-				
-			case 2:
-				// 둘다 같은 월에 냈는데, 2장이라면, 쪽
-				nResult = RES_JJOCK;
-				break;
-				
-			case 4:
-				// 둘다 같은 월에 냈는데, 4장이라면, 따닥
-				nResult = RES_DDADDAK;
-				break;
-				
-			case 3:
-				// 둘다 같은 월에 냈는데, 3장이라면, 뻑
-				nResult = RES_PPUCK;
-				// 뻑을 한 사람 기억
-				m_nPpuckConvict[m_nPutOutMonth] = nPlayer;
-				break;
-        }
-    } // if(m_nTurnUpMonth == m_nPutOutMonth).
-    else if( nCntTurnUpMonth >= 4 )
-    {
-        // 둘다 같은 월이 아닌데
-		// 해당 슬롯의 카드가 4장 이상이고
-		//
-		
-		// 뻑을 한 살마과 현재 플레이어가 같다면
-        if(nPlayer == m_nPpuckConvict[m_nPutOutMonth]) 
-        {
-			// 해당 슬롯의 뻑기록 초기화
-            m_nPpuckConvict[m_nPutOutMonth] = NONE;
-			// 자뻑
-            nResult = RES_EATJAPPUCK;
-        }
-        else
-        {	// 해당 슬롯의 뻑기록 초기화
-            m_nPpuckConvict[m_nPutOutMonth] = NONE;
-			
-           // 아니면 그냥 뻑을 먹은 것임.
-			// 혹은 바닥에 놓인 3장이 뻑을 한것이 아닐수도 있찌만 
-            nResult = RES_EATPPUCK;
-        }
-    } // else if( nCntTurnUpMonth >= 4 ).
-	
-    return nResult;
-} // INT CGostopFloor::TurnUpCard(INT nPlayer).
+
 
 // 센터 카드 한장 추출
 - (int) PopCenterCard
@@ -341,6 +271,12 @@
     return [m_vCenterCards count];
 } // INT CGostopFloor::GetCenterCardCount(void).
 
+//센터 카드 리턴
+- (int) GetCenterCard:(int)index
+{
+	return (int)[[m_vCenterCards objectAtIndex:index] intValue];
+}
+
 // 바닥 카드 장수 리턴
 - (int) GetFloorCardCount:(int)nMonth
 {
@@ -415,7 +351,6 @@
                 if(NONE == nTargetMonth)
                 {
 					// 보너스 카드가 있고, 해당 슬롯에 일반 카드가 없다면
-                    //if( ISBONUSCARD((int)[[m_vFloorCards[iCnt] objectAtIndex:0] intValue]) && (0==(int)[self GetNormalFloorCardCount:iCnt]) )
 					int nIdxCard = (int)[[m_vFloorCards[iCnt] objectAtIndex:0] intValue];
 					if((BONUSCARD2 == (nIdxCard)) || (BONUSCARD3 == (nIdxCard)) && (0==(int)[self GetNormalFloorCardCount:iCnt]))	
                     {
@@ -454,5 +389,29 @@
 {
     return m_nTurnUpMonth;
 } // INT CGostopFloor::GetTurnUpMonth(void).
+
+- (int) SetPutOutMonth:(int)nMonth
+{
+	m_nPutOutMonth = nMonth;
+	return m_nPutOutMonth;
+}
+
+- (int) SetTurnUpMonth:(int)nMonth
+{
+	m_nTurnUpMonth = nMonth;
+	return m_nTurnUpMonth;
+}
+
+- (int) GetPpuckConvict:(int)nMonth
+{
+	return m_nPpuckConvict[nMonth];
+}
+
+- (int) SetPpuckConvict:(int)nMonth nSet:(int)nSet
+{
+	m_nPpuckConvict[nMonth] = nSet;
+	
+	return m_nPpuckConvict[nMonth];
+}
 
 @end

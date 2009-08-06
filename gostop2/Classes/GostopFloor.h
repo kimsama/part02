@@ -41,8 +41,7 @@
 - (int) PutToFloor:(int)nPlayer nIdxCard:(int)nIdxCard;
 // 바닥의 특정 슬롯에 카드를 냄
 - (int) PutToFloor:(int)nPlayer nIdxCard:(int)nIdxCard nMonth:(int)nMonth;
-// 중앙 카드를 뒤집어 바닥에 냄
-- (int) TurnUpCard:(int) nPlayer;
+
 // 바닥 정렬
 - (void) SortFloor:(int) nMonth;
 
@@ -56,7 +55,7 @@
 // 바닥에 쌓여진 보너스 카드 획득
 - (int) PopBonusCard:(int) nMonth;
 
-
+- (int) GetCenterCard:(int)index;
 // 센터 카드 갯수 리턴
 - (int) GetCenterCardCount;
 
@@ -75,8 +74,17 @@
 
 // 카드를 낸 월 리턴
 - (int) GetPutOutMonth;
+
+- (int) SetPutOutMonth:(int)nMonth;
 // 카드를 뒤집어 낸 월 리턴
 - (int) GetTurnUpMonth;
+
+- (int) SetTurnUpMonth:(int)nMonth;
+
+- (int) GetPpuckConvict:(int)nMonth;
+
+- (int) SetPpuckConvict:(int)nMonth nSet:(int)nSet;
+
 // 정렬
 - (int) numbersort:(id) obj1 second: (id) obj2;
 
