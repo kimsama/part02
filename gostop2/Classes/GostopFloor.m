@@ -42,8 +42,8 @@
 	srandom(time(Nil));
 	for(int i = 0 ; i < 400; i++)
 	{
-		NSUInteger idx1 = random() % 48;
-		NSUInteger idx2 = random() % 48;
+		NSUInteger idx1 = random() % 50;
+		NSUInteger idx2 = random() % 50;
 		
 		[m_vCenterCards exchangeObjectAtIndex:(NSUInteger)idx1 withObjectAtIndex:(NSUInteger)idx2];
 	}
@@ -155,33 +155,19 @@
 // 바닥 장렬
 - (void) SortFloor:(int)nMonth
 {
-	//[m_vFloorCards[nMonth] sortUsingFunction:numbersort context:nil];
-	int count = [m_vFloorCards[nMonth] count];
 	
-    for(int i = 0; i < count ; i++)
-	{
-		for(int j = count; j > 0 ; j--)
-		{
-			j--;
-			NSNumber *first = [m_vFloorCards[nMonth] objectAtIndex:i];
-			NSNumber *second = [m_vFloorCards[nMonth] objectAtIndex:j];
-			
-			if(first == nil && second == nil) 
-				continue;
-			
-			if(first == nil)
-			{
-				//[m_vFloorCards[nMonth] insertObject:second atIndex:i];
-			}else if(second == nil)
-			{				
-				//[m_vFloorCards[nMonth] insertObject:first atIndex:j];
-			}else
-			{
-				int result = [self numbersort:first second:second ];
-				if(result == NSOrderedDescending)
-				{
-					[m_vFloorCards[nMonth] exchangeObjectAtIndex:(NSUInteger)i withObjectAtIndex:(NSUInteger)j];
-				}
+	int count = [m_vFloorCards[nMonth] count];
+	int i, Sorted;
+	Sorted = FALSE;
+	while(!Sorted) {
+		Sorted = TRUE;
+		for(i = 1; i < count; i++) {
+			int first = [[m_vFloorCards[nMonth] objectAtIndex:i] intValue];
+			int second = [[m_vFloorCards[nMonth] objectAtIndex:i-1] intValue];
+			if(second > first) {
+				
+				[m_vFloorCards[nMonth] exchangeObjectAtIndex:(NSUInteger)i-1 withObjectAtIndex:(NSUInteger)i];
+				Sorted = FALSE;
 			}
 		}
 	}
