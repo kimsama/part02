@@ -263,7 +263,7 @@
 
     case DC_SORT_CARDS:
 
-		/*
+		
 		// 플레이어들의 카드를 정렬한다.
 		[m_Card SortPlayerCards];
 
@@ -272,7 +272,7 @@
         {
 			[m_Floor SortFloor:iCnt];
         }
-		*/
+		
 		[self DrawAll];
 			
         break;
@@ -614,6 +614,8 @@
         break;
 
     case PO_CHANGETURN:
+			[m_Card SortPlayerCards:[self GetTurn]];
+			[self DrawPlayerCards];
 			NSLog(@"턴 변경");
 			[self ChangeState:GS_CHANGETURN];
         return;
@@ -1240,7 +1242,6 @@
 	int iCnt;
 	int nIdxPlayerCard;
 	int nCntPlayerCardCount;
-	//AtlasSpriteManager *mgr = (AtlasSpriteManager*)[self getChildByTag:kTagSpriteManager];
 	
 	iCnt = -1;
 	
@@ -1253,33 +1254,24 @@
 		
 		if(0 > (nIdxPlayerCard))
 			break;
-		
-		//m_sprCard[nIdxPlayerCard].position = ccp ( m_coPlayerCards[PLAYER][iCnt].x , m_coPlayerCards[PLAYER][iCnt].y);
-		//		[m_sprCard[nIdxPlayerCard] setPosition:CGPointMake( m_coPlayerCards[PLAYER][iCnt].x , m_coPlayerCards[PLAYER][iCnt].y)];
-		//[mgr addChild:m_sprCard[nIdxPlayerCard]];
+		NSLog(@"정렬된 플레이어 카드 %d , %d번째",nIdxPlayerCard,i);
 		
 		AtlasSprite* card =(AtlasSprite*)[m_atlasmgr getChildByTag:nIdxPlayerCard];
-		[card setPosition:CGPointMake([self Getm_coPlayerCards:PLAYER index2:iCnt].x ,[self Getm_coPlayerCards:PLAYER index2:iCnt].y )];
-		
+		//[card setPosition:CGPointMake([self Getm_coPlayerCards:PLAYER index2:iCnt].x ,[self Getm_coPlayerCards:PLAYER index2:iCnt].y )];
+		[self MovingCard:nIdxPlayerCard startpoint:card.position endpoint:[self Getm_coPlayerCards:PLAYER index2:i]];
 		
 	}
-	//	while (! ISNOCARD(nIdxPlayerCard = [self GetPlayerCard:PLAYER nOffset:++iCnt]))
-	//	{
-	//		[m_sprCard[nIdxPlayerCard] setPosition:CGPointMake( m_coPlayerCards[PLAYER][iCnt].x , m_coPlayerCards[PLAYER][iCnt].y)];
-	//		[mgr addChild:m_sprCard[nIdxPlayerCard]];
 	
-	//[m_sprCard[nIdxPlayerCard] release];
-	//	}
 	
 	for(iCnt =0; iCnt< [self GetPlayerCardCount:OPPONENT]; iCnt++)
 	{
-		//AtlasSprite *OppCardBack = [AtlasSprite spriteWithRect:CGRectMake(18.5*BACK_CARD,0,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
-		//[OppCardBack setPosition:CGPointMake(m_coPlayerCards[OPPONENT][iCnt].x , m_coPlayerCards[OPPONENT][iCnt].y)];
-		//OppCardBack.position = ccp (m_coPlayerCards[OPPONENT][iCnt].x , m_coPlayerCards[OPPONENT][iCnt].y);
-		//[mgr addChild:OppCardBack];
 		
-		AtlasSprite* card =(AtlasSprite*)[m_atlasmgr getChildByTag:61+iCnt];
-		[card setPosition:CGPointMake([self Getm_coPlayerCards:OPPONENT index2:iCnt].x ,[self Getm_coPlayerCards:OPPONENT index2:iCnt].y )];
+		nIdxPlayerCard = [self GetPlayerCard:OPPONENT nOffset:iCnt];	
+		NSLog(@"정렬된 상대방 카드 %d , %d번째",nIdxPlayerCard,iCnt);
+		
+		AtlasSprite* card =(AtlasSprite*)[m_atlasmgr getChildByTag:nIdxPlayerCard];//61+iCnt
+		//[card setPosition:CGPointMake([self Getm_coPlayerCards:OPPONENT index2:iCnt].x ,[self Getm_coPlayerCards:OPPONENT index2:iCnt].y )];
+		[self MovingCard:nIdxPlayerCard startpoint:card.position endpoint:[self Getm_coPlayerCards:OPPONENT index2:iCnt]];
 		
 		//[OppCardBack release];
 	}
@@ -1297,21 +1289,23 @@
 	 Label* oshlabel = (Label*)[self getChildByTag:5];
 	 Label* pplabel = (Label*)[self getChildByTag:6];
 	 Label* oplabel = (Label*)[self getChildByTag:7];
-	 */	
 	
+	NSString str(@"%d",[self GetScore:PLAYER]);
+	[pslabel setString:str];	
+	*/
 }
 
 - (void) DrawAll
 {
-	if(GS_PLAYING == [self GetState])
+//	if(GS_PLAYING == [self GetState])
 	{
 		
 		//카드 그리고
 		[self DrawFloorCards];
-		[self DrawObtainedCards];
+		//[self DrawObtainedCards];
 		[self DrawPlayerCards];
 		//게임 상황 그리고
-		[self DisplayGameProgress];
+		//[self DisplayGameProgress];
 	}
 	
 }

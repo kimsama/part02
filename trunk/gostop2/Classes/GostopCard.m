@@ -227,39 +227,24 @@
 // 특정 플레이어 카드 정렬
 - (void) SortPlayerCards:(int)nPlayer
 {
-    //sort(m_vPlayerCards[nPlayer].begin(), m_vPlayerCards[nPlayer].end());
-	//[m_vPlayerCards[nPlayer] sortUsingFunction:numbersort context:nil];
+	
 	int count = [m_vPlayerCards[nPlayer] count];
 	
-    for(int i = 0; i < count ; i++)
-	{
-		for(int j = count; j > 0 ; j--)
-		{
-			//배열이니까
-			j--;
-			
-			NSNumber *first = [m_vPlayerCards[nPlayer] objectAtIndex:i];
-			NSNumber *second = [m_vPlayerCards[nPlayer] objectAtIndex:j];
-			
-			if(first == nil && second == nil) 
-				continue;
-			
-			if(first == nil)
-			{
-				[m_vPlayerCards[nPlayer] insertObject:second atIndex:i];
-			}else if(second == nil)
-			{				
-				[m_vPlayerCards[nPlayer] insertObject:first atIndex:j];
-			}else
-			{
-				int result = [self numbersort:first second:second ];
-				if(result == NSOrderedDescending)
-				{
-					[m_vPlayerCards[nPlayer] exchangeObjectAtIndex:(NSUInteger)i withObjectAtIndex:(NSUInteger)j];
-				}
+	int i, Sorted;
+	Sorted = FALSE;
+	while(!Sorted) {
+		Sorted = TRUE;
+		for(i = 1; i < count; i++) {
+			int first = [[m_vPlayerCards[nPlayer] objectAtIndex:i] intValue];
+			int second = [[m_vPlayerCards[nPlayer] objectAtIndex:i-1] intValue];
+			if(second > first) {
+				
+				[m_vPlayerCards[nPlayer] exchangeObjectAtIndex:(NSUInteger)i-1 withObjectAtIndex:(NSUInteger)i];
+				Sorted = FALSE;
 			}
 		}
 	}
+	 
 	
 } // void SortPlayerCards(int nPlayer).
 // 획득 카드 정렬
