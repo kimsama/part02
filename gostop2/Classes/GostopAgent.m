@@ -23,16 +23,16 @@
 	// 뺏어올 피 장수 초기화
     m_nCntRobPee = 0;
 	
+	m_nTurnUpCardMonth = 0;
 	
 	m_sbonuscardinfo.nMonth = 0;
 	m_sbonuscardinfo.nCount = 0;
 	
 
     MoveCards = [[NSMutableArray alloc] initWithCapacity:20];
-	for(int i = 0; i < 20 ;i++)
-	{
-		Movepoint[i] = CGPointMake( 0, 0 );
-	}
+	
+	Movepoint = CGPointMake( 0, 0 );
+	
     // 카드 초기화
 	m_Card = [[CGostopCard alloc] init];
 	[m_Card InitCardTypes];
@@ -290,7 +290,7 @@
         {
 			NSLog(@"총통입니다.~!");
             // 3초 대기
-			sleep(3000);
+			sleep(1);
 
 			// 새게임 시작	
             [self StartNewGame];
@@ -489,7 +489,12 @@
 
     case PO_PUTOUT:
 			// 픽업한 카드를 바닥에 낸다.
-		[self MovingCard:m_nIdxPutOutCard startpoint:[self Getm_coPlayerCards:turn index2:m_nGSParam1] endpoint:[self Getm_coFloorCards:m_nAvailableFloorSlot]];	
+		if(m_bAnimEvent == false)
+		{
+			Movepoint = [self Getm_coFloorCards:m_nAvailableFloorSlot+1];
+		[self MovingCard:m_nIdxPutOutCard startpoint:[self Getm_coPlayerCards:turn index2:m_nGSParam1] endpoint:Movepoint];	
+			m_bAnimEvent = true;
+		
 		switch( [m_Floor PutToFloor:[self GetTurn] nIdxCard:m_nIdxPutOutCard nMonth:m_nAvailableFloorSlot] )
         {
 				// 뻑을 먹었다면
@@ -524,7 +529,7 @@
 				// 특별히 처리할 것이 없으므로, 한번 더 낸다.
 				 nIdxCard = [m_Card PopPlayerCard:[self GetTurn] nOffset:iCnt];
                 [m_Floor AddToFloor:nIdxCard nMonth:m_nAvailableFloorSlot ];
-				[self MovingCard:nIdxCard startpoint:[self Getm_coPlayerCards:turn index2:m_nGSParam1] endpoint:[self Getm_coFloorCards:m_nAvailableFloorSlot]];
+				[self MovingCard:nIdxCard startpoint:[self Getm_coPlayerCards:turn index2:m_nGSParam1] endpoint:[self Getm_coFloorCards:m_nAvailableFloorSlot+1]];
             }
 				// 폭탄 카드 두장을 추가로 획득
 			[m_Card ReceiveCard:[self GetTurn] nIdxCard:BOMBCARD];
@@ -537,14 +542,32 @@
             m_nCntRobPee++;
             break;
         } // switch(m_nShakingMode).
+			
+		} // if(m_bAnimEvent)
+		else if(m_bAnimEvent)
+		{
+			if([self IsMoving:m_nIdxPutOutCard point:Movepoint] == false)
+			{
+				m_bAnimEvent = false;
+			}
+		}
         break;
 
     case PO_TURNUP:
 			// 중앙의 카드를 뒤집어 바닥에 붙이고 , 몇월에 붙었는지 기억
-			m_nGSParam2 = [self TurnUpCard:[self GetTurn] ];
-			
-			
-        break;
+			if(m_bAnimEvent == false)
+			{
+				m_nGSParam2 = [self TurnUpCard:[self GetTurn] ];
+				m_bAnimEvent = true;
+			}else if(m_bAnimEvent == true)
+			{
+				if(false == [self IsMoving:m_nidxTurnUpCard point:Movepoint])
+				{
+					m_bAnimEvent = false;
+				}
+			}
+		
+		break;
         
     case PO_CHECKRULE:
 			// 바닥에 붙인 결과에 따라서
@@ -621,7 +644,11 @@
         return;
     } // switch(m_nAgencyStep).
 	// 스텝 증가
-    m_nAgencyStep++;
+	if(m_bAnimEvent == false)
+	{
+		m_nAgencyStep++;
+	}
+    
 } // void DealPutOutPlayerCards(void).
 
 // 턴 변경
@@ -736,7 +763,7 @@
 			{
 				nIdxCard = [m_Floor PopFloorCard:nMonth];
 				[self ObtainCard:nIdxCard];
-				[self MovingCard:nIdxCard startpoint:[self Getm_coFloorCards:nMonth] endpoint:[self Getm_coObtainedCards:[self GetTurn] index2:[self GetCardType:nIdxCard]]];
+				[self MovingCard:nIdxCard startpoint:[self Getm_coFloorCards:nMonth+1] endpoint:[self Getm_coObtainedCards:[self GetTurn] index2:[self GetCardType:nIdxCard]]];
 			}while( nIdxCard != NOCARD );
 			NSLog(@"바닥(%d)에 있는 패 총 %d장 모두 획득",nMonth, [m_Floor GetFloorCardCount:nMonth]);
 
@@ -1313,23 +1340,24 @@
 // 중앙 카드를 뒤집어 바닥에 냄
 - (int) TurnUpCard:(int)nPlayer
 {
-    int nIdxCard;
+    //int nIdxCard;
     int nResult = NONE;
     int nCntTurnUpMonth;
-	// 중앙에 카드가 없다면
-    if( 0 > (nIdxCard = [m_Floor PopCenterCard]) )
+	m_nidxTurnUpCard = [m_Floor PopCenterCard];
+	// 만약 중앙에 카드가 없다면
+    if( 0 > m_nidxTurnUpCard  )
     {	// 아무것도 하지 않고
         return NOCARD;
     }
 	// 중앙 카드를 뒤집어 바닥에 냄
-    //m_nTurnUpMonth = [m_Floor AddToFloor:nIdxCard];
-	[m_Floor SetTurnUpMonth:[m_Floor AddToFloor:nIdxCard]];
-	[self MovingCard:nIdxCard startpoint:[self Getm_coFloorCards:0] endpoint:[self Getm_coFloorCards:[m_Floor GetAvailableFloorSlot:nIdxCard]]];
+	[m_Floor SetTurnUpMonth:[m_Floor AddToFloor:m_nidxTurnUpCard]];
+	m_nTurnUpCardMonth = [m_Floor GetAvailableFloorSlot:m_nidxTurnUpCard];
+	Movepoint = [self Getm_coFloorCards:m_nTurnUpCardMonth+1];
+	[self MovingCard:m_nidxTurnUpCard startpoint:[self Getm_coFloorCards:0] endpoint:Movepoint];
 	// 보너스 카드를 냈다면
-    //if( ISBONUSCARD(nIdxCard) )
-	if((BONUSCARD2 == (nIdxCard)) || (BONUSCARD3 == (nIdxCard)))
+	if((BONUSCARD2 == (m_nidxTurnUpCard)) || (BONUSCARD3 == (m_nidxTurnUpCard)))
     {
-        return nIdxCard;
+        return m_nidxTurnUpCard;
     }
 	// 낸 월(슬롯)의 카드 장수 카운트
     nCntTurnUpMonth = [m_Floor GetNormalFloorCardCount:[m_Floor GetTurnUpMonth]];

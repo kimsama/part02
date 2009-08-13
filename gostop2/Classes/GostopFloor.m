@@ -324,31 +324,37 @@
     {	// 바닥의 카드 중에 같은 우러을 갖은 패가 있는지 검색
         for(iCnt=0; iCnt< 12; iCnt++)
         {
+			int count = [self GetFloorCardCount:iCnt];
 			// 카드가 있는 월이 있다면
-            if([self GetFloorCardCount:iCnt] > 0)
+            if(count > 0)
             {
 				// 바닥에 가튼 월이 있다면,
-                if(((int)[[m_vFloorCards[iCnt] objectAtIndex:0] intValue])/4 == nIdxCard/4)
-                {
-                    nTargetMonth = iCnt;
-                    break;
-                }
-				// 아직 낼 곳을 결정하지 못한 경우, 보너스 카드만 쌓인 곳을 발견했다면,
-                if(NONE == nTargetMonth)
-                {
-					// 보너스 카드가 있고, 해당 슬롯에 일반 카드가 없다면
-					int nIdxCard = (int)[[m_vFloorCards[iCnt] objectAtIndex:0] intValue];
-					if((BONUSCARD2 == (nIdxCard)) || (BONUSCARD3 == (nIdxCard)) && (0==(int)[self GetNormalFloorCardCount:iCnt]))	
-                    {
-						// 일단 그곳을 기억해 두고
-                        nTargetMonth = iCnt;
-                        continue;
-                    }
-                }
-            }
+				
+				for(int i = 0; i < count; i++)
+				{
+					int Card = [self GetFloorCard:iCnt byOffset:(Byte)i];
+					if(Card/4 == nIdxCard/4)
+					{
+						NSLog(@"바닥에 같은 월이 있다, 바닥:%d , 뒤집은 카드:%d, 월:%d",Card,nIdxCard,iCnt);
+						nTargetMonth = iCnt;
+						return nTargetMonth;
+						// 아직 낼 곳을 결정하지 못한 경우, 보너스 카드만 쌓인 곳을 발견했다면,
+					}else if(BONUSCARD2 == Card || BONUSCARD3 == Card )
+					{
+						if(0 == [self GetNormalFloorCardCount:iCnt])
+						{
+							NSLog(@"보너스 카드만 있다, 바닥:%d , 뒤집은 카드:%d, 월:%d",Card,nIdxCard,iCnt);							
+							nTargetMonth = iCnt;
+							continue;
+						}
+					}
+				}
+              
+            }//if(count > 0)
             else if(NONE == nTargetMonth)
             {
 				// 빈 월을 찾았다면, 기억해 둔다.
+				NSLog(@"빈 바닥을 찾았다, 뒤집은 카드:%d, 월:%d",nIdxCard,iCnt);
                 nTargetMonth = iCnt;
             }
         } // for(iCnt=0; iCnt<12; iCnt++).
@@ -359,6 +365,7 @@
 		//일반 카드는 이런일이 일어날 일이 없다.
 		//그러나 보너스 카드의 경우 아주 극히 드문 확률로
 		//이런 일이 발생할수도 있다. 그때를 위한 예외 처리
+		NSLog(@"타겟 월을 찾지 못했다, , 뒤집은 카드:%d, 월:%d",nIdxCard,iCnt);
         nTargetMonth = 0;
     }
 	// 해당 슬롯 번호 월를 리턴

@@ -18,7 +18,7 @@
 #define KUKJIN                      32
 #define BIKWANG                     44
 
-#define ANIMTIME					0.5
+#define ANIMTIME					0.3
 #define FLOOR_CARD_HSPACE 60
 #define FLOOR_CARD_VSPACE 45
 #define FLOOR_CARD_GAP    10

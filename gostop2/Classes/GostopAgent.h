@@ -25,6 +25,10 @@ typedef struct bonuscardinfo {
     int m_nGSParam2;
 	// 바닥에 낼 플레이어 카드
     int m_nIdxPutOutCard;
+	// 가운데 패에서 뒤집은 카드
+	int m_nidxTurnUpCard;
+	// 가운데 패에서 뒤집은 카드가 이동할 위치
+	int m_nTurnUpCardMonth;
 	// 흔듦 여부
     int m_nShakingMode;
 	// 바닥에 낼 슬롯
@@ -50,7 +54,7 @@ typedef struct bonuscardinfo {
 	// 움직일 카드
 	NSMutableArray *MoveCards;
 	// 움직일 위치
-	CGPoint Movepoint[20];
+	CGPoint Movepoint;
 	
 	AtlasSpriteManager * m_atlasmgr;
 	
