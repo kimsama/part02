@@ -262,6 +262,21 @@
 //	[m_vObtainedCards[nPlayer][nCardType] sortUsingFunction:numbersort context:nil];
 	int count = [m_vObtainedCards[nPlayer][nCardType] count];
 	
+	int i, Sorted;
+	Sorted = FALSE;
+	while(!Sorted) {
+		Sorted = TRUE;
+		for(i = 1; i < count; i++) {
+			int first = [[m_vObtainedCards[nPlayer][nCardType] objectAtIndex:i] intValue];
+			int second = [[m_vObtainedCards[nPlayer][nCardType] objectAtIndex:i-1] intValue];
+			if(second > first) {
+				
+				[m_vObtainedCards[nPlayer][nCardType] exchangeObjectAtIndex:(NSUInteger)i-1 withObjectAtIndex:(NSUInteger)i];
+				Sorted = FALSE;
+			}
+		}
+	}
+	/*
     for(int i = 0; i < count ; i++)
 	{
 		for(int j = count; j > 0 ; j--)
@@ -290,7 +305,7 @@
 			}
 		}
 	}
-	
+	*/
 } // void SortObtainCards(int nPlayer, int nCardType).
 
 // 카드 획득
@@ -323,7 +338,14 @@
 {
     int iCnt;
     int nOffsetCard = NOCARD;
-    int nOpponent = !nPlayer;
+    int nOpponent;
+	if(nPlayer == PLAYER)
+	{
+		nOpponent = OPPONENT;
+	}else
+	{
+		nOpponent = PLAYER;
+	}
     if(0 >= [self GetObtainedCardCount:(int)nOpponent nCardType:(int)PEE])
     {
 		NSLog(@"상대 피가 없음 (%d)",nOpponent);
@@ -332,9 +354,9 @@
 
 	// 획득 카드 정렬
     //SortObtainCards(nPlayer);
-	[self SortObtainCards:(int)nPlayer];
+	[self SortObtainCards:PLAYER];
     //SortObtainCards(!nPlayer);
-	[self SortObtainCards:(int)!nPlayer];
+	[self SortObtainCards:OPPONENT];
 
     iCnt = 0;
 	// 상대방의 카드를 조사
@@ -361,7 +383,7 @@
     }
 	NSLog(@"최종 획득 피 (%d)",[self GetObtainedCard:nOpponent nCardType:PEE nOffset:nOffsetCard]);
     //ObtainCard(nPlayer, GetObtainedCard(nOpponent, PEE, nOffsetCard));
-	//-(int) GetObtainedCard:(int) nPlayer nCardType:(int)nCardType nOffset:(int) nOffset
+	
 	[self ObtainCard:(int)nPlayer nIdxCard:(int)[self GetObtainedCard:(int)nOpponent nCardType:PEE nOffset:(int)nOffsetCard]];
 	
 	// 해당 벡터에서 카드 제거
@@ -577,14 +599,19 @@
         return BONUSPEE3;
     }
 
+	if(nIdxCard == KUKJIN || nIdxCard == 41 || nIdxCard == 47)
+	{
+		return SSANGPEE;
+	}
+	
+	/*
 	NSNumber *idxcard = [[NSNumber alloc] initWithInt:nIdxCard];
 
-    //if(TRUE == binary_search(m_vCardTypes[PEE].begin(), m_vCardTypes[PEE].end(), nIdxCard))
-	if(TRUE == [m_vCardTypes[PEE] containsObject:idxcard])
+    if(TRUE == [m_vCardTypes[PEE] containsObject:idxcard])
     {
         return SSANGPEE;
     }
-
+	 */
     return NORMALPEE;
 } // BOOL IsSsangPee(int nIdxCard).
 
@@ -700,6 +727,7 @@
     }
 	// 해당 오프셋의 카드 인덱스 리턴
     return (int)[[m_vObtainedCards[nPlayer][nCardType] objectAtIndex:nOffset] intValue];
+	//return nOffset;
 } // int GetObtainedCard(int nPlayer, int nCardType, int nOffset).
 
 // 획득 피 장수 리턴
