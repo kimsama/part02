@@ -381,14 +381,20 @@
 		NSLog(@"일반 피를 발견 못함");
         nOffsetCard = 0;
     }
-	NSLog(@"최종 획득 피 (%d)",[self GetObtainedCard:nOpponent nCardType:PEE nOffset:nOffsetCard]);
+	int obtaincard = [self GetObtainedCard:nOpponent nCardType:PEE nOffset:nOffsetCard];
+	NSLog(@"최종 획득 피 (%d)",obtaincard);
     //ObtainCard(nPlayer, GetObtainedCard(nOpponent, PEE, nOffsetCard));
 	
 	[self ObtainCard:(int)nPlayer nIdxCard:(int)[self GetObtainedCard:(int)nOpponent nCardType:PEE nOffset:(int)nOffsetCard]];
+	m_nRobPeeCard = obtaincard;
 	
 	// 해당 벡터에서 카드 제거
     //m_vObtainedCards[nOpponent][PEE].erase(m_vObtainedCards[nOpponent][PEE].begin()+nOffsetCard);
-	[m_vObtainedCards[nOpponent][PEE] removeObjectAtIndex:(int)[[m_vObtainedCards[nOpponent][PEE] objectAtIndex:(int)nOffsetCard] intValue]];
+	//[m_vObtainedCards[nOpponent][PEE] removeObjectAtIndex:];
+	
+	[m_vObtainedCards[nOpponent][PEE] removeObjectAtIndex:(int)nOffsetCard];
+	
+	
 	
 } // void RobPee(int nPlayer).
 
@@ -757,5 +763,11 @@
 	// 최종적으로 계산된 카드 장수 리턴
     return nCntCards;
 } // int GetObtainedPeeCount(int nPlayer).
+
+-(int) GetRobPeeCard
+{
+	return m_nRobPeeCard;
+}
+
 
 @end
