@@ -654,6 +654,7 @@
 // 턴 변경
 - (void) DealChangeTurn
 {
+	int turn = [self GetTurn];
     switch(m_nAgencyStep)
     {
     case CT_ROBPEE:
@@ -663,7 +664,10 @@
         {
 			NSLog(@"피 1장 가져옴 (%d) -> (%d)",!m_nTurn, m_nTurn);
 			// 피를 빼앗아 온다.
-            [m_Card RobPee:[self GetTurn]];
+            [m_Card RobPee:turn];
+			int robpeecard = [m_Card GetRobPeeCard];
+			int robpeecardtype = [self GetCardType:robpeecard];
+			[self MovingCard:robpeecard startpoint:[self Getm_coObtainedCards:turn index2:robpeecardtype] endpoint:[self Getm_coObtainedCards:!turn index2:robpeecardtype]];
         }
         break;
 
@@ -685,6 +689,8 @@
 			// 게임이 끝났다면, 턴을 바꾸지 않는다.
 			
             [self ChangeState:GS_PLAYING];
+			// 바닥에 덱카드를 모두 Hide 시키자..
+			// 새로 시작
             return;
         }
         break;
@@ -1127,7 +1133,7 @@
 	
 }
 
-//중앙 카드 그려줌
+//중앙 카드 그려줌 - 가운데 덱카드
 - (void) DrawCenterCards
 {
 	int iCnt;
@@ -1136,23 +1142,49 @@
 	
 	nCntCenterCard = [self GetCenterCardCount];
 	
-	if(nCntCenterCard <= 5)
+	
+	if(nCntCenterCard == 0)
 	{
-		for(iCnt = 0; iCnt < nCntCenterCard; iCnt++)
+		for(iCnt = 0; iCnt < 10; iCnt++)
 		{
 			AtlasSprite *OppCardBack = (AtlasSprite*)[m_atlasmgr getChildByTag:51+iCnt];
-			[OppCardBack setPosition:CGPointMake([self Getm_coFloorCards:0].x -iCnt,[self Getm_coFloorCards:0].y-iCnt)];
+			[OppCardBack setPosition:CGPointMake(0,0)];
+			
+			
+			
 		}
+		return;
 	}
-	else
+	// 처음엔 바닥에 덱카드를 다 그린다.
+	if(nCntCenterCard >= 20)
 	{
-		for(iCnt = 0 ; iCnt <5+(nCntCenterCard)/6;iCnt++)
+		for(iCnt = 0 ; iCnt < 10;iCnt++)
 		{
 			AtlasSprite *OppCardBack = (AtlasSprite*)[m_atlasmgr getChildByTag:51+iCnt];
 			[OppCardBack setPosition:CGPointMake([self Getm_coFloorCards:0].x -iCnt,[self Getm_coFloorCards:0].y-iCnt)];
 			
 		}
+		
+	}else
+	{// 덱카드가 줄어들때마다 2장에 1장씩 줄여서 그린다.
+		int diff = (20 - nCntCenterCard)/2;
+		
+		
+		for(iCnt = 0;iCnt< 10; iCnt++)
+		{
+			AtlasSprite *OppCardBack = (AtlasSprite*)[m_atlasmgr getChildByTag:51+iCnt];
+			// 가져간 만큼 안그리고
+			if(iCnt < diff)
+			{
+				[OppCardBack setPosition:CGPointMake(0,0)];
+			}else
+			{ // 나머지 그린다.
+				[OppCardBack setPosition:CGPointMake([self Getm_coFloorCards:0].x -iCnt,[self Getm_coFloorCards:0].y-iCnt)];
+			}
+			
+		}
 	}
+	
 	
 	
 }
@@ -1161,7 +1193,10 @@
 	int iCnt;
 	int iMonth;
 	int nidxCard;
+	
+	// 중앙 덱카드를 그린다.
 	[self DrawCenterCards];
+	
 	//AtlasSpriteManager *mgr = (AtlasSpriteManager*)[self getChildByTag:kTagSpriteManager];
 	for(iMonth=0; iMonth <12; iMonth++)
 	{
@@ -1283,9 +1318,14 @@
 			break;
 		NSLog(@"정렬된 플레이어 카드 %d , %d번째",nIdxPlayerCard,i);
 		
+		id sprite = [m_atlasmgr getChildByTag:nIdxPlayerCard];
+		[m_atlasmgr reorderChild:sprite z:i+10];
+		
+		
 		AtlasSprite* card =(AtlasSprite*)[m_atlasmgr getChildByTag:nIdxPlayerCard];
 		//[card setPosition:CGPointMake([self Getm_coPlayerCards:PLAYER index2:iCnt].x ,[self Getm_coPlayerCards:PLAYER index2:iCnt].y )];
 		[self MovingCard:nIdxPlayerCard startpoint:card.position endpoint:[self Getm_coPlayerCards:PLAYER index2:i]];
+		
 		
 	}
 	
@@ -1295,6 +1335,9 @@
 		
 		nIdxPlayerCard = [self GetPlayerCard:OPPONENT nOffset:iCnt];	
 		NSLog(@"정렬된 상대방 카드 %d , %d번째",nIdxPlayerCard,iCnt);
+		
+		id sprite = [m_atlasmgr getChildByTag:nIdxPlayerCard];
+		[m_atlasmgr reorderChild:sprite z:iCnt+10];
 		
 		AtlasSprite* card =(AtlasSprite*)[m_atlasmgr getChildByTag:nIdxPlayerCard];//61+iCnt
 		//[card setPosition:CGPointMake([self Getm_coPlayerCards:OPPONENT index2:iCnt].x ,[self Getm_coPlayerCards:OPPONENT index2:iCnt].y )];
@@ -1344,9 +1387,13 @@
     int nResult = NONE;
     int nCntTurnUpMonth;
 	m_nidxTurnUpCard = [m_Floor PopCenterCard];
+	int count = [m_Floor GetCenterCardCount];
+	NSLog(@"바닥에 남은 카드: %d", count);
+	
 	// 만약 중앙에 카드가 없다면
     if( 0 > m_nidxTurnUpCard  )
     {	// 아무것도 하지 않고
+		NSLog(@"바닥 중앙 카드에 아무것도 없다");
         return NOCARD;
     }
 	// 중앙 카드를 뒤집어 바닥에 냄
@@ -1413,6 +1460,8 @@
             nResult = RES_EATPPUCK;
         }
     } // else if( nCntTurnUpMonth >= 4 ).
+	
+	[self DrawCenterCards];
 	
     return nResult;
 } // INT CGostopFloor::TurnUpCard(INT nPlayer).

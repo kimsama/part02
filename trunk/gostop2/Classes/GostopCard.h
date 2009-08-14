@@ -22,6 +22,9 @@
 	//int m_vObtainedCards[PLAYER_COUNT][CARDTYPE_COUNT];
 	// 점수 기억 배열
     int m_nScore[PLAYER_COUNT];
+	
+	int m_nRobPeeCard;
+	
 
 
     
@@ -92,4 +95,6 @@
 // 정렬
 - (int) numbersort:(id) obj1 second: (id) obj2;
 
+
+-(int) GetRobPeeCard;
 @end
