@@ -655,6 +655,11 @@
 - (void) DealChangeTurn
 {
 	int turn = [self GetTurn];
+	int oppturn;
+	if(turn == PLAYER)
+		oppturn = OPPONENT;
+	else 
+		oppturn = PLAYER;
     switch(m_nAgencyStep)
     {
     case CT_ROBPEE:
@@ -667,7 +672,9 @@
             [m_Card RobPee:turn];
 			int robpeecard = [m_Card GetRobPeeCard];
 			int robpeecardtype = [self GetCardType:robpeecard];
-			[self MovingCard:robpeecard startpoint:[self Getm_coObtainedCards:turn index2:robpeecardtype] endpoint:[self Getm_coObtainedCards:!turn index2:robpeecardtype]];
+			CGPoint start = CGPointMake([self Getm_coObtainedCards:turn index2:robpeecardtype].x, [self Getm_coObtainedCards:turn index2:robpeecardtype].y);
+			CGPoint end = CGPointMake([self Getm_coObtainedCards:oppturn index2:robpeecardtype].x,[self Getm_coObtainedCards:oppturn index2:robpeecardtype].y);
+			[self MovingCard:robpeecard startpoint:start endpoint:end];
         }
         break;
 
@@ -684,8 +691,14 @@
 			// 따라서 뒤집어서 플레이어가 가져간다.
 			
 			NSLog(@"바닥에 남은 보너스 피 가져감 시작");
-			// 바닥에 남은 카드를 모두 가져감
+			// 중앙에 남은 카드를 모두 가져감
             while( !( 0 > ( [self ObtainCard:[m_Floor PopCenterCard]] )) );
+			// 바닥에 남은 카드를 모두 가져감
+			for(int i = 0 ; i < 12 ; i++)
+			{
+				while( !(0 > ([self ObtainCard:[m_Floor PopFloorCard:i]] )) );
+			}
+			
 			// 게임이 끝났다면, 턴을 바꾸지 않는다.
 			
             [self ChangeState:GS_PLAYING];
@@ -1070,7 +1083,7 @@
 		[m_atlasmgr setPosition:CGPointMake(0,0)];
 		[m_atlasmgr addChild:m_sprOppCardBack[cnt] z:0 tag:61+cnt];
 	}
-/*	
+	/*
 	NSString *pscore = [[NSString alloc] initWithFormat:@"%d",[self GetScore:PLAYER]];
 	NSString *oscore = [[NSString alloc] initWithFormat:@"%d",[self GetScore:OPPONENT]];
 	
@@ -1082,37 +1095,45 @@
 	
 	NSString *pppnotice = [[NSString alloc] initWithFormat:@"%d",[self GetRuleCount:PLAYER nRuleType:PPUCK]];
 	NSString *oppnotice = [[NSString alloc] initWithFormat:@"%d",[self GetRuleCount:OPPONENT nRuleType:PPUCK]];
+	*/
+	pslabel = [Label labelWithString:@"0" fontName:@"Courier" fontSize:32];
+	oslabel = [Label labelWithString:@"0" fontName:@"Courier" fontSize:32];
+	pglabel = [Label labelWithString:@"0" fontName:@"Courier" fontSize:10];
+	oglabel = [Label labelWithString:@"0" fontName:@"Courier" fontSize:10];
+	pshlabel = [Label labelWithString:@"0" fontName:@"Courier" fontSize:10];
+	oshlabel = [Label labelWithString:@"0" fontName:@"Courier" fontSize:10];
+	pplabel = [Label labelWithString:@"0" fontName:@"Courier" fontSize:10];
+	oplabel = [Label labelWithString:@"0" fontName:@"Courier" fontSize:10];
 	
-	Label* pslabel = [Label labelWithString:pscore fontName:@"Arial" fontSize:10];
-	Label* oslabel = [Label labelWithString:oscore fontName:@"Arial" fontSize:10];
-	Label* pglabel = [Label labelWithString:pgonotice fontName:@"Arial" fontSize:10];
-	Label* oglabel = [Label labelWithString:ogonotice fontName:@"Arial" fontSize:10];
-	Label* pshlabel = [Label labelWithString:pshakenotice fontName:@"Arial" fontSize:10];
-	Label* oshlabel = [Label labelWithString:oshakenotice fontName:@"Arial" fontSize:10];
-	Label* pplabel = [Label labelWithString:pppnotice fontName:@"Arial" fontSize:10];
-	Label* oplabel = [Label labelWithString:oppnotice fontName:@"Arial" fontSize:10];
 	
-	[self addChild: pslabel z:0 tag:0];
-	[pslabel setPosition: ccp([self Getm_coScore:PLAYER].x, [self Getm_coScore:PLAYER].y)];
-	[self addChild: oslabel z:0 tag:1];
+	[pslabel setPosition: ccp([self Getm_coScore:PLAYER].x , [self Getm_coScore:PLAYER].y)];
+	
 	[oslabel setPosition: ccp([self Getm_coScore:OPPONENT].x, [self Getm_coScore:OPPONENT].y)];
 	
-	[self addChild: pglabel z:0 tag:2];
+	
 	[pglabel setPosition: ccp([self Getm_coRule:PLAYER index2:GO].x, [self Getm_coRule:PLAYER index2:GO].y)];
-	[self addChild: oglabel z:0 tag:3];
+	
 	[oglabel setPosition: ccp([self Getm_coRule:OPPONENT index2:GO].x,[self Getm_coRule:OPPONENT index2:GO].y)];
 	
-	[self addChild: pshlabel z:0 tag:4];
+	
 	[pshlabel setPosition: ccp([self Getm_coRule:PLAYER index2:SHAKE].x,[self Getm_coRule:PLAYER index2:SHAKE].y)];
-	[self addChild: oshlabel z:0 tag:5];
+	
 	[oshlabel setPosition: ccp([self Getm_coRule:OPPONENT index2:SHAKE].x,[self Getm_coRule:OPPONENT index2:SHAKE].y)];
 	
-	[self addChild: pplabel z:0 tag:6];
-	[pplabel setPosition: ccp([self Getm_coRule:PLAYER index2:PPUCK].x,[self Getm_coRule:PLAYER index2:PPUCK].y)];
-	[self addChild: oplabel z:0 tag:7];
-	[oplabel setPosition: ccp([self Getm_coRule:OPPONENT index2:PPUCK].x,[self Getm_coRule:OPPONENT index2:PPUCK].y)];
-	*/
 	
+	[pplabel setPosition: ccp([self Getm_coRule:PLAYER index2:PPUCK].x,[self Getm_coRule:PLAYER index2:PPUCK].y)];
+	
+	[oplabel setPosition: ccp([self Getm_coRule:OPPONENT index2:PPUCK].x,[self Getm_coRule:OPPONENT index2:PPUCK].y)];
+	
+	[self addChild: pslabel];
+	[self addChild: oslabel];
+	[self addChild: pglabel];
+	[self addChild: oglabel];
+	[self addChild: pshlabel];
+	[self addChild: oshlabel];
+	[self addChild: pplabel];
+	[self addChild: oplabel];
+		
 }
 - (void) UnloadSprites
 {
@@ -1350,19 +1371,39 @@
 {
 	
 	
-	/*
-	 Label* pslabel = (Label*)[self getChildByTag:0];
-	 Label* oslabel = (Label*)[self getChildByTag:1];
-	 Label* pglabel = (Label*)[self getChildByTag:2];
-	 Label* oglabel = (Label*)[self getChildByTag:3];
-	 Label* pshlabel = (Label*)[self getChildByTag:4];
-	 Label* oshlabel = (Label*)[self getChildByTag:5];
-	 Label* pplabel = (Label*)[self getChildByTag:6];
-	 Label* oplabel = (Label*)[self getChildByTag:7];
 	
-	NSString str(@"%d",[self GetScore:PLAYER]);
-	[pslabel setString:str];	
-	*/
+	NSString *pscore = [NSString stringWithFormat:@"%d",[self GetScore:PLAYER]];
+	NSString *oscore = [NSString stringWithFormat:@"%d",[self GetScore:OPPONENT]];
+	
+	NSString *pgonotice = [NSString stringWithFormat:@"%d",[self GetRuleCount:PLAYER nRuleType:GO]];
+	NSString *ogonotice = [NSString stringWithFormat:@"%d",[self GetRuleCount:OPPONENT nRuleType:GO]];
+	
+	NSString *pshakenotice = [NSString stringWithFormat:@"%d",[self GetRuleCount:PLAYER nRuleType:SHAKE]];
+	NSString *oshakenotice = [NSString stringWithFormat:@"%d",[self GetRuleCount:OPPONENT nRuleType:SHAKE]];
+	
+	NSString *pppnotice = [NSString stringWithFormat:@"%d",[self GetRuleCount:PLAYER nRuleType:PPUCK]];
+	NSString *oppnotice = [NSString stringWithFormat:@"%d",[self GetRuleCount:OPPONENT nRuleType:PPUCK]];
+	
+	
+	[pslabel setString:pscore];	
+	[oslabel setString:oscore];	
+	[pglabel setString:pgonotice];	
+	[oglabel setString:ogonotice];	
+	[pshlabel setString:pshakenotice];	
+	[oshlabel setString:oshakenotice];	
+	[pplabel setString:pppnotice];	
+	[oplabel setString:oppnotice];	
+	
+	[pslabel draw];
+	[oslabel draw];
+	[pglabel draw];
+	[oglabel draw];
+	[pshlabel draw];
+	[oshlabel draw];
+	[pplabel draw];
+	[oplabel draw];
+	
+
 }
 
 - (void) DrawAll
@@ -1375,7 +1416,7 @@
 		//[self DrawObtainedCards];
 		[self DrawPlayerCards];
 		//게임 상황 그리고
-		//[self DisplayGameProgress];
+		[self DisplayGameProgress];
 	}
 	
 }
@@ -1387,8 +1428,8 @@
     int nResult = NONE;
     int nCntTurnUpMonth;
 	m_nidxTurnUpCard = [m_Floor PopCenterCard];
-	int count = [m_Floor GetCenterCardCount];
-	NSLog(@"바닥에 남은 카드: %d", count);
+	//int count = [m_Floor GetCenterCardCount];
+	//NSLog(@"바닥에 남은 카드: %d", count);
 	
 	// 만약 중앙에 카드가 없다면
     if( 0 > m_nidxTurnUpCard  )
