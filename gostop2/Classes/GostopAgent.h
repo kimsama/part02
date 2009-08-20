@@ -14,7 +14,7 @@ typedef struct bonuscardinfo {
 	int nCount;
 }bonusinfo;
 
-@interface CGostopAgent : NSObject
+@interface CGostopAgent : CocosNode
 {
 	// 게임 상태
     int m_nGameState;
@@ -69,6 +69,15 @@ typedef struct bonuscardinfo {
 	AtlasSprite *m_sprCard[GAME_TOTAL_CARD];
 	AtlasSprite *m_sprOppCardBack[DISTRIBUTE_PLAYER_CARDS];
 	AtlasSprite *m_sprBombCard;
+	
+	Label* pslabel;
+	Label* oslabel;
+	Label* pglabel;
+	Label* oglabel;
+	Label* pshlabel;
+	Label* oshlabel;
+	Label* pplabel;
+	Label* oplabel;
 }
 
 
