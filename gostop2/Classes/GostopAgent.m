@@ -28,21 +28,34 @@
 	m_sbonuscardinfo.nMonth = 0;
 	m_sbonuscardinfo.nCount = 0;
 	
-
-    MoveCards = [[NSMutableArray alloc] initWithCapacity:20];
+	if(m_bFirstStart == FALSE)
+	{
+		MoveCards = [[NSMutableArray alloc] initWithCapacity:20];
+		
+		Movepoint = CGPointMake( 0, 0 );
+		
+		// 카드 초기화
+		m_Card = [[CGostopCard alloc] init];
+		[m_Card InitCardTypes];
+		[m_Card InitGostopHands];
+		[m_Card Init];
+		
+		// 바닥 초기화
+		m_Floor = [[CGostopFloor alloc] init];
+		[m_Floor Init];
+		
+		m_bFirstStart  = TRUE;
+	}else
+	{
+		//플레이어 카드 및 획득 카드 정보 초기화
+		[m_Card Init];
+		[m_Floor Init];
+	}
 	
-	Movepoint = CGPointMake( 0, 0 );
-	
-    // 카드 초기화
-	m_Card = [[CGostopCard alloc] init];
-	[m_Card InitCardTypes];
-	[m_Card InitGostopHands];
-	[m_Card Init];
+    
 	
 	
-    // 바닥 초기화
-	m_Floor = [[CGostopFloor alloc] init];
-	[m_Floor Init];
+    
 	
     // 플레이어 수 만큼 룹을 돌며 초기화
     for(iCnt=0; iCnt<PLAYER_COUNT; iCnt++)
@@ -70,6 +83,10 @@
 	[NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(DoAgency:) userInfo:nil repeats:YES];
 	
 }
+- (void) SetFirstStartGame:(bool) set
+{
+	m_bFirstStart = set;
+}
 // 게임 상태 변경
 - (void) ChangeState:(int) nGameState
 {
@@ -85,6 +102,7 @@
     // 새로운 게임 시작
     case GS_START_NEWGAME:
         //InitGame();
+			
 		[self InitGame];	
         break;
 
@@ -141,10 +159,11 @@
 
 - (void) MovingCard:(int)nIdxCard startpoint:(CGPoint)startpoint endpoint:(CGPoint)endpoint
 {
+	
+	//NSLog(@"%d번 플레이어가 %d번 카드를 %f ,%f 에서 %f , %f 로 이동시켰따~!!!",[self GetTurn], nIdxCard , startpoint.x , startpoint.y , endpoint.x , endpoint.y);
 	AtlasSprite *Card = (AtlasSprite*)[m_atlasmgr getChildByTag:nIdxCard];
 	Card.position = startpoint;
-	
-	
+		
 	id actionTo = [MoveTo actionWithDuration:ANIMTIME position:ccp( endpoint.x, endpoint.y)];
 	[Card runAction:actionTo];
 }
@@ -492,56 +511,56 @@
 		if(m_bAnimEvent == false)
 		{
 			Movepoint = [self Getm_coFloorCards:m_nAvailableFloorSlot+1];
-		[self MovingCard:m_nIdxPutOutCard startpoint:[self Getm_coPlayerCards:turn index2:m_nGSParam1] endpoint:Movepoint];	
+			[self MovingCard:m_nIdxPutOutCard startpoint:[self Getm_coPlayerCards:turn index2:m_nGSParam1] endpoint:Movepoint];	
 			m_bAnimEvent = true;
 		
-		switch( [m_Floor PutToFloor:[self GetTurn] nIdxCard:m_nIdxPutOutCard nMonth:m_nAvailableFloorSlot] )
-        {
+			switch( [m_Floor PutToFloor:[self GetTurn] nIdxCard:m_nIdxPutOutCard nMonth:m_nAvailableFloorSlot] )
+			{
 				// 뻑을 먹었다면
-        case RES_EATPPUCK:
-				NSLog(@"뻑먹음 1장");
-            m_nCntRobPee += 1;
-            break;
+				case RES_EATPPUCK:
+					NSLog(@"뻑먹음 1장");
+					m_nCntRobPee += 1;
+					break;
 				// 자기가 싼 뻑을 먺었다면
-        case RES_EATJAPPUCK:
-				NSLog(@"자뻑먹음");
-            m_nCntRobPee += 2;
-            break;
-        } // switch( m_Floor.PutToFloor(GetTurn(), m_nIdxPutOutCard, m_nAvailableFloorSlot) ).
+				case RES_EATJAPPUCK:
+					NSLog(@"자뻑먹음");
+					m_nCntRobPee += 2;
+					break;
+			} // switch( m_Floor.PutToFloor(GetTurn(), m_nIdxPutOutCard, m_nAvailableFloorSlot) ).
 			// 흔듬/ 폭탄 처리
-        switch(m_nShakingMode)
-        {
-        case PM_SHAKE:
-            break;
+			switch(m_nShakingMode)
+			{
+			case PM_SHAKE:
+				break;
 
-        case PM_BOMB:
+			case PM_BOMB:
 				// 루프를 돌며 같은 월이 있는 첫번째 인덱스를 검색
-            for(iCnt=0; iCnt<[self GetPlayerCardCount]; iCnt++)
-            {	// 같은 월을 찾았다면
-                if([self GetPlayerCard:(iCnt)/4] == m_nIdxPutOutCard/4)
-                {	// 루프를 벗어남
-                    break;
-                }
-            }
+				for(iCnt=0; iCnt<[self GetPlayerCardCount]; iCnt++)
+				{	// 같은 월을 찾았다면
+					if([self GetPlayerCard:(iCnt)/4] == m_nIdxPutOutCard/4)
+					{	// 루프를 벗어남
+						break;
+					}
+				}
 				// 같은 월의 카드를 모두 냄
-			while([self GetPlayerCard:(iCnt)/4] == m_nIdxPutOutCard/4)
-            {	// 바닥의 방금 낸 슬롯에 해당 카드를 한번 더 냄
-				// 특별히 처리할 것이 없으므로, 한번 더 낸다.
-				 nIdxCard = [m_Card PopPlayerCard:[self GetTurn] nOffset:iCnt];
-                [m_Floor AddToFloor:nIdxCard nMonth:m_nAvailableFloorSlot ];
-				[self MovingCard:nIdxCard startpoint:[self Getm_coPlayerCards:turn index2:m_nGSParam1] endpoint:[self Getm_coFloorCards:m_nAvailableFloorSlot+1]];
-            }
+				while([self GetPlayerCard:(iCnt)/4] == m_nIdxPutOutCard/4)
+				{	// 바닥의 방금 낸 슬롯에 해당 카드를 한번 더 냄
+					// 특별히 처리할 것이 없으므로, 한번 더 낸다.
+					nIdxCard = [m_Card PopPlayerCard:[self GetTurn] nOffset:iCnt];
+					[m_Floor AddToFloor:nIdxCard nMonth:m_nAvailableFloorSlot ];
+					[self MovingCard:nIdxCard startpoint:[self Getm_coPlayerCards:turn index2:m_nGSParam1] endpoint:[self Getm_coFloorCards:m_nAvailableFloorSlot+1]];
+				}
 				// 폭탄 카드 두장을 추가로 획득
-			[m_Card ReceiveCard:[self GetTurn] nIdxCard:BOMBCARD];
-            [m_Card ReceiveCard:[self GetTurn] nIdxCard:BOMBCARD];
+				[m_Card ReceiveCard:[self GetTurn] nIdxCard:BOMBCARD];
+				[m_Card ReceiveCard:[self GetTurn] nIdxCard:BOMBCARD];
 				//To Do: 8,9 - Edit this
 				[self MovingCard:BOMBCARD startpoint:[self Getm_coFloorCards:0] endpoint:[self Getm_coPlayerCards:turn index2:8]];
 				[self MovingCard:BOMBCARD startpoint:[self Getm_coFloorCards:0] endpoint:[self Getm_coPlayerCards:turn index2:9]];
 				NSLog(@"폭탄 1장 + 1장");
 				// 빼앗아 올 피 장수 증가
-            m_nCntRobPee++;
-            break;
-        } // switch(m_nShakingMode).
+				m_nCntRobPee++;
+				break;
+			} // switch(m_nShakingMode).
 			
 		} // if(m_bAnimEvent)
 		else if(m_bAnimEvent)
@@ -639,6 +658,7 @@
     case PO_CHANGETURN:
 			[m_Card SortPlayerCards:[self GetTurn]];
 			[self DrawPlayerCards];
+			[self DrawObtainedCards];
 			NSLog(@"턴 변경");
 			[self ChangeState:GS_CHANGETURN];
         return;
@@ -663,17 +683,28 @@
     switch(m_nAgencyStep)
     {
     case CT_ROBPEE:
-			NSLog(@"빼앗아 와야할 피 : (%d)",m_nCntRobPee);
+			if(m_nCntRobPee != 0)
+			{
+				NSLog(@"빼앗아 와야할 피 장수: (%d)",m_nCntRobPee);
+			}
+			
 			//빼앗아 와야할 피의 장수 만큼
         while(m_nCntRobPee-- > 0)
         {
-			NSLog(@"피 1장 가져옴 (%d) -> (%d)",!m_nTurn, m_nTurn);
+			if(m_nTurn == PLAYER)
+			{
+				NSLog(@"피 1장 가져옴 OPPONENT -> PLAYER");
+			}else
+			{
+				NSLog(@"피 1장 가져옴 PLAYER -> OPPONENT");
+			}
+			
 			// 피를 빼앗아 온다.
             [m_Card RobPee:turn];
 			int robpeecard = [m_Card GetRobPeeCard];
 			int robpeecardtype = [self GetCardType:robpeecard];
-			CGPoint start = CGPointMake([self Getm_coObtainedCards:turn index2:robpeecardtype].x, [self Getm_coObtainedCards:turn index2:robpeecardtype].y);
-			CGPoint end = CGPointMake([self Getm_coObtainedCards:oppturn index2:robpeecardtype].x,[self Getm_coObtainedCards:oppturn index2:robpeecardtype].y);
+			CGPoint end = CGPointMake([self Getm_coObtainedCards:turn index2:robpeecardtype].x, [self Getm_coObtainedCards:turn index2:robpeecardtype].y);
+			CGPoint start = CGPointMake([self Getm_coObtainedCards:oppturn index2:robpeecardtype].x,[self Getm_coObtainedCards:oppturn index2:robpeecardtype].y);
 			[self MovingCard:robpeecard startpoint:start endpoint:end];
         }
         break;
@@ -700,8 +731,12 @@
 			}
 			
 			// 게임이 끝났다면, 턴을 바꾸지 않는다.
+			if(m_bFirstStart == TRUE)
+			{
+				[self MoveAllCardToDeck];
+			}
 			
-            [self ChangeState:GS_PLAYING];
+            [self ChangeState:GS_START_NEWGAME];
 			// 바닥에 덱카드를 모두 Hide 시키자..
 			// 새로 시작
             return;
@@ -769,21 +804,41 @@
 			nIdxCard = [m_Floor PopFloorCard:nMonth];
 			[self ObtainCard:nIdxCard];
 			pos =[self Getm_coObtainedCards:[self GetTurn] index2:[self GetCardType:nIdxCard]];
-			//pos.x += 5;
+			
 			[self MovingCard:nIdxCard startpoint:[self Getm_coFloorCards:nMonth+1] endpoint:pos];
         break;
 
     default:
+			
 			NSLog(@"바닥(%d)에 있는 패 총 %d장 모두 획득",nMonth, [m_Floor GetFloorCardCount:nMonth]);
 			// 2장 , 4장이 있다면
 			// 그냥 다 먹어버림
 			// 해당 월의 카드를 모두 먹고,
-			do
+			
+			for(int iCnt = 0 ; /*0 < (nIdxCard =[m_Floor PopFloorCard:nMonth])*/  ; iCnt++)
 			{
 				nIdxCard = [m_Floor PopFloorCard:nMonth];
+				if(nIdxCard < 0) 
+				{
+					if( [m_Floor GetFloorCardCount:nMonth] == 0)
+					{
+						break;
+					}
+				}
+				
+				
+				
+				
+				CGPoint startpoint = [self Getm_coFloorCards:nMonth+1];
+				CGPoint endpoint = [self Getm_coObtainedCards:[self GetTurn] index2:[self GetCardType:nIdxCard]];
+				NSLog(@"%d번 플레이어가 %d번 카드를 %2f ,%2f 에서 %2f , %2f 로 이동시켰따~!!!",[self GetTurn], nIdxCard , startpoint.x , startpoint.y , endpoint.x , endpoint.y);
+				
+				[self MovingCard:nIdxCard startpoint:startpoint endpoint:endpoint];
+				
+				//nIdxCard = [m_Floor PopFloorCard:nMonth];
 				[self ObtainCard:nIdxCard];
-				[self MovingCard:nIdxCard startpoint:[self Getm_coFloorCards:nMonth+1] endpoint:[self Getm_coObtainedCards:[self GetTurn] index2:[self GetCardType:nIdxCard]]];
-			}while( nIdxCard != NOCARD );
+			}
+			
 			NSLog(@"바닥(%d)에 있는 패 총 %d장 모두 획득",nMonth, [m_Floor GetFloorCardCount:nMonth]);
 
     }
@@ -791,14 +846,17 @@
 // 현재 턴 플레이어가 카드 획득
 - (int) ObtainCard:(int) nIdxCard
 {
+//	if(nIdxCard < 0)
+//		return -1;
+	
     int nResult;
 
-	if([self GetTurn]== PLAYER && nIdxCard > 0)
+	if([self GetTurn]== PLAYER)
 	{
-		NSLog(@"카드 획득 (%d)",nIdxCard);
+		NSLog(@"플레이어가 카드 획득 :(%d)번",nIdxCard);
 	}else if([self GetTurn] == OPPONENT)
 	{
-		NSLog(@"카드 획득 (%d)",nIdxCard);
+		NSLog(@"상대방이 카드 획득 :(%d)번",nIdxCard);
 	}
 	
 	// 카드 획득
@@ -974,7 +1032,7 @@
 	
 	for(int j =0; j < CARDTYPE_COUNT; j++)
 	{
-		m_coObtainedCards[OPPONENT][j] = CGPointMake ( 0+(CARD_WIDTH/2) , m_coObtainedCards[PLAYER][j].y + 179);
+		m_coObtainedCards[OPPONENT][j] = CGPointMake ( 0+(CARD_WIDTH/2) , m_coObtainedCards[PLAYER][j].y + 223);//216.5
 		
 	}
 	
@@ -1016,20 +1074,23 @@
 {
 	//int offset = 0;
 	int count;
+	count = [m_Card GetObtainedCardCount:index1 nCardType:index2];
+	/*
 	if(index2 == PEE)
 	{
-		count = [m_Card GetObtainedPeeCount:[self GetTurn]];
+		count = [m_Card GetObtainedCardCount:index1 nCardType:index2];
 	}else if(index2 == KWANG)
 	{
-		count = [m_Card GetObtainedCardCount:[self GetTurn] nCardType:KWANG];
+		count = [m_Card GetObtainedCardCount:index1 nCardType:KWANG];
 	}else if(index2 == YEOL)
 	{
-		count = [m_Card GetObtainedCardCount:[self GetTurn] nCardType:YEOL];
+		count = [m_Card GetObtainedCardCount:index1 nCardType:YEOL];
 	}else if(index2 == TEE)
 	{
-		count = [m_Card GetObtainedCardCount:[self GetTurn] nCardType:TEE];
+		count = [m_Card GetObtainedCardCount:index1 nCardType:TEE];
 	}
-	CGPoint returnpoint = CGPointMake(m_coObtainedCards[index1][index2].x + count*5, m_coObtainedCards[index1][index2].y);
+	 */
+	CGPoint returnpoint = CGPointMake(m_coObtainedCards[index1][index2].x + (CARD_WIDTH*0.67)*(count%5), m_coObtainedCards[index1][index2].y - (CARD_HEIGHT*0.67)*(count/5));
 	return returnpoint;
 }
 - (CGPoint) Getm_coScore:(int)index1
@@ -1048,6 +1109,8 @@
 	int cnt;
 	float x = 0.0f; 
 	float y = 0.0f;
+	
+	
 	for( cnt = 0; cnt < GAME_TOTAL_CARD; cnt++)
 	{
 		
@@ -1057,6 +1120,7 @@
 		m_sprCard[cnt] = [AtlasSprite spriteWithRect:CGRectMake(x,y,CARD_WIDTH,CARD_HEIGHT) spriteManager:m_atlasmgr];
 		[m_atlasmgr setPosition:CGPointMake( 0, 0 )];
 		[m_atlasmgr addChild:m_sprCard[cnt] z:0 tag:cnt];
+		
 		
 	}
 	x =(50%10)*CARD_WIDTH;
@@ -1069,19 +1133,16 @@
 	x =(51%10)*CARD_WIDTH;
 	y =((51)/10)*CARD_HEIGHT;
 	
-	//	m_sprOppCardBack = [AtlasSprite spriteWithRect:CGRectMake(x,y,CARD_WIDTH,CARD_HEIGHT) spriteManager:mgr];
-	//	[mgr setPosition:CGPointMake( 0, 0 )];
-	//	[mgr addChild:m_sprOppCardBack z:0 tag:51];
 	
 	for(cnt = 0  ; cnt < DISTRIBUTE_PLAYER_CARDS ; cnt++)
 	{
 		m_sprBack[cnt] = [AtlasSprite spriteWithRect:CGRectMake(x, y, CARD_WIDTH, CARD_HEIGHT) spriteManager:m_atlasmgr];
 		[m_atlasmgr setPosition:CGPointMake(0,0)];
-		[m_atlasmgr addChild:m_sprBack[cnt] z:0 tag:51+cnt];
+		[m_atlasmgr addChild:m_sprBack[cnt] z:51+cnt tag:51+cnt];
 		
 		m_sprOppCardBack[cnt] = [AtlasSprite spriteWithRect:CGRectMake(x, y, CARD_WIDTH, CARD_HEIGHT) spriteManager:m_atlasmgr];
 		[m_atlasmgr setPosition:CGPointMake(0,0)];
-		[m_atlasmgr addChild:m_sprOppCardBack[cnt] z:0 tag:61+cnt];
+		[m_atlasmgr addChild:m_sprOppCardBack[cnt] z:61+cnt tag:61+cnt];
 	}
 	/*
 	NSString *pscore = [[NSString alloc] initWithFormat:@"%d",[self GetScore:PLAYER]];
@@ -1262,7 +1323,7 @@
 		{
 			nCntObtainedCard = [self GetObtainedCardCount:iPlayer nCardType:iCardType];
 			nGapObtainedCard = OBTAINED_CARD_GAP;
-			
+			/*
 			switch (iCardType)
 			{
 				case KWANG:
@@ -1307,18 +1368,37 @@
 					}
 					break;
 			}
-			
+			*/
 			iCnt = -1;
 			
 			while(!( 0 > (nIdxObtainedCard = [self GetObtainedCard:iPlayer nCardType:iCardType nOffset:++iCnt])))
 			{
+				id sprite = [m_atlasmgr getChildByTag:nIdxObtainedCard];
+				[m_atlasmgr reorderChild:sprite z:iCnt+1];
+				
 				AtlasSprite* card =(AtlasSprite*)[m_atlasmgr getChildByTag:nIdxObtainedCard];
+				// 카드의 스케일을 변경시켜준다.
 				[card setScale:0.67];
-				[card setPosition:CGPointMake([self Getm_coObtainedCards:iPlayer index2:iCardType].x + (CARD_WIDTH+nGapObtainedCard)*(iCnt%10) ,[self Getm_coObtainedCards:iPlayer index2:iCardType].y-(CARD_HEIGHT/2)*(iCnt/10) )];
+				CGPoint startpos = m_coObtainedCards[iPlayer][iCardType];
+				CGPoint resultpos = CGPointMake(startpos.x + (CARD_WIDTH*0.67)*(iCnt%5) ,startpos.y - (CARD_HEIGHT*0.67)*(iCnt/5)); 
+				
+				//위치가 잘못되있다면 올바른 위치로 이동시킨다.
+				if(card.position.x != resultpos.x && card.position.y != resultpos.y)
+				{   // 이동시키는 ..카드
+					[self MovingCard:nIdxObtainedCard startpoint:startpos endpoint:resultpos];
+				}
+				// 위치 세팅
+				[card setPosition:resultpos];
+				
+                NSLog(@"%d번 플레이어 %d개의 카드중 %d번째 %d번 카드 정렬 위치는 %2f, %2f",iPlayer,nCntObtainedCard,iCnt, nIdxObtainedCard , resultpos.x , resultpos.y);
 			}
+			
 			
 		}
 	}
+	
+	[m_atlasmgr draw];
+	
 }
 - (void) DrawPlayerCards
 {
@@ -1337,7 +1417,7 @@
 		
 		if(0 > (nIdxPlayerCard))
 			break;
-		NSLog(@"정렬된 플레이어 카드 %d , %d번째",nIdxPlayerCard,i);
+		//NSLog(@"정렬된 플레이어 카드 %d , %d번째",nIdxPlayerCard,i);
 		
 		id sprite = [m_atlasmgr getChildByTag:nIdxPlayerCard];
 		[m_atlasmgr reorderChild:sprite z:i+10];
@@ -1355,7 +1435,7 @@
 	{
 		
 		nIdxPlayerCard = [self GetPlayerCard:OPPONENT nOffset:iCnt];	
-		NSLog(@"정렬된 상대방 카드 %d , %d번째",nIdxPlayerCard,iCnt);
+		//NSLog(@"정렬된 상대방 카드 %d , %d번째",nIdxPlayerCard,iCnt);
 		
 		id sprite = [m_atlasmgr getChildByTag:nIdxPlayerCard];
 		[m_atlasmgr reorderChild:sprite z:iCnt+10];
@@ -1413,7 +1493,7 @@
 		
 		//카드 그리고
 		[self DrawFloorCards];
-		//[self DrawObtainedCards];
+//		[self DrawObtainedCards];
 		[self DrawPlayerCards];
 		//게임 상황 그리고
 		[self DisplayGameProgress];
@@ -1506,4 +1586,16 @@
 	
     return nResult;
 } // INT CGostopFloor::TurnUpCard(INT nPlayer).
+
+- (void) MoveAllCardToDeck
+{
+	for(int i = 0 ; i < GAME_TOTAL_CARD ; i++)
+	{
+		AtlasSprite *Card = (AtlasSprite*)[m_atlasmgr getChildByTag:i];
+		[Card setScale:1.0];
+		CGPoint start = Card.position;
+		[self MovingCard:i startpoint:start endpoint:[self Getm_coFloorCards:0]];
+		
+	}
+}
 @end
