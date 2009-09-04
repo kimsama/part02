@@ -55,11 +55,22 @@ Class restartAction()
 	
 	isTouchEnabled = YES;
 	AtlasSpriteManager *mgr = [AtlasSpriteManager spriteManagerWithFile:@"editcard.png" ];	
-	[self addChild:mgr z:0 tag:kTagSpriteManager ];
+	[self addChild:mgr z:1 tag:kTagSpriteManager ];
+	
+	
+	
+	AtlasSpriteManager *mgr2 = [AtlasSpriteManager spriteManagerWithFile:@"background.png" ];	
+	[self addChild:mgr2 z:0 tag:99];
+	
+	AtlasSprite *m_sprBackGround = [AtlasSprite spriteWithRect:CGRectMake(0, 0, 320, 460) spriteManager:mgr2];
+	[mgr2 setPosition:CGPointMake(160,250)];
+	[mgr2 addChild:m_sprBackGround z:0 tag:0];
+	[m_sprBackGround draw];
 	
 //	[self LoadSprites];
 	
 	m_Agent = [CGostopAgent alloc];
+	[m_Agent SetFirstStartGame:(bool)FALSE]; 
 	[m_Agent InitGame];
 	[m_Agent SetDefaultCoordination];
 	[m_Agent SetDisplayCoordination];
@@ -78,7 +89,8 @@ Class restartAction()
 }
 - (void) dealloc
 {
-//	[self UnloadSprites];
+	[m_Agent UnloadSprites];
+	[m_Agent release];
 	[super dealloc];
 }
 
@@ -161,8 +173,8 @@ Class restartAction()
 	//appRect.origin = CGPointMake( 0.0f , 0.0f );
 	window = [[UIWindow alloc] initWithFrame:appRect]; // CGRectInset(appRect, 0.0f, 0.0f) [[UIScreen mainScreen] bounds]
 	//window.backgroundColor = [UIColor greenColor];
-	//[window setUserInteractionEnabled:YES];
-	//[window setMultipleTouchEnabled:YES];
+	[window setUserInteractionEnabled:YES];
+	[window setMultipleTouchEnabled:YES];
 	
 	
 
@@ -176,7 +188,7 @@ Class restartAction()
 	[[Director sharedDirector] setLandscape: NO];
 	
 	// display FPS (useful when debugging)
-	//[[Director sharedDirector] setDisplayFPS:YES];
+	[[Director sharedDirector] setDisplayFPS:YES];
 	
 	// frames per second
 	[[Director sharedDirector] setAnimationInterval:1.0/60];

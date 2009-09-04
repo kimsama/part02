@@ -49,6 +49,9 @@ typedef struct bonuscardinfo {
 	bool m_bAnimEvent;
 	// 
 	bool m_bPickUpCard;
+	// 처음 시작된 판인지의 여부
+	BOOL m_bFirstStart;
+	
 	
 	bonusinfo m_sbonuscardinfo;
 	// 움직일 카드
@@ -69,6 +72,7 @@ typedef struct bonuscardinfo {
 	AtlasSprite *m_sprCard[GAME_TOTAL_CARD];
 	AtlasSprite *m_sprOppCardBack[DISTRIBUTE_PLAYER_CARDS];
 	AtlasSprite *m_sprBombCard;
+	//AtlasSprite *m_sprBackGround;
 	
 	Label* pslabel;
 	Label* oslabel;
@@ -177,5 +181,8 @@ typedef struct bonuscardinfo {
 - (bool) IsMoving:(int)nIdxCard point:(CGPoint)point;
 // 중앙 카드를 뒤집어 바닥에 냄
 - (int) TurnUpCard:(int) nPlayer;
+- (void) SetFirstStartGame:(bool) set;
 
+// 카드를 전부 중앙덱으로 이동
+- (void) MoveAllCardToDeck;
 @end
