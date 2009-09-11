@@ -202,3 +202,10 @@ enum {
 	kTagSprite3,
 	
 };
+
+enum {
+	SND_GET,
+	SND_MATCH,
+	SND_CLICK,
+};
+

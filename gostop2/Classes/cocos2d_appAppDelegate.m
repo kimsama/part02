@@ -116,6 +116,7 @@ Class restartAction()
 					{
 						NSLog(@"location : %f , %f : choose: %d",location.x , location.y, i);
 						[m_Agent PutOutPlayerCard:i];
+						[m_Agent PlaySound:SND_CLICK];
 						break;
 					}
 				}

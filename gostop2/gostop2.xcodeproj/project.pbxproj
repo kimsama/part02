@@ -88,6 +88,13 @@
 		496EB1C8100F5C40000DED0F /* GostopFloor.m in Sources */ = {isa = PBXBuildFile; fileRef = 496EB1C4100F5C40000DED0F /* GostopFloor.m */; };
 		497D6B28103D8B8D0042FBA4 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 497D6B27103D8B8D0042FBA4 /* background.png */; };
 		499251B01017568C00AE374B /* editcard.png in Resources */ = {isa = PBXBuildFile; fileRef = 499251AF1017568C00AE374B /* editcard.png */; };
+		499C98A810592D8B0007AC07 /* MainGameMatchCard1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 499C98A410592D8B0007AC07 /* MainGameMatchCard1.wav */; };
+		499C98A910592D8B0007AC07 /* MainGameMatchCard2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 499C98A510592D8B0007AC07 /* MainGameMatchCard2.wav */; };
+		499C98AA10592D8B0007AC07 /* MainGameMatchCard3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 499C98A610592D8B0007AC07 /* MainGameMatchCard3.wav */; };
+		499C98AB10592D8B0007AC07 /* MainGameMatchCard4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 499C98A710592D8B0007AC07 /* MainGameMatchCard4.wav */; };
+		499C98AD10592E180007AC07 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 499C98AC10592E180007AC07 /* AudioToolbox.framework */; };
+		499C98D0105938A00007AC07 /* MainGameClickCard.wav in Resources */ = {isa = PBXBuildFile; fileRef = 499C98CE105938A00007AC07 /* MainGameClickCard.wav */; };
+		499C98D1105938A00007AC07 /* MainGameGetCard.wav in Resources */ = {isa = PBXBuildFile; fileRef = 499C98CF105938A00007AC07 /* MainGameGetCard.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -179,6 +186,13 @@
 		496EB1C5100F5C40000DED0F /* GostopFloor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GostopFloor.h; sourceTree = "<group>"; };
 		497D6B27103D8B8D0042FBA4 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		499251AF1017568C00AE374B /* editcard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editcard.png; sourceTree = "<group>"; };
+		499C98A410592D8B0007AC07 /* MainGameMatchCard1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = MainGameMatchCard1.wav; path = sound/MainGameMatchCard1.wav; sourceTree = "<group>"; };
+		499C98A510592D8B0007AC07 /* MainGameMatchCard2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = MainGameMatchCard2.wav; path = sound/MainGameMatchCard2.wav; sourceTree = "<group>"; };
+		499C98A610592D8B0007AC07 /* MainGameMatchCard3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = MainGameMatchCard3.wav; path = sound/MainGameMatchCard3.wav; sourceTree = "<group>"; };
+		499C98A710592D8B0007AC07 /* MainGameMatchCard4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = MainGameMatchCard4.wav; path = sound/MainGameMatchCard4.wav; sourceTree = "<group>"; };
+		499C98AC10592E180007AC07 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
+		499C98CE105938A00007AC07 /* MainGameClickCard.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = MainGameClickCard.wav; sourceTree = "<group>"; };
+		499C98CF105938A00007AC07 /* MainGameGetCard.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = MainGameGetCard.wav; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* cocos2d_app-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "cocos2d_app-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -192,6 +206,7 @@
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				496EAD371009BA5A000DED0F /* OpenGLES.framework in Frameworks */,
 				496EAD391009BA5A000DED0F /* QuartzCore.framework in Frameworks */,
+				499C98AD10592E180007AC07 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +263,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				499C98A310592D730007AC07 /* sound */,
 				496EB0EB100E0396000DED0F /* image */,
 				496EAD3E1009BA7E000DED0F /* fps_images.png */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
@@ -259,6 +275,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				499C98AC10592E180007AC07 /* AudioToolbox.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
@@ -340,6 +357,19 @@
 				496EB120100E03AC000DED0F /* jocker3.bmp */,
 			);
 			name = image;
+			sourceTree = "<group>";
+		};
+		499C98A310592D730007AC07 /* sound */ = {
+			isa = PBXGroup;
+			children = (
+				499C98CE105938A00007AC07 /* MainGameClickCard.wav */,
+				499C98CF105938A00007AC07 /* MainGameGetCard.wav */,
+				499C98A410592D8B0007AC07 /* MainGameMatchCard1.wav */,
+				499C98A510592D8B0007AC07 /* MainGameMatchCard2.wav */,
+				499C98A610592D8B0007AC07 /* MainGameMatchCard3.wav */,
+				499C98A710592D8B0007AC07 /* MainGameMatchCard4.wav */,
+			);
+			name = sound;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -455,6 +485,12 @@
 				496B814C1013459100BD4235 /* Card.png in Resources */,
 				499251B01017568C00AE374B /* editcard.png in Resources */,
 				497D6B28103D8B8D0042FBA4 /* background.png in Resources */,
+				499C98A810592D8B0007AC07 /* MainGameMatchCard1.wav in Resources */,
+				499C98A910592D8B0007AC07 /* MainGameMatchCard2.wav in Resources */,
+				499C98AA10592D8B0007AC07 /* MainGameMatchCard3.wav in Resources */,
+				499C98AB10592D8B0007AC07 /* MainGameMatchCard4.wav in Resources */,
+				499C98D0105938A00007AC07 /* MainGameClickCard.wav in Resources */,
+				499C98D1105938A00007AC07 /* MainGameGetCard.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
