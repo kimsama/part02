@@ -1,5 +1,6 @@
 #import "GostopAgent.h"
 
+
 @implementation CGostopAgent
 // 새 게임 시작
 - (void) StartNewGame
@@ -206,6 +207,7 @@
 			// 바닥에 카드 추가
 			[m_Floor AddToFloor:nIdxCard nMonth:nMonth];
 			[self MovingCard:nIdxCard startpoint:[self Getm_coFloorCards:0] endpoint:[self Getm_coFloorCards:nMonth+1]];
+			[self PlaySound:SND_GET];
 			
         }        
         break;
@@ -219,7 +221,7 @@
 				// 바닥에 카드 추가
 				[m_Floor AddToFloor:nIdxCard nMonth:nMonth];
 				[self MovingCard:nIdxCard startpoint:[self Getm_coFloorCards:0] endpoint:[self Getm_coFloorCards:nMonth+1]];
-				
+				[self PlaySound:SND_GET];				
 			}        
 			break;
 
@@ -233,7 +235,7 @@
 				// 플레이어에 카드 추가
 				[m_Card ReceiveCard:PLAYER nIdxCard:nIdxCard];
 				[self MovingCard:nIdxCard startpoint:[self Getm_coFloorCards:0] endpoint:[self Getm_coPlayerCards:PLAYER index2:iCnt]];
-				
+				[self PlaySound:SND_GET];				
 			}        
 			break;
 		
@@ -247,7 +249,7 @@
 				// 상대방에 카드 추가
 				[m_Card ReceiveCard:OPPONENT nIdxCard:nIdxCard];
 				[self MovingCard:nIdxCard startpoint:[self Getm_coFloorCards:0] endpoint:[self Getm_coPlayerCards:OPPONENT index2:iCnt]];
-				
+				[self PlaySound:SND_GET];				
 			}        
 			break;
 			
@@ -261,7 +263,7 @@
 				// 플레이어에 카드 추가
 				[m_Card ReceiveCard:PLAYER nIdxCard:nIdxCard];
 				[self MovingCard:nIdxCard startpoint:[self Getm_coFloorCards:0] endpoint:[self Getm_coPlayerCards:PLAYER index2:iCnt+5]];
-				
+				[self PlaySound:SND_GET];				
 			}        
 			break;
 
@@ -275,7 +277,7 @@
 				// 상대방에 카드 추가
 				[m_Card ReceiveCard:OPPONENT nIdxCard:nIdxCard];
 				[self MovingCard:nIdxCard startpoint:[self Getm_coFloorCards:0] endpoint:[self Getm_coPlayerCards:OPPONENT index2:iCnt+5]];
-				
+				[self PlaySound:SND_GET];				
 			}        
 			break;
 
@@ -567,6 +569,7 @@
 		{
 			if([self IsMoving:m_nIdxPutOutCard point:Movepoint] == false)
 			{
+				[self PlaySound:SND_MATCH];
 				m_bAnimEvent = false;
 			}
 		}
@@ -582,6 +585,7 @@
 			{
 				if(false == [self IsMoving:m_nidxTurnUpCard point:Movepoint])
 				{
+					[self PlaySound:SND_MATCH];
 					m_bAnimEvent = false;
 				}
 			}
@@ -1194,6 +1198,11 @@
 	[self addChild: oshlabel];
 	[self addChild: pplabel];
 	[self addChild: oplabel];
+	
+	//sprite 까지 로드했으면 사운드도 로드한다.
+	[self LoadSound];
+	
+	
 		
 }
 - (void) UnloadSprites
@@ -1596,6 +1605,37 @@
 		CGPoint start = Card.position;
 		[self MovingCard:i startpoint:start endpoint:[self Getm_coFloorCards:0]];
 		
+	}
+}
+
+- (void) LoadSound
+{
+		
+	id sndpath = [[[NSBundle mainBundle] pathForResource:@"MainGameMatchCard1" ofType:@"wav"] autorelease];
+	id sndpath2 = [[[NSBundle mainBundle] pathForResource:@"MainGameClickCard" ofType:@"wav"] autorelease];
+	id sndpath3 = [[[NSBundle mainBundle] pathForResource:@"MainGameGetCard" ofType:@"wav"] autorelease];
+	
+	CFURLRef baseURL = (CFURLRef)[[NSURL alloc] initFileURLWithPath:sndpath];
+	CFURLRef baseURL2 = (CFURLRef)[[NSURL alloc] initFileURLWithPath:sndpath2];
+	CFURLRef baseURL3 = (CFURLRef)[[NSURL alloc] initFileURLWithPath:sndpath3];
+	
+	AudioServicesCreateSystemSoundID(baseURL, &m_sndmatchcard);
+	AudioServicesCreateSystemSoundID(baseURL2, &m_sndgetcard);
+	AudioServicesCreateSystemSoundID(baseURL3, &m_sndclickcard);
+
+	
+}
+- (void) PlaySound:(int)type
+{
+	if(type == SND_GET)
+	{
+		AudioServicesPlaySystemSound(m_sndgetcard);
+	}else if(type == SND_MATCH)
+	{
+		AudioServicesPlaySystemSound(m_sndmatchcard);
+	}else if(type == SND_CLICK)
+	{
+		AudioServicesPlaySystemSound(m_sndclickcard);
 	}
 }
 @end

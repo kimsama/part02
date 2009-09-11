@@ -3,6 +3,7 @@
 #import "GostopCommon.h"
 #import "GostopFloor.h"
 #import "GostopCard.h"
+#import "AudioToolbox/AudioServices.h"
 
 @class CGostopCard;
 @class CGostopFloor;
@@ -82,6 +83,11 @@ typedef struct bonuscardinfo {
 	Label* oshlabel;
 	Label* pplabel;
 	Label* oplabel;
+	// sound
+	SystemSoundID m_sndmatchcard; //때렸을때
+	SystemSoundID m_sndgetcard; //얻을때
+	SystemSoundID m_sndclickcard; // 눌렀을때
+	
 }
 
 
@@ -185,4 +191,10 @@ typedef struct bonuscardinfo {
 
 // 카드를 전부 중앙덱으로 이동
 - (void) MoveAllCardToDeck;
+
+- (void) PlaySound:(int)type;
+
+- (void) LoadSound;
+
+
 @end
